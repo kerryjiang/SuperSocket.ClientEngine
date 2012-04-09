@@ -1,5 +1,0 @@
-D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Core\obj\Debug\ResolveAssemblyReference.cache
-D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Core\bin\Debug\SuperSocket.ClientEngine.Core.dll
-D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Core\bin\Debug\SuperSocket.ClientEngine.Core.pdb
-D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Core\obj\Debug\SuperSocket.ClientEngine.Core.dll
-D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Core\obj\Debug\SuperSocket.ClientEngine.Core.pdb
