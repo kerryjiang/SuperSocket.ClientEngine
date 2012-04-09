@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.WP71", "Core\Core.WP71.csproj", "{38A1B75C-AD6C-40E3-9E35-B5F00AB2FF2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.WP71", "Protocol\Protocol.WP71.csproj", "{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38A1B75C-AD6C-40E3-9E35-B5F00AB2FF2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38A1B75C-AD6C-40E3-9E35-B5F00AB2FF2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38A1B75C-AD6C-40E3-9E35-B5F00AB2FF2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38A1B75C-AD6C-40E3-9E35-B5F00AB2FF2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+D:\Kerry\Workshop\SuperSocket.ClientEngine\Protocol\bin\Debug\SuperSocket.ClientEngine.Protocol.dll
+D:\Kerry\Workshop\SuperSocket.ClientEngine\Protocol\bin\Debug\SuperSocket.ClientEngine.Protocol.pdb
+D:\Kerry\Workshop\SuperSocket.ClientEngine\Protocol\obj\Debug\ResolveAssemblyReference.cache
+D:\Kerry\Workshop\SuperSocket.ClientEngine\Protocol\obj\Debug\SuperSocket.ClientEngine.Protocol.dll
+D:\Kerry\Workshop\SuperSocket.ClientEngine\Protocol\obj\Debug\SuperSocket.ClientEngine.Protocol.pdb
+D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Protocol\obj\Debug\ResolveAssemblyReference.cache
+D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Protocol\obj\Debug\SuperSocket.ClientEngine.Protocol.pdb
+D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Protocol\bin\Debug\SuperSocket.ClientEngine.Protocol.dll
+D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Protocol\bin\Debug\SuperSocket.ClientEngine.Protocol.pdb
+D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Protocol\bin\Debug\SuperSocket.ClientEngine.Core.dll
+D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Protocol\bin\Debug\SuperSocket.ClientEngine.Core.pdb
+D:\Kerry\Workshop\SuperSocket.ClientEngine\trunk\Protocol\obj\Debug\SuperSocket.ClientEngine.Protocol.dll
