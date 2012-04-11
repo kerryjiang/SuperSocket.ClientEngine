@@ -45,14 +45,18 @@
     </Compile>
     <Compile Include="ClientSession.cs" />
     <Compile Include="ConcurrentQueue.cs" />
-    <Compile Include="ConnectStateToken.cs" />
     <Compile Include="DataEventArgs.cs" />
     <Compile Include="ErrorEventArgs.cs" />
     <Compile Include="IClientSession.cs" />
-    <Compile Include="NameValueCollection.cs" />
     <Compile Include="AsyncTcpSession.cs" />
     <Compile Include="Properties\AssemblyInfo.WP71.cs" />
     <Compile Include="TcpClientSession.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.WP71.csproj">
+      <Project>{A7CD766F-4033-45DD-9E9A-7EEA1F5CD08E}</Project>
+      <Name>Common.WP71</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

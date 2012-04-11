@@ -12,7 +12,8 @@
     <AssemblyName>SuperSocket.ClientEngine.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,7 +48,6 @@
     </Compile>
     <Compile Include="ClientSession.cs" />
     <Compile Include="ConcurrentQueue.cs" />
-    <Compile Include="ConnectStateToken.cs" />
     <Compile Include="DataEventArgs.cs" />
     <Compile Include="ErrorEventArgs.cs" />
     <Compile Include="IClientSession.cs" />
@@ -55,6 +55,12 @@
     <Compile Include="SslStreamTcpSession.cs" />
     <Compile Include="AsyncTcpSession.cs" />
     <Compile Include="TcpClientSession.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

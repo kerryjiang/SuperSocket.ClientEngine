@@ -47,7 +47,7 @@ namespace SuperSocket.ClientEngine.Core
         {
             if (e.LastOperation == SocketAsyncOperation.Connect)
             {
-                ProcessConnect(e);
+                ProcessConnect(sender as Socket, null, e);
                 return;
             }
 

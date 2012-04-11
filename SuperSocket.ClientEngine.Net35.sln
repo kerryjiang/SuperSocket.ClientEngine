@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Net35", "Core\Core.Net
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.Net35", "Protocol\Protocol.Net35.csproj", "{73EDDB1C-1B51-4095-A7F1-D2876B294BC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Net35", "Common\Common.Net35.csproj", "{818DF11D-0B8E-49F6-8DCA-03412C316B8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy.Net35", "Proxy\Proxy.Net35.csproj", "{6A8DA923-53E1-4462-9CD4-3AD41CF0231F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{73EDDB1C-1B51-4095-A7F1-D2876B294BC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73EDDB1C-1B51-4095-A7F1-D2876B294BC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73EDDB1C-1B51-4095-A7F1-D2876B294BC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{818DF11D-0B8E-49F6-8DCA-03412C316B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{818DF11D-0B8E-49F6-8DCA-03412C316B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{818DF11D-0B8E-49F6-8DCA-03412C316B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{818DF11D-0B8E-49F6-8DCA-03412C316B8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A8DA923-53E1-4462-9CD4-3AD41CF0231F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8DA923-53E1-4462-9CD4-3AD41CF0231F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8DA923-53E1-4462-9CD4-3AD41CF0231F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8DA923-53E1-4462-9CD4-3AD41CF0231F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

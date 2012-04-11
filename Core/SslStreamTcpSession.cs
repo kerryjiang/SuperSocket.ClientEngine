@@ -47,7 +47,7 @@ namespace SuperSocket.ClientEngine.Core
 
         protected override void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e)
         {
-            ProcessConnect(e);
+            ProcessConnect(sender as Socket, null, e);
         }
 
         protected override void StartReceive(SocketAsyncEventArgs e)

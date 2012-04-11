@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.WP71", "Core\Core.WP71
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.WP71", "Protocol\Protocol.WP71.csproj", "{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WP71", "Common\Common.WP71.csproj", "{A7CD766F-4033-45DD-9E9A-7EEA1F5CD08E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy.WP71", "Proxy\Proxy.WP71.csproj", "{0A32FF9D-87D3-4455-9BA9-20C915A1C7BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CD766F-4033-45DD-9E9A-7EEA1F5CD08E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CD766F-4033-45DD-9E9A-7EEA1F5CD08E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CD766F-4033-45DD-9E9A-7EEA1F5CD08E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CD766F-4033-45DD-9E9A-7EEA1F5CD08E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A32FF9D-87D3-4455-9BA9-20C915A1C7BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A32FF9D-87D3-4455-9BA9-20C915A1C7BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A32FF9D-87D3-4455-9BA9-20C915A1C7BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A32FF9D-87D3-4455-9BA9-20C915A1C7BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

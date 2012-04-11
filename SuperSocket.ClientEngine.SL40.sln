@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.SL40", "Core\Core.SL40
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.SL40", "Protocol\Protocol.SL40.csproj", "{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.SL40", "Common\Common.SL40.csproj", "{BA9CFD5C-ADD2-4E5D-A33E-C50414C447E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy.SL40", "Proxy\Proxy.SL40.csproj", "{91435861-D82D-41B5-853A-C1FAA7F3A22B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECEC2C29-1E1E-48EF-B544-76510C2D42B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA9CFD5C-ADD2-4E5D-A33E-C50414C447E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA9CFD5C-ADD2-4E5D-A33E-C50414C447E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA9CFD5C-ADD2-4E5D-A33E-C50414C447E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA9CFD5C-ADD2-4E5D-A33E-C50414C447E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91435861-D82D-41B5-853A-C1FAA7F3A22B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91435861-D82D-41B5-853A-C1FAA7F3A22B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91435861-D82D-41B5-853A-C1FAA7F3A22B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91435861-D82D-41B5-853A-C1FAA7F3A22B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

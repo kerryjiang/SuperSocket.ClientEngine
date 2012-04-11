@@ -12,7 +12,8 @@
     <AssemblyName>SuperSocket.ClientEngine.Core</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,15 +48,19 @@
     </Compile>
     <Compile Include="ClientSession.cs" />
     <Compile Include="ConcurrentQueue.cs" />
-    <Compile Include="ConnectStateToken.cs" />
     <Compile Include="DataEventArgs.cs" />
-    <Compile Include="DnsEndPoint.cs" />
     <Compile Include="ErrorEventArgs.cs" />
     <Compile Include="IClientSession.cs" />
     <Compile Include="Properties\AssemblyInfo.Net35.cs" />
     <Compile Include="SslStreamTcpSession.cs" />
     <Compile Include="AsyncTcpSession.cs" />
     <Compile Include="TcpClientSession.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Net35.csproj">
+      <Project>{818DF11D-0B8E-49F6-8DCA-03412C316B8D}</Project>
+      <Name>Common.Net35</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

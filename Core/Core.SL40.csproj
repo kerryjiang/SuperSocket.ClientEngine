@@ -53,14 +53,18 @@
     </Compile>
     <Compile Include="ClientSession.cs" />
     <Compile Include="ConcurrentQueue.cs" />
-    <Compile Include="ConnectStateToken.cs" />
     <Compile Include="DataEventArgs.cs" />
     <Compile Include="ErrorEventArgs.cs" />
     <Compile Include="IClientSession.cs" />
-    <Compile Include="NameValueCollection.cs" />
     <Compile Include="AsyncTcpSession.cs" />
     <Compile Include="Properties\AssemblyInfo.SL40.cs" />
     <Compile Include="TcpClientSession.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.SL40.csproj">
+      <Project>{BA9CFD5C-ADD2-4E5D-A33E-C50414C447E2}</Project>
+      <Name>Common.SL40</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

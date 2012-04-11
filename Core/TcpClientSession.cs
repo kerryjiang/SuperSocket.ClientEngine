@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using SuperSocket.ClientEngine.Common;
 
 namespace SuperSocket.ClientEngine.Core
 {
@@ -21,6 +22,19 @@ namespace SuperSocket.ClientEngine.Core
             : base(remoteEndPoint)
         {
             ReceiveBufferSize = receiveBufferSize;
+
+            var dnsEndPoint = remoteEndPoint as DnsEndPoint;
+
+            if (dnsEndPoint != null)
+            {
+                HostName = dnsEndPoint.Host;
+                return;
+            }
+
+            var ipEndPoint = remoteEndPoint as IPEndPoint;
+
+            if (ipEndPoint != null)
+                HostName = ipEndPoint.Address.ToString();
         }
 
         protected bool IsIgnorableException(Exception e)
@@ -56,134 +70,34 @@ namespace SuperSocket.ClientEngine.Core
 
         public override void Connect()
         {
-            var socketEventArgs = new SocketAsyncEventArgs();
-            socketEventArgs.Completed += new EventHandler<SocketAsyncEventArgs>(SocketEventArgsCompleted);
-
-#if SILVERLIGHT
-            socketEventArgs.RemoteEndPoint = RemoteEndPoint;
-    //WindowsPhone doesn't have this property
-    #if !WINDOWS_PHONE
-            socketEventArgs.SocketClientAccessPolicyProtocol = ClientAccessPolicyProtocol;
-    #endif
-
-            if (!Socket.ConnectAsync(SocketType.Stream, ProtocolType.Tcp, socketEventArgs))
-                ProcessConnect(socketEventArgs);
+//WindowsPhone doesn't have this property
+#if SILVERLIGHT && !WINDOWS_PHONE
+            RemoteEndPoint.ConnectAsync(ClientAccessPolicyProtocol, ProcessConnect, null);
 #else
-            if (RemoteEndPoint is IPEndPoint)
-            {
-                socketEventArgs.RemoteEndPoint = RemoteEndPoint;
-
-                var ipEndPoint = RemoteEndPoint as IPEndPoint;
-                HostName = ipEndPoint.Address.ToString();
-
-                var socket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                socketEventArgs.UserToken = new ConnectStateToken
-                {
-                    Addresses = new IPAddress[] { ipEndPoint.Address },
-                    Port = ipEndPoint.Port,
-                    CurrentConnectIndex = 0,
-                    Socket = socket,
-                    SocketEventArgs = socketEventArgs
-                };
-
-                if (!socket.ConnectAsync(socketEventArgs))
-                    ProcessConnect(socketEventArgs);
-            }
-            else if (RemoteEndPoint is DnsEndPoint)
-            {
-                var dnsEndPoint = RemoteEndPoint as DnsEndPoint;
-                HostName = dnsEndPoint.Host;
-                Dns.BeginGetHostAddresses(dnsEndPoint.Host, OnGetHostAddresses,
-                    new ConnectStateToken
-                    {
-                        Port = dnsEndPoint.Port,
-                        SocketEventArgs = socketEventArgs
-                    });
-            }
+            RemoteEndPoint.ConnectAsync(ProcessConnect, null);
 #endif
         }
 
-#if !SILVERLIGHT
-        private void OnGetHostAddresses(IAsyncResult state)
+        protected void ProcessConnect(Socket socket, object state, SocketAsyncEventArgs e)
         {
-            IPAddress[] addresses = Dns.EndGetHostAddresses(state);
-
-            var connectState = state.AsyncState as ConnectStateToken;
-
-            if (!Socket.OSSupportsIPv6)
-                addresses = addresses.Where(a => a.AddressFamily == AddressFamily.InterNetwork).ToArray();
-            else
-            {
-                //IPv4 address in higher priority
-                addresses = addresses.OrderBy(a => a.AddressFamily == AddressFamily.InterNetwork ? 0 : 1).ToArray();
-            }
-
-            if (addresses.Length <= 0)
-                return;
-
-            var socketEventArgs = connectState.SocketEventArgs;
-
-            connectState.Addresses = addresses;
-
-            var ipEndPoint = new IPEndPoint(addresses[0], connectState.Port);
-            socketEventArgs.RemoteEndPoint = ipEndPoint;
-
-            var socket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
-            connectState.Socket = socket;
-
-            socketEventArgs.UserToken = connectState;
-
-            if (!socket.ConnectAsync(socketEventArgs))
-                ProcessConnect(socketEventArgs);
-        }
-#endif
-
-        protected void ProcessConnect(SocketAsyncEventArgs e)
-        {
-#if SILVERLIGHT
-            if (e.SocketError != SocketError.Success)
+            if (e != null && e.SocketError != SocketError.Success)
             {
                 OnError(new SocketException((int)e.SocketError));
                 return;
             }
 
-            Client = e.ConnectSocket;
-#else
-            var connectState = e.UserToken as ConnectStateToken;
-
-            if (e.SocketError != SocketError.Success)
+            if (socket == null)
             {
-                if (e.SocketError != SocketError.HostUnreachable && e.SocketError != SocketError.ConnectionRefused)
-                {
-                    OnError(new SocketException((int)e.SocketError));
-                    return;
-                }
-
-                if (connectState.Addresses.Length <= (connectState.CurrentConnectIndex + 1))
-                {
-                    OnError(new SocketException((int)SocketError.HostUnreachable));
-                    return;
-                }
-
-                var currentConnectIndex = connectState.CurrentConnectIndex + 1;
-                var currentIpAddress = connectState.Addresses[currentConnectIndex];
-
-                e.RemoteEndPoint = new IPEndPoint(currentIpAddress, connectState.Port);
-                connectState.CurrentConnectIndex = currentConnectIndex;
-
-                var socket = new Socket(currentIpAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                connectState.Socket = socket;
-
-                if (!socket.ConnectAsync(e))
-                    ProcessConnect(e);
-
+                OnError(new SocketException((int)SocketError.ConnectionAborted));
                 return;
             }
 
-            Client = connectState.Socket;
-            e.UserToken = null;
-#endif
+            if (e == null)
+                e = new SocketAsyncEventArgs();
+
+            e.Completed += SocketEventArgsCompleted;
+
+            Client = socket;
 
 #if !SILVERLIGHT
             //Set keep alive
