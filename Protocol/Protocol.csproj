@@ -12,7 +12,8 @@
     <AssemblyName>SuperSocket.ClientEngine.Protocol</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +42,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
@@ -51,17 +51,19 @@
     <Compile Include="ArraySegmentList.cs" />
     <Compile Include="AssemblyUtil.cs" />
     <Compile Include="BinaryCommandInfo.cs" />
-    <Compile Include="BinaryUtil.cs" />
     <Compile Include="CommandInfo.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="IClientCommandReader.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="ICommandInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.Net40.cs" />
-    <Compile Include="SearchMarkState.cs" />
     <Compile Include="StringCommandInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{1BC7E184-8225-425A-900E-9FEA38865E20}</Project>
       <Name>Core</Name>

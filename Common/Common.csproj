@@ -5,21 +5,22 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AF269343-F9FD-4823-AC0A-3481446C7686}</ProjectGuid>
-    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine.Protocol</RootNamespace>
-    <AssemblyName>SuperSocket.ClientEngine.Protocol</AssemblyName>
+    <RootNamespace>SuperSocket.ClientEngine.Common</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -31,40 +32,30 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\SuperSocket.ClientEngine.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ArraySegmentEx.cs" />
-    <Compile Include="ArraySegmentList.cs" />
-    <Compile Include="AssemblyUtil.cs" />
-    <Compile Include="BinaryCommandInfo.cs" />
-    <Compile Include="CommandInfo.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="IClientCommandReader.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="ICommandInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.MonoDroid.cs" />
-    <Compile Include="StringCommandInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.MonoDroid.csproj">
-      <Project>{38367EC0-D72E-4EC5-8FBA-0AE3706A2C49}</Project>
-      <Name>Common.MonoDroid</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Core.MonoDroid.csproj">
-      <Project>{6447CAEB-757A-4D47-91BA-71E521AA7B42}</Project>
-      <Name>Core.MonoDroid</Name>
-    </ProjectReference>
+    <Compile Include="ConnectAsyncExtension.cs" />
+    <Compile Include="ConnectAsyncExtension.Net40.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IProxyConnector.cs" />
+    <Compile Include="Properties\AssemblyInfo.Net40.cs" />
+    <Compile Include="ProxyEventArgs.cs" />
+    <Compile Include="SearchMarkState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

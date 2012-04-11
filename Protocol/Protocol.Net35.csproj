@@ -12,7 +12,8 @@
     <AssemblyName>SuperSocket.ClientEngine.Protocol</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,17 +51,19 @@
     <Compile Include="ArraySegmentList.cs" />
     <Compile Include="AssemblyUtil.cs" />
     <Compile Include="BinaryCommandInfo.cs" />
-    <Compile Include="BinaryUtil.cs" />
     <Compile Include="CommandInfo.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="IClientCommandReader.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="ICommandInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.Net35.cs" />
-    <Compile Include="SearchMarkState.cs" />
     <Compile Include="StringCommandInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Net35.csproj">
+      <Project>{818DF11D-0B8E-49F6-8DCA-03412C316B8D}</Project>
+      <Name>Common.Net35</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.Net35.csproj">
       <Project>{1BC7E184-8225-425A-900E-9FEA38865E20}</Project>
       <Name>Core.Net35</Name>

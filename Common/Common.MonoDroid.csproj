@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AF269343-F9FD-4823-AC0A-3481446C7686}</ProjectGuid>
+    <ProjectGuid>{38367EC0-D72E-4EC5-8FBA-0AE3706A2C49}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine.Protocol</RootNamespace>
-    <AssemblyName>SuperSocket.ClientEngine.Protocol</AssemblyName>
+    <RootNamespace>SuperSocket.ClientEngine.Common</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine.Common</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -27,41 +27,33 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\SuperSocket.ClientEngine.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ArraySegmentEx.cs" />
-    <Compile Include="ArraySegmentList.cs" />
-    <Compile Include="AssemblyUtil.cs" />
-    <Compile Include="BinaryCommandInfo.cs" />
-    <Compile Include="CommandInfo.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="IClientCommandReader.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="ICommandInfo.cs" />
+    <Compile Include="ConnectAsyncExtension.cs" />
+    <Compile Include="ConnectAsyncExtension.WindowsPhone.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IProxyConnector.cs" />
+    <Compile Include="NameValueCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.MonoDroid.cs" />
-    <Compile Include="StringCommandInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.MonoDroid.csproj">
-      <Project>{38367EC0-D72E-4EC5-8FBA-0AE3706A2C49}</Project>
-      <Name>Common.MonoDroid</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Core.MonoDroid.csproj">
-      <Project>{6447CAEB-757A-4D47-91BA-71E521AA7B42}</Project>
-      <Name>Core.MonoDroid</Name>
-    </ProjectReference>
+    <Compile Include="ProxyEventArgs.cs" />
+    <Compile Include="SearchMarkState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
