@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
-namespace SuperSocket.ClientEngine.Core
+namespace SuperSocket.ClientEngine
 {
     public class SslStreamTcpSession : TcpClientSession
     {

@@ -1,10 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection;
-using System.Text;
 
 namespace SuperSocket.ClientEngine
 {
@@ -20,7 +18,8 @@ namespace SuperSocket.ClientEngine
             if (Socket.OSSupportsIPv6)
                 connectState.Socket6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
 
-            connectState.Socket4 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            if(Socket.OSSupportsIPv4)
+                connectState.Socket4 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
     }
 }

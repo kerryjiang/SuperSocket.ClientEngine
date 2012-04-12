@@ -5,7 +5,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 
-namespace SuperSocket.ClientEngine.Core
+namespace SuperSocket.ClientEngine
 {
     public interface IClientSession
     {

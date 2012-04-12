@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace SuperSocket.ClientEngine.Common
+namespace SuperSocket.ClientEngine
 {
     public static partial class ConnectAsyncExtension
     {

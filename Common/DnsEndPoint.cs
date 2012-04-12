@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 
-namespace SuperSocket.ClientEngine.Common
+namespace System.Net
 {
     public class DnsEndPoint : EndPoint
     {

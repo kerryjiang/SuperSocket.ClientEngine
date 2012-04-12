@@ -8,7 +8,7 @@
     <ProjectGuid>{1BC7E184-8225-425A-900E-9FEA38865E20}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine.Core</RootNamespace>
+    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
     <AssemblyName>SuperSocket.ClientEngine.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -47,7 +47,6 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ClientSession.cs" />
-    <Compile Include="ConcurrentQueue.cs" />
     <Compile Include="DataEventArgs.cs" />
     <Compile Include="ErrorEventArgs.cs" />
     <Compile Include="IClientSession.cs" />

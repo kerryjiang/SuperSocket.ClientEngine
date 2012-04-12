@@ -2,7 +2,7 @@
 using System.Net;
 using System.Collections.Generic;
 
-namespace SuperSocket.ClientEngine.Core
+namespace System.Collections.Concurrent
 {
     public class ConcurrentQueue<T>
     {

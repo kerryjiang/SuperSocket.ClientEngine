@@ -8,7 +8,7 @@
     <ProjectGuid>{818DF11D-0B8E-49F6-8DCA-03412C316B8D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine.Common</RootNamespace>
+    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
     <AssemblyName>SuperSocket.ClientEngine.Common</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -47,6 +47,7 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ConnectAsyncExtension.cs" />
+    <Compile Include="ConnectAsyncExtension.Net.cs" />
     <Compile Include="ConnectAsyncExtension.Net35.cs" />
     <Compile Include="DnsEndPoint.cs" />
     <Compile Include="Extensions.cs" />

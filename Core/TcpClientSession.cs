@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using SuperSocket.ClientEngine.Common;
+using System.Collections.Concurrent;
 
-namespace SuperSocket.ClientEngine.Core
+namespace SuperSocket.ClientEngine
 {
     public abstract class TcpClientSession : ClientSession
     {
@@ -104,6 +104,7 @@ namespace SuperSocket.ClientEngine.Core
             Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
 #endif
 
+            OnConnected();
             StartReceive(e);
         }
 

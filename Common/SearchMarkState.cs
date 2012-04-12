@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SuperSocket.ClientEngine.Common
+namespace SuperSocket.ClientEngine
 {
     public class SearchMarkState<T>
         where T : IEquatable<T>

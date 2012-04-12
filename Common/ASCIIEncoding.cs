@@ -3,7 +3,7 @@ using System.Net;
 using System.Text;
 using System.Collections.Generic;
 
-namespace SuperSocket.ClientEngine.Common
+namespace SuperSocket.ClientEngine
 {
     /// <summary>
     /// A custom encoding class that provides encoding capabilities for the

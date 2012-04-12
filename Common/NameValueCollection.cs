@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace SuperSocket.ClientEngine.Common
+namespace System.Collections.Specialized
 {
     public class NameValueCollection : List<KeyValuePair<string, string>>
     {

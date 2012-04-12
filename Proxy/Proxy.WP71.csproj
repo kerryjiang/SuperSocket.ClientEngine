@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{38A1B75C-AD6C-40E3-9E35-B5F00AB2FF2F}</ProjectGuid>
+    <ProjectGuid>{0A32FF9D-87D3-4455-9BA9-20C915A1C7BE}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
-    <AssemblyName>SuperSocket.ClientEngine.Core</AssemblyName>
+    <RootNamespace>SuperSocket.ClientEngine.Proxy</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine.Proxy</AssemblyName>
     <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>false</SilverlightApplication>
@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -43,14 +43,12 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ClientSession.cs" />
-    <Compile Include="ConcurrentQueue.cs" />
-    <Compile Include="DataEventArgs.cs" />
-    <Compile Include="ErrorEventArgs.cs" />
-    <Compile Include="IClientSession.cs" />
-    <Compile Include="AsyncTcpSession.cs" />
+    <Compile Include="HttpConnectProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.WP71.cs" />
-    <Compile Include="TcpClientSession.cs" />
+    <Compile Include="ProxyConnectorBase.cs" />
+    <Compile Include="Socks4aConnector.cs" />
+    <Compile Include="Socks4Connector.cs" />
+    <Compile Include="Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.WP71.csproj">

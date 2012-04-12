@@ -2,7 +2,7 @@
 using System.Text;
 using System.Net.Sockets;
 
-namespace SuperSocket.ClientEngine.Common
+namespace SuperSocket.ClientEngine
 {
     public class ProxyEventArgs : EventArgs
     {

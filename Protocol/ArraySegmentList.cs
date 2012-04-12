@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SuperSocket.ClientEngine.Common;
+using SuperSocket.ClientEngine;
 
 namespace SuperSocket.ClientEngine.Protocol
 {

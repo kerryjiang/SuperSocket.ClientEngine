@@ -5,24 +5,22 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{38A1B75C-AD6C-40E3-9E35-B5F00AB2FF2F}</ProjectGuid>
-    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectGuid>{00BD38B0-9D33-4E65-9B86-01576FD8B778}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
-    <AssemblyName>SuperSocket.ClientEngine.Core</AssemblyName>
-    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
-    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
-    <SilverlightApplication>false</SilverlightApplication>
-    <ValidateXaml>true</ValidateXaml>
-    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <RootNamespace>SuperSocket.ClientEngine.Proxy</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine.Proxy</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -30,36 +28,33 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ClientSession.cs" />
-    <Compile Include="ConcurrentQueue.cs" />
-    <Compile Include="DataEventArgs.cs" />
-    <Compile Include="ErrorEventArgs.cs" />
-    <Compile Include="IClientSession.cs" />
-    <Compile Include="AsyncTcpSession.cs" />
-    <Compile Include="Properties\AssemblyInfo.WP71.cs" />
-    <Compile Include="TcpClientSession.cs" />
+    <Compile Include="HttpConnectProxy.cs" />
+    <Compile Include="Properties\AssemblyInfo.Net40.cs" />
+    <Compile Include="ProxyConnectorBase.cs" />
+    <Compile Include="Socks4aConnector.cs" />
+    <Compile Include="Socks4Connector.cs" />
+    <Compile Include="Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.WP71.csproj">
-      <Project>{A7CD766F-4033-45DD-9E9A-7EEA1F5CD08E}</Project>
-      <Name>Common.WP71</Name>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</Project>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

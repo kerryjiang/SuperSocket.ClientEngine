@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 
-namespace SuperSocket.ClientEngine.Core
+namespace SuperSocket.ClientEngine
 {
     public class AsyncTcpSession : TcpClientSession
     {
@@ -56,8 +56,6 @@ namespace SuperSocket.ClientEngine.Core
 
         protected override void StartReceive(SocketAsyncEventArgs e)
         {
-            OnConnected();
-
             m_ReceiveBuffer = new byte[ReceiveBufferSize];
             e.SetBuffer(m_ReceiveBuffer, 0, m_ReceiveBuffer.Length);
             m_SocketEventArgs = e;

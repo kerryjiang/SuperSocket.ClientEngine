@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 
-namespace SuperSocket.ClientEngine.Core
+namespace SuperSocket.ClientEngine
 {
     public abstract class ClientSession : IClientSession
     {

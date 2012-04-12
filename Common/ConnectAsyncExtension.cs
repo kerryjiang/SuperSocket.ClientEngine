@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Net;
 
-namespace SuperSocket.ClientEngine.Common
+namespace SuperSocket.ClientEngine
 {
     public static partial class ConnectAsyncExtension
     {
