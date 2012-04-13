@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
@@ -24,10 +23,10 @@ namespace SuperSocket.ClientEngine
 
             public object State { get; set; }
 
-            public Action<Socket, object, SocketAsyncEventArgs> ConnectedCallback { get; set; }
+            public ConnectedCallback Callback { get; set; }
         }
 
-        private static void ConnectAsyncInternal(this EndPoint remoteEndPoint, Action<Socket, object, SocketAsyncEventArgs> connectedCallback, object state)
+        private static void ConnectAsyncInternal(this EndPoint remoteEndPoint, ConnectedCallback callback, object state)
         {
             if (remoteEndPoint is DnsEndPoint)
             {
@@ -37,7 +36,7 @@ namespace SuperSocket.ClientEngine
                     new DnsConnectState
                     {
                         Port = dnsEndPoint.Port,
-                        ConnectedCallback = connectedCallback,
+                        Callback = callback,
                         State = state
                     });
 
@@ -46,7 +45,7 @@ namespace SuperSocket.ClientEngine
             }
             else
             {
-                var e = CreateSocketAsyncEventArgs(remoteEndPoint, connectedCallback, state);
+                var e = CreateSocketAsyncEventArgs(remoteEndPoint, callback, state);
                 var socket = new Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 socket.ConnectAsync(e);
             }
@@ -94,13 +93,13 @@ namespace SuperSocket.ClientEngine
             }
             catch
             {
-                connectState.ConnectedCallback(null, connectState.State, null);
+                connectState.Callback(null, connectState.State, null);
                 return;
             }
 
             if (addresses == null || addresses.Length <= 0)
             {
-                connectState.ConnectedCallback(null, connectState.State, null);
+                connectState.Callback(null, connectState.State, null);
                 return;
             }
 
@@ -114,7 +113,7 @@ namespace SuperSocket.ClientEngine
 
             if (address == null)
             {
-                connectState.ConnectedCallback(null, connectState.State, null);
+                connectState.Callback(null, connectState.State, null);
                 return;
             }
 
@@ -136,14 +135,14 @@ namespace SuperSocket.ClientEngine
             if (e.SocketError == SocketError.Success)
             {
                 ClearSocketAsyncEventArgs(e);
-                connectState.ConnectedCallback((Socket)sender, connectState.State, e);
+                connectState.Callback((Socket)sender, connectState.State, e);
                 return;
             }
 
             if (e.SocketError != SocketError.HostUnreachable && e.SocketError != SocketError.ConnectionRefused)
             {
                 ClearSocketAsyncEventArgs(e);
-                connectState.ConnectedCallback(null, connectState.State, e);
+                connectState.Callback(null, connectState.State, e);
                 return;
             }
 
@@ -155,7 +154,7 @@ namespace SuperSocket.ClientEngine
             {
                 ClearSocketAsyncEventArgs(e);
                 e.SocketError = SocketError.HostUnreachable;
-                connectState.ConnectedCallback(null, connectState.State, e);
+                connectState.Callback(null, connectState.State, e);
                 return;
             }
 

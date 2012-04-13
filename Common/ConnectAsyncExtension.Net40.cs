@@ -18,15 +18,15 @@ namespace SuperSocket.ClientEngine
             m_ConnectMethod = typeof(Socket).GetMethod("ConnectAsync", BindingFlags.Public | BindingFlags.Static);
         }
 
-        public static void ConnectAsync(this EndPoint remoteEndPoint, Action<Socket, object, SocketAsyncEventArgs> connectedCallback, object state)
+        public static void ConnectAsync(this EndPoint remoteEndPoint, ConnectedCallback callback, object state)
         {
             //Socket.ConnectAsync(SocketType.Stream, ProtocolType.Tcp, e);
             //Don't use Socket.ConnectAsync directly because Mono hasn't implement this method
             if (m_ConnectMethod != null)
-                m_ConnectMethod.Invoke(null, new object[] { SocketType.Stream, ProtocolType.Tcp, CreateSocketAsyncEventArgs(remoteEndPoint, connectedCallback, state) });
+                m_ConnectMethod.Invoke(null, new object[] { SocketType.Stream, ProtocolType.Tcp, CreateSocketAsyncEventArgs(remoteEndPoint, callback, state) });
             else
             {
-                ConnectAsyncInternal(remoteEndPoint, connectedCallback, state);
+                ConnectAsyncInternal(remoteEndPoint, callback, state);
             }
         }
 

@@ -49,7 +49,6 @@
     </Compile>
     <Compile Include="ArraySegmentEx.cs" />
     <Compile Include="ArraySegmentList.cs" />
-    <Compile Include="AssemblyUtil.cs" />
     <Compile Include="BinaryCommandInfo.cs" />
     <Compile Include="CommandInfo.cs" />
     <Compile Include="DelegateCommand.cs" />

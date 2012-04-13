@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using SuperSocket.ClientEngine;
 
 namespace SuperSocket.ClientEngine.Protocol
 {
+    public delegate void CommandDelegate<TClientSession, TCommandInfo>(TClientSession session, TCommandInfo commandInfo);
+
     class DelegateCommand<TClientSession, TCommandInfo> : ICommand<TClientSession, TCommandInfo>
         where TClientSession : IClientSession
         where TCommandInfo : ICommandInfo
     {
-        private Action<TClientSession, TCommandInfo> m_Execution;
+        private CommandDelegate<TClientSession, TCommandInfo> m_Execution;
 
-        public DelegateCommand(string name, Action<TClientSession, TCommandInfo> execution)
+        public DelegateCommand(string name, CommandDelegate<TClientSession, TCommandInfo> execution)
         {
             Name = name;
             m_Execution = execution;

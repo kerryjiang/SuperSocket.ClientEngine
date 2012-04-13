@@ -20,6 +20,12 @@ FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
 %msbuild% SuperSocket.ClientEngine.Net35.sln /p:Configuration=Release /t:Rebuild /p:OutputPath=..\bin\Net35\Release
 FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
 
+%msbuild% SuperSocket.ClientEngine.Net20.sln /p:Configuration=Debug /t:Rebuild /p:OutputPath=..\bin\Net20\Debug
+FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
+
+%msbuild% SuperSocket.ClientEngine.Net20.sln /p:Configuration=Release /t:Rebuild /p:OutputPath=..\bin\Net20\Release
+FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
+
 %msbuild% SuperSocket.ClientEngine.SL40.sln /p:Configuration=Debug /t:Rebuild /p:OutputPath=..\bin\SL40\Debug
 FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
 

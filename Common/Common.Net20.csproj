@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D9A94B6C-7A16-4472-916C-AF2CD1B1F226}</ProjectGuid>
+    <ProjectGuid>{818DF11D-0B8E-49F6-8DCA-03412C316B8D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine.Protocol</RootNamespace>
-    <AssemblyName>SuperSocket.ClientEngine.Protocol</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine.Common</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -40,33 +40,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ArraySegmentEx.cs" />
-    <Compile Include="ArraySegmentList.cs" />
-    <Compile Include="BinaryCommandInfo.cs" />
-    <Compile Include="CommandInfo.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="IClientCommandReader.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="ICommandInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.Net40.cs" />
-    <Compile Include="StringCommandInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{1BC7E184-8225-425A-900E-9FEA38865E20}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
+    <Compile Include="GenericDelegates.cs" />
+    <Compile Include="ConnectAsyncExtension.cs" />
+    <Compile Include="ConnectAsyncExtension.Net.cs" />
+    <Compile Include="ConnectAsyncExtension.Net35.cs" />
+    <Compile Include="DnsEndPoint.cs" />
+    <Compile Include="ExtensionAttribute.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IProxyConnector.cs" />
+    <Compile Include="Properties\AssemblyInfo.Net20.cs" />
+    <Compile Include="ProxyEventArgs.cs" />
+    <Compile Include="SearchMarkState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

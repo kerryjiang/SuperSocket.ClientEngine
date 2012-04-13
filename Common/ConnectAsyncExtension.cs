@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 using System.Reflection;
@@ -8,13 +7,15 @@ using System.Net;
 
 namespace SuperSocket.ClientEngine
 {
+    public delegate void ConnectedCallback(Socket socket, object state, SocketAsyncEventArgs e);
+
     public static partial class ConnectAsyncExtension
     {
         class ConnectToken
         {
             public object State { get; set; }
 
-            public Action<Socket, object, SocketAsyncEventArgs> ConnectedCallback { get; set; }
+            public ConnectedCallback Callback { get; set; }
         }
 
         static void SocketAsyncEventCompleted(object sender, SocketAsyncEventArgs e)
@@ -22,17 +23,17 @@ namespace SuperSocket.ClientEngine
             e.Completed -= SocketAsyncEventCompleted;
             var token = (ConnectToken)e.UserToken;
             e.UserToken = null;
-            token.ConnectedCallback(sender as Socket, token.State, e);
+            token.Callback(sender as Socket, token.State, e);
         }
 
-        static SocketAsyncEventArgs CreateSocketAsyncEventArgs(EndPoint remoteEndPoint, Action<Socket, object, SocketAsyncEventArgs> connectedCallback, object state)
+        static SocketAsyncEventArgs CreateSocketAsyncEventArgs(EndPoint remoteEndPoint, ConnectedCallback callback, object state)
         {
             var e = new SocketAsyncEventArgs();
 
             e.UserToken = new ConnectToken
             {
                 State = state,
-                ConnectedCallback = connectedCallback
+                Callback = callback
             };
 
             e.RemoteEndPoint = remoteEndPoint;

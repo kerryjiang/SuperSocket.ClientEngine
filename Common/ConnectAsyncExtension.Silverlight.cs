@@ -7,9 +7,9 @@ namespace SuperSocket.ClientEngine
 {
     public static partial class ConnectAsyncExtension
     {
-        public static void ConnectAsync(this EndPoint remoteEndPoint, SocketClientAccessPolicyProtocol clientAccessPolicyProtocol, Action<Socket, object, SocketAsyncEventArgs> connectedCallback, object state)
+        public static void ConnectAsync(this EndPoint remoteEndPoint, SocketClientAccessPolicyProtocol clientAccessPolicyProtocol, ConnectedCallback callback, object state)
         {
-            var e = CreateSocketAsyncEventArgs(remoteEndPoint, connectedCallback, state);
+            var e = CreateSocketAsyncEventArgs(remoteEndPoint, callback, state);
             e.SocketClientAccessPolicyProtocol = clientAccessPolicyProtocol;
             Socket.ConnectAsync(SocketType.Stream, ProtocolType.Tcp, e);
         }

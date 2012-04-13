@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D9A94B6C-7A16-4472-916C-AF2CD1B1F226}</ProjectGuid>
+    <ProjectGuid>{873F2AFF-0C7C-4D05-B1F8-6651668EF5EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine.Protocol</RootNamespace>
-    <AssemblyName>SuperSocket.ClientEngine.Protocol</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine.Core</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -40,32 +40,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ArraySegmentEx.cs" />
-    <Compile Include="ArraySegmentList.cs" />
-    <Compile Include="BinaryCommandInfo.cs" />
-    <Compile Include="CommandInfo.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="IClientCommandReader.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="ICommandInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.Net40.cs" />
-    <Compile Include="StringCommandInfo.cs" />
+    <Compile Include="ClientSession.cs" />
+    <Compile Include="ConcurrentQueue.cs" />
+    <Compile Include="DataEventArgs.cs" />
+    <Compile Include="ErrorEventArgs.cs" />
+    <Compile Include="IClientSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.Net20.cs" />
+    <Compile Include="SslStreamTcpSession.cs" />
+    <Compile Include="AsyncTcpSession.cs" />
+    <Compile Include="TcpClientSession.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{1BC7E184-8225-425A-900E-9FEA38865E20}</Project>
-      <Name>Core</Name>
+    <ProjectReference Include="..\Common\Common.Net20.csproj">
+      <Project>{818DF11D-0B8E-49F6-8DCA-03412C316B8D}</Project>
+      <Name>Common.Net20</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

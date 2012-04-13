@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
@@ -10,9 +9,9 @@ namespace SuperSocket.ClientEngine
 {
     public static partial class ConnectAsyncExtension
     {
-        public static void ConnectAsync(this EndPoint remoteEndPoint, Action<Socket, object, SocketAsyncEventArgs> connectedCallback, object state)
+        public static void ConnectAsync(this EndPoint remoteEndPoint, ConnectedCallback callback, object state)
         {
-            ConnectAsyncInternal(remoteEndPoint, connectedCallback, state);
+            ConnectAsyncInternal(remoteEndPoint, callback, state);
         }
 
         static partial void CreateAttempSocket(DnsConnectState connectState)
