@@ -104,5 +104,7 @@ namespace SuperSocket.ClientEngine
         }
 
         public virtual int ReceiveBufferSize { get; set; }
+
+        public IProxyConnector Proxy { get; set; }
     }
 }

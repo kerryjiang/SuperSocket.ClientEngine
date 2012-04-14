@@ -8,6 +8,8 @@ namespace SuperSocket.ClientEngine
 {
     public interface IClientSession
     {
+        IProxyConnector Proxy { get; set; }
+
         int ReceiveBufferSize { get; set; }
 
         void Connect();

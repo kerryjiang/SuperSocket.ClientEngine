@@ -11,6 +11,8 @@ namespace SuperSocket.ClientEngine
     {
         protected string HostName { get; private set; }
 
+        private bool m_InConnecting = false;
+
         public TcpClientSession(EndPoint remoteEndPoint)
             : this(remoteEndPoint, 1024)
         {
@@ -69,24 +71,56 @@ namespace SuperSocket.ClientEngine
 
         public override void Connect()
         {
+            if (m_InConnecting)
+                throw new Exception("The socket is connecting, cannot connect again!");
+
+            if (Client != null)
+                throw new Exception("The socket is connected, you neednt' connect again!");
+
+            //If there is a proxy set, connect the proxy server by proxy connector
+            if (Proxy != null)
+            {
+                Proxy.Completed += new EventHandler<ProxyEventArgs>(Proxy_Completed);
+                Proxy.Connect(RemoteEndPoint);
+                m_InConnecting = true;
+                return;
+            }
+
 //WindowsPhone doesn't have this property
 #if SILVERLIGHT && !WINDOWS_PHONE
             RemoteEndPoint.ConnectAsync(ClientAccessPolicyProtocol, ProcessConnect, null);
 #else
             RemoteEndPoint.ConnectAsync(ProcessConnect, null);
 #endif
+            m_InConnecting = true;
+        }
+
+        void Proxy_Completed(object sender, ProxyEventArgs e)
+        {
+            Proxy.Completed -= new EventHandler<ProxyEventArgs>(Proxy_Completed);
+
+            if (e.Connected)
+            {
+                ProcessConnect(e.Socket, null, null);
+                return;
+            }
+
+            OnError(new Exception("proxy error", e.Exception));
+            m_InConnecting = false;
         }
 
         protected void ProcessConnect(Socket socket, object state, SocketAsyncEventArgs e)
         {
             if (e != null && e.SocketError != SocketError.Success)
             {
+                m_InConnecting = false;
                 OnError(new SocketException((int)e.SocketError));
                 return;
             }
 
             if (socket == null)
             {
+                m_InConnecting = false;
                 OnError(new SocketException((int)SocketError.ConnectionAborted));
                 return;
             }
@@ -97,17 +131,16 @@ namespace SuperSocket.ClientEngine
             e.Completed += SocketEventArgsCompleted;
 
             Client = socket;
+            m_InConnecting = false;
 
 #if !SILVERLIGHT
             //Set keep alive
             Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
 #endif
-
-            OnConnected();
-            StartReceive(e);
+            OnGetSocket(e);
         }
 
-        protected abstract void StartReceive(SocketAsyncEventArgs e);
+        protected abstract void OnGetSocket(SocketAsyncEventArgs e);
 
         protected bool EnsureSocketClosed()
         {

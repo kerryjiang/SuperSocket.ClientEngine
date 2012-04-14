@@ -53,12 +53,13 @@ namespace SuperSocket.ClientEngine
             ProcessReceive(e);
         }
 
-        protected override void StartReceive(SocketAsyncEventArgs e)
+        protected override void OnGetSocket(SocketAsyncEventArgs e)
         {
             m_ReceiveBuffer = new byte[ReceiveBufferSize];
             e.SetBuffer(m_ReceiveBuffer, 0, m_ReceiveBuffer.Length);
             m_SocketEventArgs = e;
 
+            OnConnected();
             StartReceive();
         }
 

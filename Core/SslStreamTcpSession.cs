@@ -49,7 +49,7 @@ namespace SuperSocket.ClientEngine
             ProcessConnect(sender as Socket, null, e);
         }
 
-        protected override void StartReceive(SocketAsyncEventArgs e)
+        protected override void OnGetSocket(SocketAsyncEventArgs e)
         {
             try
             {
