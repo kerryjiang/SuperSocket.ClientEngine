@@ -155,6 +155,14 @@ namespace SuperSocket.ClientEngine
                 return false;
             }
 
+#if DEBUG
+            //In debug mode, ignore certificate name mismatch error
+            if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
+            {
+                return true;
+            }
+#endif
+
             //Not a remote certificate error
             if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateChainErrors) == 0)
             {
