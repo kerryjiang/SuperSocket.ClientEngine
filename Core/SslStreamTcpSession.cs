@@ -199,6 +199,21 @@ namespace SuperSocket.ClientEngine
             return true;
         }
 
+        protected override bool IsIgnorableException(Exception e)
+        {
+            if (base.IsIgnorableException(e))
+                return true;
+
+            if (e is System.IO.IOException)
+            {
+                var exc = e as System.IO.IOException;
+                if (exc.InnerException is ObjectDisposedException)
+                    return true;
+            }
+
+            return false;
+        }
+
         protected override void SendInternal(ArraySegment<byte> segment)
         {
             try

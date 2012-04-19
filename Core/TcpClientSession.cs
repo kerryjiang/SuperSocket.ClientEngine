@@ -38,7 +38,7 @@ namespace SuperSocket.ClientEngine
                 HostName = ipEndPoint.Address.ToString();
         }
 
-        protected bool IsIgnorableException(Exception e)
+        protected virtual bool IsIgnorableException(Exception e)
         {
             if (e is System.ObjectDisposedException)
                 return true;
