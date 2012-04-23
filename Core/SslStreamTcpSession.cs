@@ -66,7 +66,7 @@ namespace SuperSocket.ClientEngine
 
             OnConnected();
 
-            if(Buffer == null)
+            if(Buffer.Array == null)
                 Buffer = new ArraySegment<byte>(new byte[ReceiveBufferSize], 0, ReceiveBufferSize);
 
             BeginRead();

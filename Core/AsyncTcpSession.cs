@@ -37,7 +37,7 @@ namespace SuperSocket.ClientEngine
 
         protected override void OnGetSocket(SocketAsyncEventArgs e)
         {
-            if (Buffer == null)
+            if (Buffer.Array == null)
                 Buffer = new ArraySegment<byte>(new byte[ReceiveBufferSize], 0, ReceiveBufferSize);
 
             e.SetBuffer(Buffer.Array, Buffer.Offset, Buffer.Count);
