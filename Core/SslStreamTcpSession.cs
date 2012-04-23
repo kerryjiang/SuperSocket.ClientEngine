@@ -12,8 +12,6 @@ namespace SuperSocket.ClientEngine
     {
         private SslStream m_SslStream;
 
-        private byte[] m_ReceiveBuffer;
-
         public bool AllowUnstrustedCertificate { get; set; }
 
         public SslStreamTcpSession(EndPoint remoteEndPoint)
@@ -37,7 +35,7 @@ namespace SuperSocket.ClientEngine
 
             set
             {
-                if (m_ReceiveBuffer != null)
+                if (Buffer != null)
                     throw new Exception("ReceiveBufferSize cannot be set after the socket has been connected!");
 
                 base.ReceiveBufferSize = value;
@@ -84,7 +82,9 @@ namespace SuperSocket.ClientEngine
 
             OnConnected();
 
-            m_ReceiveBuffer = new byte[ReceiveBufferSize];
+            if(Buffer == null)
+                Buffer = new ArraySegment<byte>(new byte[ReceiveBufferSize], 0, ReceiveBufferSize);
+
             BeginRead();
         }
 
@@ -116,7 +116,7 @@ namespace SuperSocket.ClientEngine
                 return;
             }
 
-            OnDataReceived(m_ReceiveBuffer, 0, length);
+            OnDataReceived(Buffer.Array, Buffer.Offset, length);
             BeginRead();
         }
 
@@ -124,7 +124,7 @@ namespace SuperSocket.ClientEngine
         {
             try
             {
-                m_SslStream.BeginRead(m_ReceiveBuffer, 0, m_ReceiveBuffer.Length, OnDataRead, m_SslStream);
+                m_SslStream.BeginRead(Buffer.Array, Buffer.Offset, Buffer.Count, OnDataRead, m_SslStream);
             }
             catch (Exception e)
             {

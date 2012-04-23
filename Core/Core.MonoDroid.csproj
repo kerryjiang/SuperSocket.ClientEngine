@@ -50,6 +50,7 @@
     <Compile Include="ClientSession.cs" />
     <Compile Include="DataEventArgs.cs" />
     <Compile Include="ErrorEventArgs.cs" />
+    <Compile Include="IBufferSetter.cs" />
     <Compile Include="IClientSession.cs" />
     <Compile Include="AsyncTcpSession.cs" />
     <Compile Include="Properties\AssemblyInfo.MonoDroid.cs" />

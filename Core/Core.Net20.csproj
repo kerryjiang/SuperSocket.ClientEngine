@@ -49,6 +49,7 @@
     <Compile Include="ConcurrentQueue.cs" />
     <Compile Include="DataEventArgs.cs" />
     <Compile Include="ErrorEventArgs.cs" />
+    <Compile Include="IBufferSetter.cs" />
     <Compile Include="IClientSession.cs" />
     <Compile Include="Properties\AssemblyInfo.Net20.cs" />
     <Compile Include="SslStreamTcpSession.cs" />

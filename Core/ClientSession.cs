@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SuperSocket.ClientEngine
 {
-    public abstract class ClientSession : IClientSession
+    public abstract class ClientSession : IClientSession, IBufferSetter
     {
         protected Socket Client { get; set; }
 
@@ -106,5 +106,12 @@ namespace SuperSocket.ClientEngine
         public virtual int ReceiveBufferSize { get; set; }
 
         public IProxyConnector Proxy { get; set; }
+
+        protected ArraySegment<byte> Buffer { get; set; }
+
+        void IBufferSetter.SetBuffer(ArraySegment<byte> bufferSegment)
+        {
+            Buffer = bufferSegment;
+        }
     }
 }
