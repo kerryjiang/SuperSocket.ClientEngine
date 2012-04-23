@@ -38,6 +38,22 @@ namespace SuperSocket.ClientEngine
                 HostName = ipEndPoint.Address.ToString();
         }
 
+        public override int ReceiveBufferSize
+        {
+            get
+            {
+                return base.ReceiveBufferSize;
+            }
+
+            set
+            {
+                if (Buffer.Array != null)
+                    throw new Exception("ReceiveBufferSize cannot be set after the socket has been connected!");
+
+                base.ReceiveBufferSize = value;
+            }
+        }
+
         protected virtual bool IsIgnorableException(Exception e)
         {
             if (e is System.ObjectDisposedException)

@@ -26,22 +26,6 @@ namespace SuperSocket.ClientEngine
 
         }
 
-        public override int ReceiveBufferSize
-        {
-            get
-            {
-                return base.ReceiveBufferSize;
-            }
-
-            set
-            {
-                if (Buffer != null)
-                    throw new Exception("ReceiveBufferSize cannot be set after the socket has been connected!");
-
-                base.ReceiveBufferSize = value;
-            }
-        }
-
         protected override void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e)
         {
             ProcessConnect(sender as Socket, null, e);
