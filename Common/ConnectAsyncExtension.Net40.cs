@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Net;
+using System.Text;
 
 namespace SuperSocket.ClientEngine
 {
@@ -12,10 +12,24 @@ namespace SuperSocket.ClientEngine
     {
         private static readonly MethodInfo m_ConnectMethod;
 
+        private static bool m_OSSupportsIPv4;
+
         static ConnectAsyncExtension()
         {
             //.NET 4.0 has this method but Mono doesn't have
             m_ConnectMethod = typeof(Socket).GetMethod("ConnectAsync", BindingFlags.Public | BindingFlags.Static);
+
+            //Socket.OSSupportsIPv4 doesn't exist in Mono
+            var pro_OSSupportsIPv4 = typeof(Socket).GetProperty("OSSupportsIPv4", BindingFlags.Public | BindingFlags.Static);
+
+            if (pro_OSSupportsIPv4 != null)
+            {
+                m_OSSupportsIPv4 = (bool)pro_OSSupportsIPv4.GetValue(null, new object[0]);
+            }
+            else
+            {
+                m_OSSupportsIPv4 = true;
+            }
         }
 
         public static void ConnectAsync(this EndPoint remoteEndPoint, ConnectedCallback callback, object state)
@@ -35,7 +49,7 @@ namespace SuperSocket.ClientEngine
             if (Socket.OSSupportsIPv6)
                 connectState.Socket6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
 
-            if (Socket.OSSupportsIPv4)
+            if (m_OSSupportsIPv4)
                 connectState.Socket4 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
     }
