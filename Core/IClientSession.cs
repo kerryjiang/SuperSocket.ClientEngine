@@ -12,6 +12,8 @@ namespace SuperSocket.ClientEngine
 
         int ReceiveBufferSize { get; set; }
 
+        bool IsConnected { get; }
+
         void Connect();
 
         void Send(byte[] data, int offset, int length);

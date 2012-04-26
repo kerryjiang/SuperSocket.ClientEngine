@@ -12,6 +12,8 @@ namespace SuperSocket.ClientEngine
 
         protected EndPoint RemoteEndPoint { get; set; }
 
+        public bool IsConnected { get; private set; }
+
         public ClientSession()
         {
 
@@ -43,6 +45,8 @@ namespace SuperSocket.ClientEngine
 
         protected virtual void OnClosed()
         {
+            IsConnected = false;
+
             var handler = m_Closed;
 
             if (handler != null)
@@ -59,10 +63,11 @@ namespace SuperSocket.ClientEngine
 
         protected virtual void OnError(Exception e)
         {
-            if (m_Error == null)
+            var handler = m_Error;
+            if (handler == null)
                 return;
 
-            m_Error(this, new ErrorEventArgs(e));
+            handler(this, new ErrorEventArgs(e));
         }
 
         private EventHandler m_Connected;
@@ -75,10 +80,13 @@ namespace SuperSocket.ClientEngine
 
         protected virtual void OnConnected()
         {
-            if (m_Connected == null)
+            IsConnected = true;
+
+            var handler = m_Connected;
+            if (handler == null)
                 return;
 
-            m_Connected(this, EventArgs.Empty);
+            handler(this, EventArgs.Empty);
         }
 
         private EventHandler<DataEventArgs> m_DataReceived;
@@ -93,14 +101,15 @@ namespace SuperSocket.ClientEngine
 
         protected virtual void OnDataReceived(byte[] data, int offset, int length)
         {
-            if (m_DataReceived == null)
+            var handler = m_DataReceived;
+            if (handler == null)
                 return;
 
             m_DataArgs.Data = data;
             m_DataArgs.Offset = offset;
             m_DataArgs.Length = length;
 
-            m_DataReceived(this, m_DataArgs);
+            handler(this, m_DataArgs);
         }
 
         public virtual int ReceiveBufferSize { get; set; }
