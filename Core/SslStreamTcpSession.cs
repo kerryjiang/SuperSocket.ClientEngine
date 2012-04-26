@@ -190,9 +190,15 @@ namespace SuperSocket.ClientEngine
 
             if (e is System.IO.IOException)
             {
-                var exc = e as System.IO.IOException;
-                if (exc.InnerException is ObjectDisposedException)
+                if (e.InnerException is ObjectDisposedException)
                     return true;
+
+                //In mono, some exception is wrapped like IOException -> IOException -> ObjectDisposedException
+                if (e.InnerException is System.IO.IOException)
+                {
+                    if (e.InnerException.InnerException is ObjectDisposedException)
+                        return true;
+                }
             }
 
             return false;
