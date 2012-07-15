@@ -59,6 +59,9 @@ namespace SuperSocket.ClientEngine
             if (e is System.ObjectDisposedException)
                 return true;
 
+            if (e is NullReferenceException)
+                return true;
+
             return false;
         }
 
@@ -102,13 +105,14 @@ namespace SuperSocket.ClientEngine
                 return;
             }
 
+            m_InConnecting = true;
+
 //WindowsPhone doesn't have this property
 #if SILVERLIGHT && !WINDOWS_PHONE
             RemoteEndPoint.ConnectAsync(ClientAccessPolicyProtocol, ProcessConnect, null);
 #else
             RemoteEndPoint.ConnectAsync(ProcessConnect, null);
 #endif
-            m_InConnecting = true;
         }
 
         void Proxy_Completed(object sender, ProxyEventArgs e)
@@ -147,6 +151,7 @@ namespace SuperSocket.ClientEngine
             e.Completed += SocketEventArgsCompleted;
 
             Client = socket;
+
             m_InConnecting = false;
 
 #if !SILVERLIGHT
@@ -160,15 +165,27 @@ namespace SuperSocket.ClientEngine
 
         protected bool EnsureSocketClosed()
         {
-            if (Client == null)
+            return EnsureSocketClosed(null);
+        }
+
+        protected bool EnsureSocketClosed(Socket originalClient)
+        {
+            var client = Client;
+
+            if (client == null)
                 return false;
 
-            if (Client.Connected)
+            if (originalClient == null)
+                Client = null;
+            else if (originalClient != client)
+                client = originalClient;
+
+            if (client.Connected)
             {
                 try
                 {
-                    Client.Shutdown(SocketShutdown.Both);
-                    Client.Close();
+                    client.Shutdown(SocketShutdown.Both);
+                    client.Close();
                 }
                 catch
                 {
@@ -176,7 +193,6 @@ namespace SuperSocket.ClientEngine
                 }
             }
 
-            Client = null;
             return true;
         }
 

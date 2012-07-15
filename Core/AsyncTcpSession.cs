@@ -79,20 +79,25 @@ namespace SuperSocket.ClientEngine
         {
             bool raiseEvent;
 
+            var client = Client;
+
+            if (client == null)
+                return;
+
             try
             {
-                raiseEvent = Client.ReceiveAsync(m_SocketEventArgs);
+                raiseEvent = client.ReceiveAsync(m_SocketEventArgs);
             }
             catch (SocketException exc)
             {
-                if (EnsureSocketClosed() && !IsIgnorableSocketError(exc.ErrorCode))
+                if (EnsureSocketClosed(client) && !IsIgnorableSocketError(exc.ErrorCode))
                     OnError(exc);
 
                 return;
             }
             catch(Exception e)
             {
-                if (EnsureSocketClosed() && !IsIgnorableException(e))
+                if (EnsureSocketClosed(client) && !IsIgnorableException(e))
                 {
                     OnError(e);
                 }
