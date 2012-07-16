@@ -90,17 +90,22 @@ namespace SuperSocket.ClientEngine
             }
             catch (SocketException exc)
             {
-                if (EnsureSocketClosed(client) && !IsIgnorableSocketError(exc.ErrorCode))
+                if(!IsIgnorableSocketError(exc.ErrorCode))
                     OnError(exc);
+
+                if (EnsureSocketClosed(client))
+                    OnClosed();
 
                 return;
             }
             catch(Exception e)
             {
-                if (EnsureSocketClosed(client) && !IsIgnorableException(e))
-                {
+                if(!IsIgnorableException(e))
                     OnError(e);
-                }
+
+                if (EnsureSocketClosed(client))
+                    OnClosed();
+
                 return;
             }
 

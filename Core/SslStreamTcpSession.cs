@@ -10,6 +10,13 @@ namespace SuperSocket.ClientEngine
 {
     public class SslStreamTcpSession : TcpClientSession
     {
+        class SslAsyncState
+        {
+            public SslStream SslStream { get; set; }
+
+            public Socket Client { get; set; }
+        }
+
         private SslStream m_SslStream;
 
         public bool AllowUnstrustedCertificate { get; set; }
@@ -42,9 +49,6 @@ namespace SuperSocket.ClientEngine
             {
                 if (!IsIgnorableException(exc))
                     OnError(exc);
-
-                if (EnsureSocketClosed())
-                    OnClosed();
             }
         }
 
@@ -74,7 +78,9 @@ namespace SuperSocket.ClientEngine
 
         private void OnDataRead(IAsyncResult result)
         {
-            var sslStream = result.AsyncState as SslStream;
+            var state = result.AsyncState as SslAsyncState;
+            var sslStream = state.SslStream;
+
             int length = 0;
 
             try
@@ -86,7 +92,7 @@ namespace SuperSocket.ClientEngine
                 if (!IsIgnorableException(e))
                     OnError(e);
 
-                if(EnsureSocketClosed())
+                if (EnsureSocketClosed(state.Client))
                     OnClosed();
 
                 return;
@@ -94,7 +100,7 @@ namespace SuperSocket.ClientEngine
 
             if (length == 0)
             {
-                if (EnsureSocketClosed())
+                if (EnsureSocketClosed(state.Client))
                     OnClosed();
 
                 return;
@@ -106,16 +112,21 @@ namespace SuperSocket.ClientEngine
 
         void BeginRead()
         {
+            var client = Client;
+
+            if (client == null)
+                return;
+
             try
             {
-                m_SslStream.BeginRead(Buffer.Array, Buffer.Offset, Buffer.Count, OnDataRead, m_SslStream);
+                m_SslStream.BeginRead(Buffer.Array, Buffer.Offset, Buffer.Count, OnDataRead, new SslAsyncState { SslStream = m_SslStream, Client = client });
             }
             catch (Exception e)
             {
                 if (!IsIgnorableException(e))
                     OnError(e);
 
-                if (EnsureSocketClosed())
+                if (EnsureSocketClosed(client))
                     OnClosed();
             }
         }
@@ -206,23 +217,26 @@ namespace SuperSocket.ClientEngine
 
         protected override void SendInternal(ArraySegment<byte> segment)
         {
+            var client = this.Client;
+
             try
             {
-                m_SslStream.BeginWrite(segment.Array, segment.Offset, segment.Count, OnWriteComplete, m_SslStream);
+                m_SslStream.BeginWrite(segment.Array, segment.Offset, segment.Count, OnWriteComplete, new SslAsyncState { SslStream = m_SslStream, Client = client });
             }
             catch (Exception e)
             {
                 if (!IsIgnorableException(e))
                     OnError(e);
 
-                if (EnsureSocketClosed())
+                if (EnsureSocketClosed(client))
                     OnClosed();
             }
         }
 
         private void OnWriteComplete(IAsyncResult result)
         {
-            var sslStream = result.AsyncState as SslStream;
+            var state = result.AsyncState as SslAsyncState;
+            var sslStream = state.SslStream;
 
             try
             {
@@ -235,7 +249,7 @@ namespace SuperSocket.ClientEngine
                 if (!IsIgnorableException(e))
                     OnError(e);
 
-                if (EnsureSocketClosed())
+                if (EnsureSocketClosed(state.Client))
                     OnClosed();
 
                 return;
@@ -252,7 +266,7 @@ namespace SuperSocket.ClientEngine
                     if (!IsIgnorableException(e))
                         OnError(e);
 
-                    if (EnsureSocketClosed())
+                    if (EnsureSocketClosed(state.Client))
                         OnClosed();
                 }
             }

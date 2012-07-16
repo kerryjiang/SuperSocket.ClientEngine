@@ -168,32 +168,50 @@ namespace SuperSocket.ClientEngine
             return EnsureSocketClosed(null);
         }
 
-        protected bool EnsureSocketClosed(Socket originalClient)
+        protected bool EnsureSocketClosed(Socket prevClient)
         {
             var client = Client;
 
             if (client == null)
                 return false;
 
-            if (originalClient == null)
+            var fireOnClosedEvent = true;
+
+            if (prevClient != null && prevClient != client)//originalClient is previous disconnected socket, so we needn't fire event for it
+            {
+                client = prevClient;
+                fireOnClosedEvent = false;
+            }
+            else
+            {
                 Client = null;
-            else if (originalClient != client)
-                client = originalClient;
+                IsSending = false;
+            }
 
             if (client.Connected)
             {
                 try
                 {
                     client.Shutdown(SocketShutdown.Both);
-                    client.Close();
                 }
                 catch
                 {
 
                 }
+                finally
+                {
+                    try
+                    {
+                        client.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
             }
 
-            return true;
+            return fireOnClosedEvent;
         }
 
         private void DetectConnected()
