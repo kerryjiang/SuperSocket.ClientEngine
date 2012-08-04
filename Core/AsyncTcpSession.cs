@@ -113,7 +113,7 @@ namespace SuperSocket.ClientEngine
                 ProcessReceive(m_SocketEventArgs);
         }
 
-        protected override void SendInternal(ArraySegment<byte> segment)
+        protected override void SendInternal(PosList<ArraySegment<byte>> items)
         {
             if (m_SocketEventArgsSend == null)
             {
@@ -121,12 +121,34 @@ namespace SuperSocket.ClientEngine
                 m_SocketEventArgsSend.Completed += new EventHandler<SocketAsyncEventArgs>(Sending_Completed);
             }
 
-            m_SocketEventArgsSend.SetBuffer(segment.Array, segment.Offset, segment.Count);
-
             bool raiseEvent;
 
             try
             {
+                if (items.Count > 1)
+                {
+                    if (m_SocketEventArgsSend.Buffer != null)
+                        m_SocketEventArgsSend.SetBuffer(null, 0, 0);
+
+                    m_SocketEventArgsSend.BufferList = items;
+                }
+                else
+                {
+                    var currentItem = items[0];
+
+                    try
+                    {
+                        if (m_SocketEventArgsSend.BufferList != null)
+                            m_SocketEventArgsSend.BufferList = null;
+                    }
+                    catch//a strange NullReference exception
+                    {
+                    }
+
+                    m_SocketEventArgsSend.SetBuffer(currentItem.Array, 0, currentItem.Count);
+                }
+                
+
                 raiseEvent = Client.SendAsync(m_SocketEventArgsSend);
             }
             catch (SocketException exc)
@@ -149,15 +171,8 @@ namespace SuperSocket.ClientEngine
 
         void Sending_Completed(object sender, SocketAsyncEventArgs e)
         {
-            if (e.LastOperation != SocketAsyncOperation.Send)
-            {
-                IsSending = false;
-                return;
-            }
-
             if (e.SocketError != SocketError.Success || e.BytesTransferred == 0)
             {
-                IsSending = false;
                 if(EnsureSocketClosed())
                     OnClosed();
 
@@ -167,7 +182,7 @@ namespace SuperSocket.ClientEngine
                 return;
             }
 
-            DequeueSend();
+            OnSendingCompleted();
         }
     }
 }

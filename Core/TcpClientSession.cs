@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Collections.Concurrent;
+using System.Threading;
 
 namespace SuperSocket.ClientEngine
 {
@@ -185,7 +186,7 @@ namespace SuperSocket.ClientEngine
             else
             {
                 Client = null;
-                IsSending = false;
+                m_IsSending = 0;
             }
 
             if (client.Connected)
@@ -194,20 +195,14 @@ namespace SuperSocket.ClientEngine
                 {
                     client.Shutdown(SocketShutdown.Both);
                 }
-                catch
-                {
-
-                }
+                catch { }
                 finally
                 {
                     try
                     {
                         client.Close();
                     }
-                    catch
-                    {
-
-                    }
+                    catch {}
                 }
             }
 
@@ -222,51 +217,100 @@ namespace SuperSocket.ClientEngine
             throw new Exception("The socket is not connected!", new SocketException((int)SocketError.NotConnected));
         }
 
-        private ConcurrentQueue<ArraySegment<byte>> m_SendingQueue = new ConcurrentQueue<ArraySegment<byte>>();
+        private IBatchQueue<ArraySegment<byte>> m_SendingQueue;
 
-        protected volatile bool IsSending = false;
-
-        public override void Send(byte[] data, int offset, int length)
+        private IBatchQueue<ArraySegment<byte>> GetSendingQueue()
         {
-            DetectConnected();
+            if (m_SendingQueue != null)
+                return m_SendingQueue;
 
-            m_SendingQueue.Enqueue(new ArraySegment<byte>(data, offset, length));
-
-            if (!IsSending)
+            lock (this)
             {
-                DequeueSend();
+                if (m_SendingQueue != null)
+                    return m_SendingQueue;
+
+                //Sending queue size must be greater than 3
+                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 3), (t) => t.Array == null);
+                return m_SendingQueue;
             }
         }
 
-        public override void Send(IList<ArraySegment<byte>> segments)
+        private PosList<ArraySegment<byte>> m_SendingItems;
+
+        private PosList<ArraySegment<byte>> GetSendingItems()
+        {
+            if (m_SendingItems == null)
+                m_SendingItems = new PosList<ArraySegment<byte>>();
+
+            return m_SendingItems;
+        }
+
+        private int m_IsSending = 0;
+
+        protected bool IsSending
+        {
+            get { return m_IsSending == 1; }
+        }
+
+        public override bool TrySend(ArraySegment<byte> segment)
         {
             DetectConnected();
 
-            for (var i = 0; i < segments.Count; i++)
-                m_SendingQueue.Enqueue(segments[i]);
-
-            if (!IsSending)
-            {
-                DequeueSend();
-            }
-        }
-
-        protected bool DequeueSend()
-        {
-            IsSending = true;
-            ArraySegment<byte> segment;
-
-            if (!m_SendingQueue.TryDequeue(out segment))
-            {
-                IsSending = false;
+            if (!GetSendingQueue().Enqueue(segment))
                 return false;
-            }
 
-            SendInternal(segment);
+            if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
+                return true;
+
+            DequeueSend();
+
             return true;
         }
 
-        protected abstract void SendInternal(ArraySegment<byte> segment);
+        public override bool TrySend(IList<ArraySegment<byte>> segments)
+        {
+            DetectConnected();
+
+            if (!GetSendingQueue().Enqueue(segments))
+                return false;
+
+            if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
+                return true;
+
+            DequeueSend();
+
+            return true;
+        }
+
+        private void DequeueSend()
+        {
+            var sendingItems = GetSendingItems();
+
+            if (!m_SendingQueue.TryDequeue(sendingItems))
+            {
+                m_IsSending = 0;
+                return;
+            }
+
+            SendInternal(sendingItems);
+        }
+
+        protected abstract void SendInternal(PosList<ArraySegment<byte>> items);
+
+        protected void OnSendingCompleted()
+        {
+            var sendingItems = GetSendingItems();
+            sendingItems.Clear();
+            sendingItems.Position = 0;
+
+            if (!m_SendingQueue.TryDequeue(sendingItems))
+            {
+                m_IsSending = 0;
+                return;
+            }
+
+            SendInternal(sendingItems);
+        }
 
         public override void Close()
         {

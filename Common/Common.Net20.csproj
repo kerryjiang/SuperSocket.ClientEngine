@@ -45,6 +45,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConcurrentBatchQueue.Net20.cs" />
     <Compile Include="GenericDelegates.cs" />
     <Compile Include="ConnectAsyncExtension.cs" />
     <Compile Include="ConnectAsyncExtension.Net.cs" />
@@ -52,7 +53,9 @@
     <Compile Include="DnsEndPoint.cs" />
     <Compile Include="ExtensionAttribute.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="IBatchQueue.cs" />
     <Compile Include="IProxyConnector.cs" />
+    <Compile Include="PosList.cs" />
     <Compile Include="Properties\AssemblyInfo.Net20.cs" />
     <Compile Include="ProxyEventArgs.cs" />
     <Compile Include="SearchMarkState.cs" />

@@ -47,12 +47,15 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConcurrentBatchQueue.cs" />
     <Compile Include="ConnectAsyncExtension.cs" />
     <Compile Include="ConnectAsyncExtension.MonoDroid.cs" />
     <Compile Include="ConnectAsyncExtension.Net.cs" />
     <Compile Include="DnsEndPoint.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="IBatchQueue.cs" />
     <Compile Include="IProxyConnector.cs" />
+    <Compile Include="PosList.cs" />
     <Compile Include="Properties\AssemblyInfo.MonoDroid.cs" />
     <Compile Include="ProxyEventArgs.cs" />
     <Compile Include="SearchMarkState.cs" />

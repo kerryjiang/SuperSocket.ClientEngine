@@ -47,11 +47,14 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConcurrentBatchQueue.cs" />
     <Compile Include="ConnectAsyncExtension.cs" />
     <Compile Include="ConnectAsyncExtension.Net.cs" />
     <Compile Include="ConnectAsyncExtension.Net40.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="IBatchQueue.cs" />
     <Compile Include="IProxyConnector.cs" />
+    <Compile Include="PosList.cs" />
     <Compile Include="Properties\AssemblyInfo.Net40.cs" />
     <Compile Include="ProxyEventArgs.cs" />
     <Compile Include="SearchMarkState.cs" />

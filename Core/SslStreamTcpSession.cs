@@ -15,6 +15,8 @@ namespace SuperSocket.ClientEngine
             public SslStream SslStream { get; set; }
 
             public Socket Client { get; set; }
+
+            public PosList<ArraySegment<byte>> SendingItems { get; set; }
         }
 
         private SslStream m_SslStream;
@@ -215,13 +217,15 @@ namespace SuperSocket.ClientEngine
             return false;
         }
 
-        protected override void SendInternal(ArraySegment<byte> segment)
+        protected override void SendInternal(PosList<ArraySegment<byte>> items)
         {
             var client = this.Client;
 
             try
             {
-                m_SslStream.BeginWrite(segment.Array, segment.Offset, segment.Count, OnWriteComplete, new SslAsyncState { SslStream = m_SslStream, Client = client });
+                var item = items[items.Position];
+                m_SslStream.BeginWrite(item.Array, item.Offset, item.Count,
+                    OnWriteComplete, new SslAsyncState { SslStream = m_SslStream, Client = client, SendingItems = items });
             }
             catch (Exception e)
             {
@@ -244,8 +248,6 @@ namespace SuperSocket.ClientEngine
             }
             catch (Exception e)
             {
-                IsSending = false;
-
                 if (!IsIgnorableException(e))
                     OnError(e);
 
@@ -255,21 +257,33 @@ namespace SuperSocket.ClientEngine
                 return;
             }
 
-            if (!DequeueSend())
-            {
-                try
-                {
-                    m_SslStream.Flush();
-                }
-                catch (Exception e)
-                {
-                    if (!IsIgnorableException(e))
-                        OnError(e);
+            var items = state.SendingItems;
+            var nextPos = items.Position + 1;
 
-                    if (EnsureSocketClosed(state.Client))
-                        OnClosed();
-                }
+            //Has more data to send
+            if (nextPos < items.Count)
+            {
+                items.Position = nextPos;
+                SendInternal(items);
+                return;
             }
+
+            try
+            {
+                m_SslStream.Flush();
+            }
+            catch (Exception e)
+            {
+                if (!IsIgnorableException(e))
+                    OnError(e);
+
+                if (EnsureSocketClosed(state.Client))
+                    OnClosed();
+
+                return;
+            }
+
+            OnSendingCompleted();
         }
     }
 }

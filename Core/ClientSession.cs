@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace SuperSocket.ClientEngine
 {
@@ -27,11 +28,80 @@ namespace SuperSocket.ClientEngine
             RemoteEndPoint = remoteEndPoint;
         }
 
+        public int SendingQueueSize { get; set; }
+
         public abstract void Connect();
 
-        public abstract void Send(byte[] data, int offset, int length);
+        public abstract bool TrySend(ArraySegment<byte> segment);
 
-        public abstract void Send(IList<ArraySegment<byte>> segments);
+        public abstract bool TrySend(IList<ArraySegment<byte>> segments);
+
+        public void Send(byte[] data, int offset, int length)
+        {
+            this.Send(new ArraySegment<byte>(data, offset, length));
+        }
+
+#if NO_SPINWAIT_CLASS
+        public void Send(ArraySegment<byte> segment)
+        {
+            if (TrySend(segment))
+                return;
+
+            while (true)
+            {
+                Thread.SpinWait(1);
+
+                if (TrySend(segment))
+                    return;
+            }
+        }
+
+        public void Send(IList<ArraySegment<byte>> segments)
+        {
+            if (TrySend(segments))
+                return;
+
+            while (true)
+            {
+                Thread.SpinWait(1);
+
+                if (TrySend(segments))
+                    return;
+            }
+        }
+#else
+        public void Send(ArraySegment<byte> segment)
+        {
+            if (TrySend(segment))
+                return;
+
+            var spinWait = new SpinWait();
+
+            while (true)
+            {
+                spinWait.SpinOnce();
+
+                if (TrySend(segment))
+                    return;
+            }
+        }
+
+        public void Send(IList<ArraySegment<byte>> segments)
+        {
+            if (TrySend(segments))
+                return;
+
+            var spinWait = new SpinWait();
+
+            while (true)
+            {
+                spinWait.SpinOnce();
+
+                if (TrySend(segments))
+                    return;
+            }
+        }
+#endif
 
         public abstract void Close();
 

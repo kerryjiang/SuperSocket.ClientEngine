@@ -12,13 +12,21 @@ namespace SuperSocket.ClientEngine
 
         int ReceiveBufferSize { get; set; }
 
+        int SendingQueueSize { get; set; }
+
         bool IsConnected { get; }
 
         void Connect();
 
-        void Send(byte[] data, int offset, int length);
+        void Send(ArraySegment<byte> segment);
 
         void Send(IList<ArraySegment<byte>> segments);
+
+        void Send(byte[] data, int offset, int length);
+
+        bool TrySend(ArraySegment<byte> segment);
+
+        bool TrySend(IList<ArraySegment<byte>> segments);
 
         void Close();
 
