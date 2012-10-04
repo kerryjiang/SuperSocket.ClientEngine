@@ -41,6 +41,12 @@ namespace SuperSocket.ClientEngine
                 Buffer = new ArraySegment<byte>(new byte[ReceiveBufferSize], 0, ReceiveBufferSize);
 
             e.SetBuffer(Buffer.Array, Buffer.Offset, Buffer.Count);
+
+            if (m_SocketEventArgs != null)
+            {
+                m_SocketEventArgs.Dispose();
+            }
+
             m_SocketEventArgs = e;
 
             OnConnected();
