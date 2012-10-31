@@ -9,6 +9,11 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 #endif
 
+
+using System.Linq;
+
+
+
 namespace SuperSocket.ClientEngine.Protocol
 {
     public static class AssemblyUtil
