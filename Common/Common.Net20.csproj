@@ -46,13 +46,14 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ConcurrentBatchQueue.Net20.cs" />
-    <Compile Include="GenericDelegates.cs" />
+    <Compile Include="GenericDelegates.Action.cs" />
     <Compile Include="ConnectAsyncExtension.cs" />
     <Compile Include="ConnectAsyncExtension.Net.cs" />
     <Compile Include="ConnectAsyncExtension.Net35.cs" />
     <Compile Include="DnsEndPoint.cs" />
     <Compile Include="ExtensionAttribute.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="GenericDelegates.Func.cs" />
     <Compile Include="IBatchQueue.cs" />
     <Compile Include="IProxyConnector.cs" />
     <Compile Include="PosList.cs" />
