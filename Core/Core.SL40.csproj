@@ -43,6 +43,9 @@
     <AssemblyOriginatorKeyFile>..\SuperSocket.ClientEngine.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\References\BouncyCastle\SL40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -58,6 +61,7 @@
     <Compile Include="IBufferSetter.cs" />
     <Compile Include="IClientSession.cs" />
     <Compile Include="AsyncTcpSession.cs" />
+    <Compile Include="NetworkStream.cs" />
     <Compile Include="Properties\AssemblyInfo.SL40.cs" />
     <Compile Include="TcpClientSession.cs" />
   </ItemGroup>
