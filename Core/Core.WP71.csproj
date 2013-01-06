@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -50,7 +51,10 @@
     <Compile Include="IBufferSetter.cs" />
     <Compile Include="IClientSession.cs" />
     <Compile Include="AsyncTcpSession.cs" />
+    <Compile Include="NetworkStream.cs" />
     <Compile Include="Properties\AssemblyInfo.WP71.cs" />
+    <Compile Include="SslStream.cs" />
+    <Compile Include="SslStreamTcpSession.cs" />
     <Compile Include="TcpClientSession.cs" />
   </ItemGroup>
   <ItemGroup>

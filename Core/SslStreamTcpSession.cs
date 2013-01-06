@@ -44,7 +44,12 @@ namespace SuperSocket.ClientEngine
         {
             try
             {
+#if !SILVERLIGHT
                 var sslStream = new SslStream(new NetworkStream(Client), false, ValidateRemoteCertificate);
+#else
+                var sslStream = new SslStream(new NetworkStream(Client));
+#endif
+
                 sslStream.BeginAuthenticateAsClient(HostName, OnAuthenticated, sslStream);
             }
             catch (Exception exc)
@@ -133,6 +138,7 @@ namespace SuperSocket.ClientEngine
             }
         }
 
+#if !SILVERLIGHT
         /// <summary>
         /// Validates the remote certificate.
         /// </summary>
@@ -196,6 +202,7 @@ namespace SuperSocket.ClientEngine
             return true;
         }
 
+#endif
         protected override bool IsIgnorableException(Exception e)
         {
             if (base.IsIgnorableException(e))

@@ -63,6 +63,8 @@
     <Compile Include="AsyncTcpSession.cs" />
     <Compile Include="NetworkStream.cs" />
     <Compile Include="Properties\AssemblyInfo.SL40.cs" />
+    <Compile Include="SslStream.cs" />
+    <Compile Include="SslStreamTcpSession.cs" />
     <Compile Include="TcpClientSession.cs" />
   </ItemGroup>
   <ItemGroup>

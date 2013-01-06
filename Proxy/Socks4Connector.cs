@@ -113,12 +113,6 @@ namespace SuperSocket.ClientEngine.Proxy
             if(e == null)
                 e = new SocketAsyncEventArgs();
 
-            if (socket == null)
-            {
-                OnException(new SocketException((int)SocketError.ConnectionAborted));
-                return;
-            }
-
             int actualLength;
             var sendingBuffer = GetSendingBuffer((EndPoint)targetEndPoint, out actualLength);
 
