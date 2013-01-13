@@ -71,7 +71,8 @@ namespace SuperSocket.ClientEngine
             //SocketError.Shutdown = 10058
             //SocketError.ConnectionAborted = 10053
             //SocketError.ConnectionReset = 10054
-            if (errorCode == 10058 || errorCode == 10053 || errorCode == 10054)
+            //SocketError.OperationAborted = 995
+            if (errorCode == 10058 || errorCode == 10053 || errorCode == 10054 || errorCode == 995)
                 return true;
 
             return false;
