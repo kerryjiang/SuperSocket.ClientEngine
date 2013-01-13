@@ -2,6 +2,7 @@
 using System.Net;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace System.Net
 {
@@ -40,7 +41,7 @@ namespace System.Net
 
         private SocketAsyncEventArgs m_SendEventArgs;
 
-        private SocketAsyncEventArgs m_ReceiveEventArgs = new SocketAsyncEventArgs();
+        private SocketAsyncEventArgs m_ReceiveEventArgs;
 
         public NetworkStream(Socket socket)
         {
@@ -64,7 +65,7 @@ namespace System.Net
 
         public override void Flush()
         {
-            throw new NotSupportedException();
+            //Do nothing
         }
 
         public override long Length
@@ -86,7 +87,11 @@ namespace System.Net
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            throw new NotSupportedException();
+            var resetEvent = new ManualResetEvent(false);
+            var result = BeginRead(buffer, offset, count, OnComplete, resetEvent);
+
+            resetEvent.WaitOne();
+            return EndRead(result);
         }
 
         public override long Seek(long offset, SeekOrigin origin)
@@ -101,7 +106,17 @@ namespace System.Net
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new NotSupportedException();
+            var resetEvent = new ManualResetEvent(false);
+            var result = BeginWrite(buffer, offset, count, OnComplete, resetEvent);
+
+            resetEvent.WaitOne();
+            EndWrite(result);
+        }
+
+        private void OnComplete(IAsyncResult result)
+        {
+            ManualResetEvent resetEvent = (ManualResetEvent)result.AsyncState;
+            resetEvent.Set();
         }
 
         public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
@@ -117,10 +132,10 @@ namespace System.Net
 
             e.SetBuffer(buffer, offset, count);
 
-            var async = m_Socket.ReceiveAsync(e);
-
             StreamAsyncResult result = new StreamAsyncResult(e, callback);
             result.AsyncState = state;
+
+            var async = m_Socket.ReceiveAsync(e);
 
             if (!async)
             {
@@ -129,7 +144,6 @@ namespace System.Net
             }
 
             return result;
-
         }
 
         public override int EndRead(IAsyncResult asyncResult)
@@ -148,7 +162,7 @@ namespace System.Net
 
         void OnReceiveEventCompleted(object sender, SocketAsyncEventArgs e)
         {
-            ProcessSend(e);
+            ProcessReceive(e);
         }
 
         void ProcessReceive(SocketAsyncEventArgs e)
