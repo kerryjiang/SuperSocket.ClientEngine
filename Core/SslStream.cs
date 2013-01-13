@@ -1,9 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using Org.BouncyCastle.Crypto.Tls;
 using System.Threading;
-using System.IO;
+using Org.BouncyCastle.Crypto.Tls;
 
 namespace System.Net.Security
 {
@@ -27,6 +27,7 @@ namespace System.Net.Security
         private TlsProtocolHandler m_TlsHandler;
 
         private Stream m_InnerStream;
+        private Stream m_SecureStream;
 
         public SslStream(Stream innerStream)
         {
@@ -34,6 +35,7 @@ namespace System.Net.Security
                 throw new ArgumentNullException("innerStream");
 
             m_InnerStream = innerStream;
+            m_SecureStream = innerStream;
         }
 
         public IAsyncResult BeginAuthenticateAsClient(string targetHost, AsyncCallback asyncCallback, Object asyncState)
@@ -52,11 +54,12 @@ namespace System.Net.Security
         {
             var result = state as AuthenticateResult;
 
-            m_TlsHandler = new TlsProtocolHandler(this);
+            m_TlsHandler = new TlsProtocolHandler(m_InnerStream);
 
             try
             {
                 m_TlsHandler.Connect(new LegacyTlsClient(new AlwaysValidVerifyer()));
+                m_SecureStream = m_TlsHandler.Stream;
             }
             catch (Exception e)
             {
@@ -83,79 +86,126 @@ namespace System.Net.Security
 
         public override bool CanRead
         {
-            get { return m_InnerStream.CanRead; }
+            get { return m_SecureStream.CanRead; }
         }
 
         public override bool CanSeek
         {
-            get { return m_InnerStream.CanSeek; }
+            get { return m_SecureStream.CanSeek; }
         }
 
         public override bool CanWrite
         {
-            get { return m_InnerStream.CanSeek; }
+            get { return m_SecureStream.CanWrite; }
         }
 
         public override void Flush()
         {
-            m_InnerStream.Flush();
+            m_SecureStream.Flush();
         }
 
         public override long Length
         {
-            get { return m_InnerStream.Length; }
+            get { return m_SecureStream.Length; }
         }
 
         public override long Position
         {
             get
             {
-                return m_InnerStream.Position;
+                return m_SecureStream.Position;
             }
             set
             {
-                m_InnerStream.Position = value;
+                m_SecureStream.Position = value;
             }
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return m_InnerStream.Read(buffer, offset, count);
+            return m_SecureStream.Read(buffer, offset, count);
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return m_InnerStream.Seek(offset, origin);
+            return m_SecureStream.Seek(offset, origin);
         }
 
         public override void SetLength(long value)
         {
-            m_InnerStream.SetLength(value);
+            m_SecureStream.SetLength(value);
         }
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            m_InnerStream.Write(buffer, offset, count);
+            m_SecureStream.Write(buffer, offset, count);
         }
 
         public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
-            return m_InnerStream.BeginRead(buffer, offset, count, callback, state);
+            return m_SecureStream.BeginRead(buffer, offset, count, callback, state);
         }
 
         public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
-            return m_InnerStream.BeginWrite(buffer, offset, count, callback, state);
+            return m_SecureStream.BeginWrite(buffer, offset, count, callback, state);
         }
 
         public override int EndRead(IAsyncResult asyncResult)
         {
-            return m_InnerStream.EndRead(asyncResult);
+            return m_SecureStream.EndRead(asyncResult);
         }
 
         public override void EndWrite(IAsyncResult asyncResult)
         {
-            m_InnerStream.EndWrite(asyncResult);
+            m_SecureStream.EndWrite(asyncResult);
+        }
+
+        public override void Close()
+        {
+            m_SecureStream.Close();
+        }
+
+        public override int ReadByte()
+        {
+            return m_SecureStream.ReadByte();
+        }
+
+        public override void WriteByte(byte value)
+        {
+            m_SecureStream.WriteByte(value);
+        }
+
+        public override int ReadTimeout
+        {
+            get
+            {
+                return m_SecureStream.ReadTimeout;
+            }
+            set
+            {
+                m_SecureStream.ReadTimeout = value;
+            }
+        }
+
+        public override int WriteTimeout
+        {
+            get
+            {
+                return m_SecureStream.WriteTimeout;
+            }
+            set
+            {
+                m_SecureStream.WriteTimeout = value;
+            }
+        }
+
+        public override bool CanTimeout
+        {
+            get
+            {
+                return m_SecureStream.CanTimeout;
+            }
         }
     }
 }

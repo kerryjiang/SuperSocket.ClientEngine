@@ -50,7 +50,7 @@ namespace System.Net
 
         public override bool CanRead
         {
-            get { throw new NotImplementedException(); }
+            get { return true; }
         }
 
         public override bool CanSeek
@@ -60,7 +60,7 @@ namespace System.Net
 
         public override bool CanWrite
         {
-            get { throw new NotImplementedException(); }
+            get { return true; }
         }
 
         public override void Flush()
@@ -191,10 +191,10 @@ namespace System.Net
 
             e.SetBuffer(buffer, offset, count);
 
-            var async = m_Socket.SendAsync(e);
-
             StreamAsyncResult result = new StreamAsyncResult(e, callback);
             result.AsyncState = state;
+
+            var async = m_Socket.SendAsync(e);
 
             if (!async)
             {
@@ -213,8 +213,8 @@ namespace System.Net
         void ProcessSend(SocketAsyncEventArgs e)
         {
             var result = e.UserToken as StreamAsyncResult;
-            e.UserToken = null;
             result.IsCompleted = true;
+            e.UserToken = null;
 
             var callback = result.Callback;
 
