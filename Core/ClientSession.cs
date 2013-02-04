@@ -15,6 +15,8 @@ namespace SuperSocket.ClientEngine
 
         public bool IsConnected { get; private set; }
 
+        public bool NoDeplay { get; set; }
+
         public ClientSession()
         {
 
@@ -150,6 +152,14 @@ namespace SuperSocket.ClientEngine
 
         protected virtual void OnConnected()
         {
+            var client = Client;
+
+            if(client != null)
+            {
+                if(client.NoDelay != NoDeplay)
+                    client.NoDelay = NoDeplay;
+            }
+
             IsConnected = true;
 
             var handler = m_Connected;
