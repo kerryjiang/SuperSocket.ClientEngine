@@ -77,7 +77,7 @@
     <Compile Include="IProxyConnector.cs" />
     <Compile Include="NameValueCollection.cs" />
     <Compile Include="PosList.cs" />
-    <Compile Include="Properties\AssemblyInfo.WP71.cs" />
+    <Compile Include="Properties\AssemblyInfo.WP80.cs" />
     <Compile Include="ProxyEventArgs.cs" />
     <Compile Include="SearchMarkState.cs" />
   </ItemGroup>

@@ -70,7 +70,7 @@
     <Compile Include="IClientSession.cs" />
     <Compile Include="AsyncTcpSession.cs" />
     <Compile Include="NetworkStream.cs" />
-    <Compile Include="Properties\AssemblyInfo.WP71.cs" />
+    <Compile Include="Properties\AssemblyInfo.WP80.cs" />
     <Compile Include="SslStream.cs" />
     <Compile Include="SslStreamTcpSession.cs" />
     <Compile Include="TcpClientSession.cs" />

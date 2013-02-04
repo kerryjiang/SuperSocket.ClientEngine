@@ -63,7 +63,7 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="HttpConnectProxy.cs" />
-    <Compile Include="Properties\AssemblyInfo.WP71.cs" />
+    <Compile Include="Properties\AssemblyInfo.WP80.cs" />
     <Compile Include="ProxyConnectorBase.cs" />
     <Compile Include="Socks4aConnector.cs" />
     <Compile Include="Socks4Connector.cs" />

@@ -73,7 +73,7 @@
     <Compile Include="IClientCommandReader.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="ICommandInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.WP71.cs" />
+    <Compile Include="Properties\AssemblyInfo.WP80.cs" />
     <Compile Include="StringCommandInfo.cs" />
   </ItemGroup>
   <ItemGroup>
