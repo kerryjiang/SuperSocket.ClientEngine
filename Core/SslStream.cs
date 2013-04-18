@@ -9,7 +9,7 @@ namespace System.Net.Security
 {
     public class SslStream : Stream
     {
-        class AuthenticateResult : IAsyncResult
+        class AsyncResult : IAsyncResult
         {
             public object AsyncState { get; set; }
 
@@ -42,7 +42,7 @@ namespace System.Net.Security
         {
             var waitCallback = new WaitCallback(StartAuthentication);
 
-            var result = new AuthenticateResult();
+            var result = new AsyncResult();
             result.Callback = asyncCallback;
             result.AsyncState = asyncState;
 
@@ -52,7 +52,7 @@ namespace System.Net.Security
 
         void StartAuthentication(object state)
         {
-            var result = state as AuthenticateResult;
+            var result = state as AsyncResult;
 
             m_TlsHandler = new TlsProtocolHandler(m_InnerStream);
 
@@ -78,7 +78,7 @@ namespace System.Net.Security
 
         public void EndAuthenticateAsClient(IAsyncResult asyncResult)
         {
-            var result = asyncResult as AuthenticateResult;
+            var result = asyncResult as AsyncResult;
 
             if(result.Exception != null)
                 throw result.Exception;
@@ -148,7 +148,37 @@ namespace System.Net.Security
 
         public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
-            return m_SecureStream.BeginWrite(buffer, offset, count, callback, state);
+            var waitCallback = new WaitCallback(StartSend);
+
+            var result = new AsyncResult();
+            result.AsyncState = state;
+            result.Callback = callback;
+            result.CompletedSynchronously = false;
+
+            ThreadPool.QueueUserWorkItem(waitCallback, new object[] { buffer, offset, count, result });
+            return result;
+        }
+
+        private void StartSend(object state)
+        {
+            var stateArr = state as object[];
+            var result = stateArr[3] as AsyncResult;
+
+            try
+            {
+                m_SecureStream.Write((byte[])stateArr[0], (int)stateArr[1], (int)stateArr[2]);
+                m_SecureStream.Flush();
+                result.IsCompleted = true;
+            }
+            catch (Exception e)
+            {
+                result.Exception = e;
+            }
+            finally
+            {
+                if (result.Callback != null)
+                    result.Callback(result);
+            }
         }
 
         public override int EndRead(IAsyncResult asyncResult)
@@ -158,7 +188,10 @@ namespace System.Net.Security
 
         public override void EndWrite(IAsyncResult asyncResult)
         {
-            m_SecureStream.EndWrite(asyncResult);
+            var result = asyncResult as AsyncResult;
+
+            if (result.Exception != null)
+                throw result.Exception;
         }
 
         public override void Close()
