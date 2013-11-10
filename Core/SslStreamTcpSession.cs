@@ -69,6 +69,7 @@ namespace SuperSocket.ClientEngine
             }
             catch(Exception e)
             {
+                EnsureSocketClosed();
                 OnError(e);
                 return;
             }
