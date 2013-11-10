@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.MonoDroid", "Core\Core.MonoDroid.csproj", "{6447CAEB-757A-4D47-91BA-71E521AA7B42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.MonoDroid", "Protocol\Protocol.MonoDroid.csproj", "{AF269343-F9FD-4823-AC0A-3481446C7686}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.MonoDroid", "Protocol\Protocol.MonoDroid.csproj", "{8C2D13FB-EFC9-4F54-BEE8-040F1604343E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MonoDroid", "Common\Common.MonoDroid.csproj", "{38367EC0-D72E-4EC5-8FBA-0AE3706A2C49}"
 EndProject
@@ -15,22 +15,25 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6447CAEB-757A-4D47-91BA-71E521AA7B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6447CAEB-757A-4D47-91BA-71E521AA7B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6447CAEB-757A-4D47-91BA-71E521AA7B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6447CAEB-757A-4D47-91BA-71E521AA7B42}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF269343-F9FD-4823-AC0A-3481446C7686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF269343-F9FD-4823-AC0A-3481446C7686}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF269343-F9FD-4823-AC0A-3481446C7686}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF269343-F9FD-4823-AC0A-3481446C7686}.Release|Any CPU.Build.0 = Release|Any CPU
 		{38367EC0-D72E-4EC5-8FBA-0AE3706A2C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{38367EC0-D72E-4EC5-8FBA-0AE3706A2C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38367EC0-D72E-4EC5-8FBA-0AE3706A2C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38367EC0-D72E-4EC5-8FBA-0AE3706A2C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6447CAEB-757A-4D47-91BA-71E521AA7B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6447CAEB-757A-4D47-91BA-71E521AA7B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6447CAEB-757A-4D47-91BA-71E521AA7B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6447CAEB-757A-4D47-91BA-71E521AA7B42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C2D13FB-EFC9-4F54-BEE8-040F1604343E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2D13FB-EFC9-4F54-BEE8-040F1604343E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C2D13FB-EFC9-4F54-BEE8-040F1604343E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C2D13FB-EFC9-4F54-BEE8-040F1604343E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AEFB6063-063D-4124-9DA6-F88350CE0039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AEFB6063-063D-4124-9DA6-F88350CE0039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEFB6063-063D-4124-9DA6-F88350CE0039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEFB6063-063D-4124-9DA6-F88350CE0039}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Core\Core.MonoDroid.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
