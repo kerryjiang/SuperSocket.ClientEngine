@@ -37,49 +37,29 @@
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Protocol\ArraySegmentEx.cs">
-      <Link>ArraySegmentEx.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\ArraySegmentList.cs">
-      <Link>ArraySegmentList.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\AssemblyUtil.cs">
-      <Link>AssemblyUtil.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\BinaryCommandInfo.cs">
-      <Link>BinaryCommandInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\CommandInfo.cs">
-      <Link>CommandInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\DelegateCommand.cs">
-      <Link>DelegateCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\IClientCommandReader.cs">
-      <Link>IClientCommandReader.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\ICommand.cs">
-      <Link>ICommand.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\ICommandInfo.cs">
-      <Link>ICommandInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Protocol\StringCommandInfo.cs">
-      <Link>StringCommandInfo.cs</Link>
-    </Compile>
+    <Compile Include="ArraySegmentEx.cs" />
+    <Compile Include="ArraySegmentList.cs" />
+    <Compile Include="AssemblyUtil.cs" />
+    <Compile Include="BinaryCommandInfo.cs" />
+    <Compile Include="CommandInfo.cs" />
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="IClientCommandReader.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="ICommandInfo.cs" />
+    <Compile Include="StringCommandInfo.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="af269343-f9fd-4823-ac0a-3481446c7686" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="af269343-f9fd-4823-ac0a-3481446c7686" />
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
-    <ProjectReference Include="..\Common.MonoTouch\Common.MonoTouch.csproj">
+    <ProjectReference Include="..\Common\Common.MonoTouch.csproj">
       <Project>{7B29D7AE-D8C6-46B2-BFF9-CE1B88E10355}</Project>
       <Name>Common.MonoTouch</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core.MonoTouch\Core.MonoTouch.csproj">
+    <ProjectReference Include="..\Core\Core.MonoTouch.csproj">
       <Project>{9A11BF63-8F81-481C-92C6-16B61250DACB}</Project>
       <Name>Core.MonoTouch</Name>
     </ProjectReference>

@@ -37,44 +37,26 @@
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Core\AsyncTcpSession.cs">
-      <Link>AsyncTcpSession.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ClientSession.cs">
-      <Link>ClientSession.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ConcurrentQueue.cs">
-      <Link>ConcurrentQueue.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\DataEventArgs.cs">
-      <Link>DataEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\ErrorEventArgs.cs">
-      <Link>ErrorEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\IBufferSetter.cs">
-      <Link>IBufferSetter.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\IClientSession.cs">
-      <Link>IClientSession.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\SslStreamTcpSession.cs">
-      <Link>SslStreamTcpSession.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\TcpClientSession.cs">
-      <Link>TcpClientSession.cs</Link>
-    </Compile>
+    <Compile Include="AsyncTcpSession.cs" />
+    <Compile Include="ClientSession.cs" />
+    <Compile Include="ConcurrentQueue.cs" />
+    <Compile Include="DataEventArgs.cs" />
+    <Compile Include="ErrorEventArgs.cs" />
+    <Compile Include="IBufferSetter.cs" />
+    <Compile Include="IClientSession.cs" />
+    <Compile Include="SslStreamTcpSession.cs" />
+    <Compile Include="TcpClientSession.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.MonoTouch\Common.MonoTouch.csproj">
+    <ProjectReference Include="..\Common\Common.MonoTouch.csproj">
       <Project>{7B29D7AE-D8C6-46B2-BFF9-CE1B88E10355}</Project>
       <Name>Common.MonoTouch</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="6447caeb-757a-4d47-91ba-71e521aa7b42" />
+      <UserProperties ProjectLinkReference="6447caeb-757a-4d47-91ba-71e521aa7b42" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
