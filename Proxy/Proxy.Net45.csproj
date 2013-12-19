@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SuperSocket.ClientEngine.Proxy</RootNamespace>
     <AssemblyName>SuperSocket.ClientEngine.Proxy</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -42,16 +44,16 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="HttpConnectProxy.cs" />
-    <Compile Include="Properties\AssemblyInfo.Net40.cs" />
+    <Compile Include="Properties\AssemblyInfo.Net45.cs" />
     <Compile Include="ProxyConnectorBase.cs" />
     <Compile Include="Socks4aConnector.cs" />
     <Compile Include="Socks4Connector.cs" />
     <Compile Include="Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
+    <ProjectReference Include="..\Common\Common.Net45.csproj">
       <Project>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</Project>
-      <Name>Common</Name>
+      <Name>Common.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

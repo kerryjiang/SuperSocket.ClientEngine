@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{1BC7E184-8225-425A-900E-9FEA38865E20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Net45", "Core\Core.Net45.csproj", "{1BC7E184-8225-425A-900E-9FEA38865E20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol", "Protocol\Protocol.csproj", "{D9A94B6C-7A16-4472-916C-AF2CD1B1F226}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol.Net45", "Protocol\Protocol.Net45.csproj", "{D9A94B6C-7A16-4472-916C-AF2CD1B1F226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy", "Proxy\Proxy.csproj", "{00BD38B0-9D33-4E65-9B86-01576FD8B778}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy.Net45", "Proxy\Proxy.Net45.csproj", "{00BD38B0-9D33-4E65-9B86-01576FD8B778}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{87FA4C97-A768-463B-B1D1-317A07C5FACE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Net45", "Common\Common.Net45.csproj", "{87FA4C97-A768-463B-B1D1-317A07C5FACE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

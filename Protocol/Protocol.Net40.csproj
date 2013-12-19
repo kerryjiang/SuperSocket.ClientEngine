@@ -59,13 +59,13 @@
     <Compile Include="StringCommandInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
+    <ProjectReference Include="..\Common\Common.Net40.csproj">
       <Project>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</Project>
-      <Name>Common</Name>
+      <Name>Common.Net40</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\Core.Net40.csproj">
       <Project>{1BC7E184-8225-425A-900E-9FEA38865E20}</Project>
-      <Name>Core</Name>
+      <Name>Core.Net40</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

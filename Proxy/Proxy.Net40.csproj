@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1BC7E184-8225-425A-900E-9FEA38865E20}</ProjectGuid>
+    <ProjectGuid>{00BD38B0-9D33-4E65-9B86-01576FD8B778}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
-    <AssemblyName>SuperSocket.ClientEngine.Core</AssemblyName>
+    <RootNamespace>SuperSocket.ClientEngine.Proxy</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine.Proxy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -32,34 +32,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\SuperSocket.ClientEngine.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ClientSession.cs" />
-    <Compile Include="DataEventArgs.cs" />
-    <Compile Include="ErrorEventArgs.cs" />
-    <Compile Include="IBufferSetter.cs" />
-    <Compile Include="IClientSession.cs" />
+    <Compile Include="HttpConnectProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.Net40.cs" />
-    <Compile Include="SslStreamTcpSession.cs" />
-    <Compile Include="AsyncTcpSession.cs" />
-    <Compile Include="TcpClientSession.cs" />
+    <Compile Include="ProxyConnectorBase.cs" />
+    <Compile Include="Socks4aConnector.cs" />
+    <Compile Include="Socks4Connector.cs" />
+    <Compile Include="Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
+    <ProjectReference Include="..\Common\Common.Net40.csproj">
       <Project>{87FA4C97-A768-463B-B1D1-317A07C5FACE}</Project>
-      <Name>Common</Name>
+      <Name>Common.Net40</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
