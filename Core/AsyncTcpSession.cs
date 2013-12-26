@@ -35,6 +35,16 @@ namespace SuperSocket.ClientEngine
             ProcessReceive(e);
         }
 
+        protected override void SetBuffer(ArraySegment<byte> bufferSegment)
+        {
+            base.SetBuffer(bufferSegment);
+
+            if (m_SocketEventArgs != null)
+            {
+                m_SocketEventArgs.SetBuffer(bufferSegment.Array, bufferSegment.Offset, bufferSegment.Count);
+            }
+        }
+
         protected override void OnGetSocket(SocketAsyncEventArgs e)
         {
             if (Buffer.Array == null)

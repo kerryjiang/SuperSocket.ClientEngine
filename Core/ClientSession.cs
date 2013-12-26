@@ -200,6 +200,11 @@ namespace SuperSocket.ClientEngine
 
         void IBufferSetter.SetBuffer(ArraySegment<byte> bufferSegment)
         {
+            SetBuffer(bufferSegment);
+        }
+
+        protected virtual void SetBuffer(ArraySegment<byte> bufferSegment)
+        {
             Buffer = bufferSegment;
         }
     }
