@@ -147,6 +147,15 @@ namespace SuperSocket.ClientEngine
                 return;
             }
 
+            //To walk around a MonoTouch's issue
+            //one user reported in some cases the e.SocketError = SocketError.Succes but the socket is not connected in MonoTouch
+            if (!socket.Connected)
+            {
+                m_InConnecting = false;
+                OnError(new SocketException((int)SocketError.ConnectionRefused));
+                return;
+            }
+
             if (e == null)
                 e = new SocketAsyncEventArgs();
 
