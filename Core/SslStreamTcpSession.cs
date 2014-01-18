@@ -150,6 +150,11 @@ namespace SuperSocket.ClientEngine
         /// <returns></returns>
         private bool ValidateRemoteCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
+            var callback = ServicePointManager.ServerCertificateValidationCallback;
+
+            if (callback != null)
+                return callback(sender, certificate, chain, sslPolicyErrors);
+
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
 
