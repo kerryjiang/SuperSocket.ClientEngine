@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;__IOS__;__MOBILE__</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
+    <DefineConstants>__IOS__;__MOBILE__</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -37,6 +38,9 @@
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AsyncTcpSession.cs" />
     <Compile Include="ClientSession.cs" />
     <Compile Include="ConcurrentQueue.cs" />
@@ -44,6 +48,7 @@
     <Compile Include="ErrorEventArgs.cs" />
     <Compile Include="IBufferSetter.cs" />
     <Compile Include="IClientSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.MonoTouch.cs" />
     <Compile Include="SslStreamTcpSession.cs" />
     <Compile Include="TcpClientSession.cs" />
   </ItemGroup>
@@ -56,7 +61,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="6447caeb-757a-4d47-91ba-71e521aa7b42" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="6447caeb-757a-4d47-91ba-71e521aa7b42" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

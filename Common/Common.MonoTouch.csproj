@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
+    <DefineConstants />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,6 +47,7 @@
     <Compile Include="IBatchQueue.cs" />
     <Compile Include="IProxyConnector.cs" />
     <Compile Include="PosList.cs" />
+    <Compile Include="Properties\AssemblyInfo.MonoTouch.cs" />
     <Compile Include="ProxyEventArgs.cs" />
     <Compile Include="SearchMarkState.cs" />
   </ItemGroup>

@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
+    <DefineConstants />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -37,7 +38,11 @@
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="HttpConnectProxy.cs" />
+    <Compile Include="Properties\AssemblyInfo.MonoTouch.cs" />
     <Compile Include="ProxyConnectorBase.cs" />
     <Compile Include="Socks4aConnector.cs" />
     <Compile Include="Socks4Connector.cs" />
