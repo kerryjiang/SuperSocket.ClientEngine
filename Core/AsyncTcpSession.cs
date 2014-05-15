@@ -52,11 +52,6 @@ namespace SuperSocket.ClientEngine
 
             e.SetBuffer(Buffer.Array, Buffer.Offset, Buffer.Count);
 
-            if (m_SocketEventArgs != null)
-            {
-                m_SocketEventArgs.Dispose();
-            }
-
             m_SocketEventArgs = e;
 
             OnConnected();
@@ -199,6 +194,23 @@ namespace SuperSocket.ClientEngine
             }
 
             OnSendingCompleted();
+        }
+
+        protected override void OnClosed()
+        {
+            if (m_SocketEventArgsSend != null)
+            {
+                m_SocketEventArgsSend.Dispose();
+                m_SocketEventArgsSend = null;
+            }
+
+            if (m_SocketEventArgs != null)
+            {
+                m_SocketEventArgs.Dispose();
+                m_SocketEventArgs = null;
+            }
+
+            base.OnClosed();
         }
     }
 }

@@ -135,6 +135,7 @@ namespace SuperSocket.ClientEngine
         {
             if (e != null && e.SocketError != SocketError.Success)
             {
+                e.Dispose();
                 m_InConnecting = false;
                 OnError(new SocketException((int)e.SocketError));
                 return;
