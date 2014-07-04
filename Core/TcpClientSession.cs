@@ -153,7 +153,8 @@ namespace SuperSocket.ClientEngine
             if (!socket.Connected)
             {
                 m_InConnecting = false;
-                OnError(new SocketException((int)SocketError.ConnectionRefused));
+                var socketError = (SocketError)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Error);
+                OnError(new SocketException((int)socketError));
                 return;
             }
 
