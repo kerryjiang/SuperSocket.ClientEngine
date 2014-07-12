@@ -153,7 +153,11 @@ namespace SuperSocket.ClientEngine
             if (!socket.Connected)
             {
                 m_InConnecting = false;
+#if SILVERLIGHT
+                var socketError = SocketError.ConnectionReset;
+#else
                 var socketError = (SocketError)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Error);
+#endif
                 OnError(new SocketException((int)socketError));
                 return;
             }
