@@ -209,12 +209,12 @@ namespace SuperSocket.ClientEngine
             return fireOnClosedEvent;
         }
 
-        private void DetectConnected()
+        private bool DetectConnected()
         {
             if (Client != null)
-                return;
-
-            throw new Exception("The socket is not connected!", new SocketException((int)SocketError.NotConnected));
+                return true;
+            OnError(new SocketException((int)SocketError.NotConnected));
+            return false;
         }
 
         private IBatchQueue<ArraySegment<byte>> m_SendingQueue;
@@ -254,7 +254,11 @@ namespace SuperSocket.ClientEngine
 
         public override bool TrySend(ArraySegment<byte> segment)
         {
-            DetectConnected();
+            if (!DetectConnected())
+            {
+                //may be return false? 
+                return true;
+            }
 
             if (!GetSendingQueue().Enqueue(segment))
                 return false;
@@ -269,7 +273,11 @@ namespace SuperSocket.ClientEngine
 
         public override bool TrySend(IList<ArraySegment<byte>> segments)
         {
-            DetectConnected();
+            if (!DetectConnected())
+            {
+                //may be return false? 
+                return true;
+            }
 
             if (!GetSendingQueue().Enqueue(segments))
                 return false;
