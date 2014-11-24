@@ -62,6 +62,12 @@ namespace SuperSocket.ClientEngine
         private void OnAuthenticated(IAsyncResult result)
         {
             var sslStream = result.AsyncState as SslStream;
+            if(sslStream == null)
+            {
+                EnsureSocketClosed();
+                OnError(new NullReferenceException("Ssl Stream is null OnAuthenticated"));
+                return;
+            }
 
             try
             {
@@ -87,42 +93,48 @@ namespace SuperSocket.ClientEngine
         private void OnDataRead(IAsyncResult result)
         {
             var state = result.AsyncState as SslAsyncState;
-            var sslStream = state.SslStream;
-
-            int length = 0;
-
-            try
+            if(state != null && state.SslStream != null)
             {
-                length = sslStream.EndRead(result);
+                var sslStream = state.SslStream;
+                int length = 0;
+
+                try
+                {
+                    length = sslStream.EndRead(result);
+                }
+                catch(Exception e)
+                {
+                    if(!IsIgnorableException(e))
+                        OnError(e);
+
+                    if(EnsureSocketClosed(state.Client))
+                        OnClosed();
+
+                    return;
+                }
+
+                if(length == 0)
+                {
+                    if(EnsureSocketClosed(state.Client))
+                        OnClosed();
+
+                    return;
+                }
+
+                OnDataReceived(Buffer.Array, Buffer.Offset, length);
+                BeginRead();
             }
-            catch (Exception e) 
+            else
             {
-                if (!IsIgnorableException(e))
-                    OnError(e);
-
-                if (EnsureSocketClosed(state.Client))
-                    OnClosed();
-
-                return;
+                OnError(new NullReferenceException("Null state or stream."));
             }
-
-            if (length == 0)
-            {
-                if (EnsureSocketClosed(state.Client))
-                    OnClosed();
-
-                return;
-            }
-
-            OnDataReceived(Buffer.Array, Buffer.Offset, length);
-            BeginRead();
         }
 
         void BeginRead()
         {
             var client = Client;
 
-            if (client == null)
+            if (client == null || m_SslStream == null)
                 return;
 
             try
@@ -253,50 +265,69 @@ namespace SuperSocket.ClientEngine
         private void OnWriteComplete(IAsyncResult result)
         {
             var state = result.AsyncState as SslAsyncState;
-            var sslStream = state.SslStream;
-
-            try
+            if(state != null && state.SslStream != null)
             {
-                sslStream.EndWrite(result);
+                var sslStream = state.SslStream;
+
+                try
+                {
+                    sslStream.EndWrite(result);
+                }
+                catch(Exception e)
+                {
+                    if(!IsIgnorableException(e))
+                        OnError(e);
+
+                    if(EnsureSocketClosed(state.Client))
+                        OnClosed();
+
+                    return;
+                }
+
+                var items = state.SendingItems;
+                var nextPos = items.Position + 1;
+
+                //Has more data to send
+                if(nextPos < items.Count)
+                {
+                    items.Position = nextPos;
+                    SendInternal(items);
+                    return;
+                }
+
+                try
+                {
+                    m_SslStream.Flush();
+                }
+                catch(Exception e)
+                {
+                    if(!IsIgnorableException(e))
+                        OnError(e);
+
+                    if(EnsureSocketClosed(state.Client))
+                        OnClosed();
+
+                    return;
+                }
+                OnSendingCompleted();
             }
-            catch (Exception e)
+            else
             {
-                if (!IsIgnorableException(e))
-                    OnError(e);
-
-                if (EnsureSocketClosed(state.Client))
-                    OnClosed();
-
-                return;
+                OnError(new NullReferenceException("State of Ssl stream is null."));
             }
+            
+        }
 
-            var items = state.SendingItems;
-            var nextPos = items.Position + 1;
-
-            //Has more data to send
-            if (nextPos < items.Count)
+        public override void Close()
+        {
+            if(m_SslStream != null)
             {
-                items.Position = nextPos;
-                SendInternal(items);
-                return;
+                m_SslStream.Close();
+                m_SslStream.Dispose();
+                m_SslStream = null;
             }
 
-            try
-            {
-                m_SslStream.Flush();
-            }
-            catch (Exception e)
-            {
-                if (!IsIgnorableException(e))
-                    OnError(e);
-
-                if (EnsureSocketClosed(state.Client))
-                    OnClosed();
-
-                return;
-            }
-
-            OnSendingCompleted();
+            base.Close();
         }
     }
 }
