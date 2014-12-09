@@ -205,21 +205,20 @@ namespace SuperSocket.ClientEngine
                 m_IsSending = 0;
             }
 
-            if (client.Connected)
+            try
+            {
+                client.Shutdown(SocketShutdown.Both);
+            }
+            catch
+            {}
+            finally
             {
                 try
                 {
-                    client.Shutdown(SocketShutdown.Both);
+                    client.Close();
                 }
-                catch { }
-                finally
-                {
-                    try
-                    {
-                        client.Close();
-                    }
-                    catch {}
-                }
+                catch
+                {}
             }
 
             return fireOnClosedEvent;
