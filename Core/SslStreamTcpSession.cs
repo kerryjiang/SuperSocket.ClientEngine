@@ -63,6 +63,13 @@ namespace SuperSocket.ClientEngine
         {
             var sslStream = result.AsyncState as SslStream;
 
+            if(sslStream == null)
+            {
+                EnsureSocketClosed();
+                OnError(new NullReferenceException("Ssl Stream is null OnAuthenticated"));
+                return;
+            }
+
             try
             {
                 sslStream.EndAuthenticateAsClient(result);
@@ -87,6 +94,13 @@ namespace SuperSocket.ClientEngine
         private void OnDataRead(IAsyncResult result)
         {
             var state = result.AsyncState as SslAsyncState;
+
+            if (state == null || state.SslStream == null)
+            {
+                OnError(new NullReferenceException("Null state or stream."));
+                return;
+            }
+
             var sslStream = state.SslStream;
 
             int length = 0;
@@ -95,7 +109,7 @@ namespace SuperSocket.ClientEngine
             {
                 length = sslStream.EndRead(result);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 if (!IsIgnorableException(e))
                     OnError(e);
@@ -122,7 +136,7 @@ namespace SuperSocket.ClientEngine
         {
             var client = Client;
 
-            if (client == null)
+            if (client == null || m_SslStream == null)
                 return;
 
             try
@@ -253,6 +267,13 @@ namespace SuperSocket.ClientEngine
         private void OnWriteComplete(IAsyncResult result)
         {
             var state = result.AsyncState as SslAsyncState;
+
+            if (state == null || state.SslStream == null)
+            {
+                OnError(new NullReferenceException("State of Ssl stream is null."));
+                return;
+            }
+
             var sslStream = state.SslStream;
 
             try
@@ -297,6 +318,20 @@ namespace SuperSocket.ClientEngine
             }
 
             OnSendingCompleted();
+        }
+
+        public override void Close()
+        {
+            var sslStream = m_SslStream;
+
+            if (sslStream != null)
+            {
+                sslStream.Close();
+                sslStream.Dispose();
+                m_SslStream = null;
+            }
+
+            base.Close();
         }
     }
 }
