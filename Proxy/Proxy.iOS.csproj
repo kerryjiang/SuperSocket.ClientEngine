@@ -8,9 +8,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FFFAD344-0C61-4C2F-9CF6-46AE2E24646A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Proxy.iOS</RootNamespace>
+    <RootNamespace>SuperSocket.ClientEngine.Proxy</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Proxy.iOS</AssemblyName>
+    <AssemblyName>SuperSocket.ClientEngine.Proxy</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
