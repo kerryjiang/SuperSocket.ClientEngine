@@ -186,8 +186,8 @@ namespace SuperSocket.ClientEngine
             }
 #endif
 
-            //Not a remote certificate error
-            if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateChainErrors) == 0)
+            //Not only a remote certificate error
+            if (sslPolicyErrors != SslPolicyErrors.None && sslPolicyErrors != SslPolicyErrors.RemoteCertificateChainErrors)
             {
                 OnError(new Exception(sslPolicyErrors.ToString()));
                 return false;
