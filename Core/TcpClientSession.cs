@@ -96,7 +96,7 @@ namespace SuperSocket.ClientEngine
                 throw new Exception("The socket is connecting, cannot connect again!");
 
             if (Client != null)
-                throw new Exception("The socket is connected, you neednt' connect again!");
+                throw new Exception("The socket is connected, you needn't connect again!");
 
             //If there is a proxy set, connect the proxy server by proxy connector
             if (Proxy != null)
