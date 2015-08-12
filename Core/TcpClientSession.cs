@@ -153,7 +153,7 @@ namespace SuperSocket.ClientEngine
             if (!socket.Connected)
             {
                 m_InConnecting = false;
-#if SILVERLIGHT
+#if SILVERLIGHT || NETFX_CORE
                 var socketError = SocketError.ConnectionReset;
 #else
                 var socketError = (SocketError)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Error);
@@ -171,7 +171,7 @@ namespace SuperSocket.ClientEngine
 
             m_InConnecting = false;
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETFX_CORE
             try
             {
                 //Set keep alive
@@ -222,7 +222,12 @@ namespace SuperSocket.ClientEngine
             {
                 try
                 {
+#if NETFX_CORE
+                    client.Shutdown(SocketShutdown.Both);                    
+                    client.Dispose();
+#else
                     client.Close();
+#endif
                 }
                 catch
                 {}
