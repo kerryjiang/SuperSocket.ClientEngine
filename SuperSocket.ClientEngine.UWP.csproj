@@ -131,6 +131,7 @@
     <Compile Include="Core\IBufferSetter.cs" />
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="GlobalAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Common\GenericDelegates.cs.txt" />
     <Content Include="Properties\SuperSocket.ClientEngine.rd.xml" />
