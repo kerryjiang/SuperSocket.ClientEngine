@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Threading;
 
 namespace SuperSocket.ClientEngine
@@ -257,7 +258,7 @@ namespace SuperSocket.ClientEngine
                     return m_SendingQueue;
 
                 //Sending queue size must be greater than 3
-                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 3), (t) => t.Array == null);
+                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 1024), (t) => t.Array == null);
                 return m_SendingQueue;
             }
         }
@@ -287,15 +288,14 @@ namespace SuperSocket.ClientEngine
                 return true;
             }
 
-            if (!GetSendingQueue().Enqueue(segment))
-                return false;
+            bool res = GetSendingQueue().Enqueue(segment); // Enqueue may fail due to full sending queue ...
 
             if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
-                return true;
+                return res; // returns false if Enqueue fails, and 'true' if sending is in progress
 
-            DequeueSend();
+            DequeueSend(); // ... so we need to try processing it if m_IsSending permits
 
-            return true;
+            return res;
         }
 
         public override bool TrySend(IList<ArraySegment<byte>> segments)
@@ -306,13 +306,12 @@ namespace SuperSocket.ClientEngine
                 return true;
             }
 
-            if (!GetSendingQueue().Enqueue(segments))
-                return false;
+            bool res = GetSendingQueue().Enqueue(segments); // Enqueue may fail due to full sending queue ...
 
             if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
-                return true;
+                return res; // returns false if Enqueue fails, and 'true' if sending is in progress
 
-            DequeueSend();
+            DequeueSend(); // ... so we need to try processing it if m_IsSending permits
 
             return true;
         }

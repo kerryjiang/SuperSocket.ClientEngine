@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace SuperSocket.ClientEngine
@@ -21,7 +20,10 @@ namespace SuperSocket.ClientEngine
         class Entity
         {
             public T[] Array { get; set; }
-
+            public int[] ArrayElementPresent { get; set; } // used to indicate that copy of Array's element has finished
+            // Often Array elements have been Dequeued being not fully Enqueued
+            // e.g. T = ArraySegment<byte>, and Array[i].Count == 0 (enqueued > 0)
+            // as a result e.BytesTransferred == 0 and disconnections in AsyncTcpSession.Sending_Completed
             public int Count;
         }
 
@@ -72,11 +74,20 @@ namespace SuperSocket.ClientEngine
         /// <param name="nullValidator">The null validator.</param>
         public ConcurrentBatchQueue(T[] array, Func<T, bool> nullValidator)
         {
-            m_Entity = new Entity();
-            m_Entity.Array = array;
+            var length = array.Length;
+            m_Entity = new Entity
+            {
+                Array = array,
+                ArrayElementPresent = new int[length]
+            };
+            for (int i = 0; i < length; ++i) m_Entity.ArrayElementPresent[i] = nullValidator(array[i]) ? 0  :1;
 
-            m_BackEntity = new Entity();
-            m_BackEntity.Array = new T[array.Length];
+            m_BackEntity = new Entity
+            {
+                Array = new T[length],
+                ArrayElementPresent = new int[length]
+            };
+            for (int i = 0; i < length; ++i) m_BackEntity.ArrayElementPresent[i] = 0;
 
             m_NullValidator = nullValidator;
         }
@@ -102,19 +113,18 @@ namespace SuperSocket.ClientEngine
         {
             full = false;
 
-            EnsureNotRebuild();
-
             var entity = m_Entity;
             var array = entity.Array;
+            var arrayElement = entity.ArrayElementPresent;
             var count = entity.Count;
 
-            if (count >= array.Length)
+            if (count == array.Length)
             {
                 full = true;
                 return false;
             }
 
-            if(entity != m_Entity)
+            if (entity != m_Entity)
                 return false;
 
             int oldCount = Interlocked.CompareExchange(ref entity.Count, count + 1, count);
@@ -122,7 +132,8 @@ namespace SuperSocket.ClientEngine
             if (oldCount != count)
                 return false;
 
-            array[count] = item;
+            array[count] = item; // not atomic
+            Interlocked.Exchange(ref arrayElement[count], 1);
 
             return true;
         }
@@ -150,6 +161,7 @@ namespace SuperSocket.ClientEngine
 
             var entity = m_Entity;
             var array = entity.Array;
+            var arrayElement = entity.ArrayElementPresent;
             var count = entity.Count;
 
             int newItemCount = items.Count;
@@ -171,29 +183,12 @@ namespace SuperSocket.ClientEngine
 
             foreach (var item in items)
             {
-                array[count++] = item;
+                array[count] = item;
+                Interlocked.Exchange(ref arrayElement[count++], 1);
             }
 
             return true;
         }
-
-        private void EnsureNotRebuild()
-        {
-            if (!m_Rebuilding)
-                return;
-
-            var spinWait = new SpinWait();
-
-            while (true)
-            {
-                spinWait.SpinOnce();
-
-                if (!m_Rebuilding)
-                    break;
-            }
-        }
-
-        private bool m_Rebuilding = false;
 
         /// <summary>
         /// Tries the dequeue.
@@ -203,45 +198,61 @@ namespace SuperSocket.ClientEngine
         public bool TryDequeue(IList<T> outputItems)
         {
             var entity = m_Entity;
-            int count = entity.Count;
-
-            if (count <= 0)
-                return false;
-
             var spinWait = new SpinWait();
 
-            Interlocked.Exchange(ref m_Entity, m_BackEntity);
+            while (ReferenceEquals(entity, m_BackEntity)) // other Thread is in TryDequeue already coz m_Entity==m_BackEntity
+            {
+                spinWait.SpinOnce();
+                entity = m_Entity;
+            }
 
-            spinWait.SpinOnce();
+            if (!ReferenceEquals(Interlocked.CompareExchange(ref m_Entity, m_BackEntity, entity), entity))
+                return false; // m_Entity set to m_BackEntity already
 
-            count = entity.Count;
+            int count;
+            int oldCount = entity.Count;
+            do
+            {
+                spinWait.SpinOnce();
+                count = oldCount;
+                oldCount = Interlocked.CompareExchange(ref entity.Count, int.MaxValue, count); // outstanding entity enqueuers should not be able to enqueue
+            } while (oldCount != count); // wait for Enqueue to complete
+
+            if (count <= 0)
+            {
+                entity.Count = 0;
+                m_BackEntity = entity; // make m_BackEntity available again, m_BackEntity.Count == 0 already
+                return false;
+            }
 
             var array = entity.Array;
+            var arrayElement = entity.ArrayElementPresent;
 
             var i = 0;
 
             while (true)
             {
-                var item = array[i];
+                var item = array[i]; //not atomic
 
-                while (m_NullValidator(item))
+                while (m_NullValidator(item)/*can see not fully copied item*/ 
+                    || arrayElement[i] == 0 /*ensure array[i] is ready*/)
                 {
                     spinWait.SpinOnce();
-                    item = array[i];
+                    item = array[i]; //not atomic
                 }
 
-                outputItems.Add(array[i]);
+                outputItems.Add(item);
                 array[i] = m_Null;
+                Interlocked.Exchange(ref arrayElement[i], 0);
 
-
-                if (entity.Count <= (i + 1))
+                if (count <= (i + 1))
                     break;
 
                 i++;
             }
 
-            m_BackEntity = entity;
-            m_BackEntity.Count = 0;
+            entity.Count = 0;
+            m_BackEntity = entity; // make m_BackEntity available again, m_BackEntity.Count == 0 already
 
             return true;
         }
