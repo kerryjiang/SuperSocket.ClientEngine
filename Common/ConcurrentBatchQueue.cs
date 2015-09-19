@@ -102,8 +102,6 @@ namespace SuperSocket.ClientEngine
         {
             full = false;
 
-            EnsureNotRebuild();
-
             var entity = m_Entity;
             var array = entity.Array;
             var count = entity.Count;
@@ -177,24 +175,6 @@ namespace SuperSocket.ClientEngine
             return true;
         }
 
-        private void EnsureNotRebuild()
-        {
-            if (!m_Rebuilding)
-                return;
-
-            var spinWait = new SpinWait();
-
-            while (true)
-            {
-                spinWait.SpinOnce();
-
-                if (!m_Rebuilding)
-                    break;
-            }
-        }
-
-        private bool m_Rebuilding = false;
-
         /// <summary>
         /// Tries the dequeue.
         /// </summary>
@@ -207,10 +187,13 @@ namespace SuperSocket.ClientEngine
 
             if (count <= 0)
                 return false;
+            
+            var oldEntity = Interlocked.CompareExchange(ref m_Entity, m_BackEntity, entity);
+
+            if (!ReferenceEquals(oldEntity, entity))
+                return false;
 
             var spinWait = new SpinWait();
-
-            Interlocked.Exchange(ref m_Entity, m_BackEntity);
 
             spinWait.SpinOnce();
 
@@ -230,9 +213,8 @@ namespace SuperSocket.ClientEngine
                     item = array[i];
                 }
 
-                outputItems.Add(array[i]);
+                outputItems.Add(item);
                 array[i] = m_Null;
-
 
                 if (entity.Count <= (i + 1))
                     break;
@@ -240,8 +222,8 @@ namespace SuperSocket.ClientEngine
                 i++;
             }
 
+            entity.Count = 0;
             m_BackEntity = entity;
-            m_BackEntity.Count = 0;
 
             return true;
         }
