@@ -257,7 +257,7 @@ namespace SuperSocket.ClientEngine
                     return m_SendingQueue;
 
                 //Sending queue size must be greater than 3
-                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 3), (t) => t.Array == null || t.Count == 0);
+                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 1024), (t) => t.Array == null || t.Count == 0);
                 return m_SendingQueue;
             }
         }
