@@ -97,7 +97,7 @@ namespace SuperSocket.ClientEngine.Proxy
 
             string request;
 
-            if (e.UserToken is DnsEndPoint)
+            if (targetEndPoint is DnsEndPoint)
             {
                 var targetDnsEndPoint = (DnsEndPoint)targetEndPoint;
                 request = string.Format(m_RequestTemplate, targetDnsEndPoint.Host, targetDnsEndPoint.Port);
