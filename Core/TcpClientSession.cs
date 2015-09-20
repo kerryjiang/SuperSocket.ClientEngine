@@ -257,7 +257,7 @@ namespace SuperSocket.ClientEngine
                     return m_SendingQueue;
 
                 //Sending queue size must be greater than 3
-                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 3), (t) => t.Array == null);
+                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 3), (t) => t.Array == null || t.Count == 0);
                 return m_SendingQueue;
             }
         }
@@ -281,6 +281,11 @@ namespace SuperSocket.ClientEngine
 
         public override bool TrySend(ArraySegment<byte> segment)
         {
+            if (segment.Array == null || segment.Count == 0)
+            {
+                throw new Exception("The data to be sent cannot be empty.");
+            }
+
             if (!DetectConnected())
             {
                 //may be return false? 
@@ -300,6 +305,21 @@ namespace SuperSocket.ClientEngine
 
         public override bool TrySend(IList<ArraySegment<byte>> segments)
         {
+            if (segments == null || segments.Count == 0)
+            {
+                throw new ArgumentNullException("segments");
+            }
+
+            for (var i = 0; i < segments.Count; i++)
+            {
+                var seg = segments[i];
+                
+                if (seg.Count == 0)
+                {
+                    throw new Exception("The data piece to be sent cannot be empty.");
+                }
+            }
+
             if (!DetectConnected())
             {
                 //may be return false? 
