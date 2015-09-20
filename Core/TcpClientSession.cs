@@ -292,15 +292,14 @@ namespace SuperSocket.ClientEngine
                 return true;
             }
 
-            if (!GetSendingQueue().Enqueue(segment))
-                return false;
+            var isEnqueued = GetSendingQueue().Enqueue(segment);
 
             if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
-                return true;
+                return isEnqueued;
 
             DequeueSend();
 
-            return true;
+            return isEnqueued;
         }
 
         public override bool TrySend(IList<ArraySegment<byte>> segments)
@@ -326,15 +325,14 @@ namespace SuperSocket.ClientEngine
                 return true;
             }
 
-            if (!GetSendingQueue().Enqueue(segments))
-                return false;
+            var isEnqueued = GetSendingQueue().Enqueue(segments);
 
             if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
-                return true;
+                return isEnqueued;
 
             DequeueSend();
 
-            return true;
+            return isEnqueued;
         }
 
         private void DequeueSend()
