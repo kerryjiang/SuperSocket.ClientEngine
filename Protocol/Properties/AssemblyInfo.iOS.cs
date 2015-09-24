@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SuperSocket.ClientEngine.Core for Silverlight 5.0")]
-[assembly: AssemblyDescription("SuperSocket.ClientEngine.Core")]
+[assembly: AssemblyTitle("SuperSocket.ClientEngine.Protocol for iOS Unified API")]
+[assembly: AssemblyDescription("SuperSocket.ClientEngine.Protocol")]
 [assembly: AssemblyConfiguration("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("7FBCB35D-C26B-454A-8ED0-C11A0F5493C6")]
+[assembly: Guid("C24F2E17-F718-4A4B-BD37-F2D4BE8B8434")]

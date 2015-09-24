@@ -96,7 +96,7 @@ namespace SuperSocket.ClientEngine
                 throw new Exception("The socket is connecting, cannot connect again!");
 
             if (Client != null)
-                throw new Exception("The socket is connected, you neednt' connect again!");
+                throw new Exception("The socket is connected, you needn't connect again!");
 
             //If there is a proxy set, connect the proxy server by proxy connector
             if (Proxy != null)
@@ -153,7 +153,12 @@ namespace SuperSocket.ClientEngine
             if (!socket.Connected)
             {
                 m_InConnecting = false;
-                OnError(new SocketException((int)SocketError.ConnectionRefused));
+#if SILVERLIGHT || NETFX_CORE
+                var socketError = SocketError.ConnectionReset;
+#else
+                var socketError = (SocketError)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Error);
+#endif
+                OnError(new SocketException((int)socketError));
                 return;
             }
 
@@ -166,9 +171,16 @@ namespace SuperSocket.ClientEngine
 
             m_InConnecting = false;
 
-#if !SILVERLIGHT
-            //Set keep alive
-            Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+#if !SILVERLIGHT && !NETFX_CORE
+            try
+            {
+                //Set keep alive
+                Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+            }
+            catch
+            {
+            }
+            
 #endif
             OnGetSocket(e);
         }
@@ -200,32 +212,36 @@ namespace SuperSocket.ClientEngine
                 m_IsSending = 0;
             }
 
-            if (client.Connected)
+            try
+            {
+                client.Shutdown(SocketShutdown.Both);
+            }
+            catch
+            {}
+            finally
             {
                 try
                 {
-                    client.Shutdown(SocketShutdown.Both);
+#if NETFX_CORE
+                    client.Shutdown(SocketShutdown.Both);                    
+                    client.Dispose();
+#else
+                    client.Close();
+#endif
                 }
-                catch { }
-                finally
-                {
-                    try
-                    {
-                        client.Close();
-                    }
-                    catch {}
-                }
+                catch
+                {}
             }
 
             return fireOnClosedEvent;
         }
 
-        private void DetectConnected()
+        private bool DetectConnected()
         {
             if (Client != null)
-                return;
-
-            throw new Exception("The socket is not connected!", new SocketException((int)SocketError.NotConnected));
+                return true;
+            OnError(new SocketException((int)SocketError.NotConnected));
+            return false;
         }
 
         private IBatchQueue<ArraySegment<byte>> m_SendingQueue;
@@ -241,7 +257,7 @@ namespace SuperSocket.ClientEngine
                     return m_SendingQueue;
 
                 //Sending queue size must be greater than 3
-                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 3), (t) => t.Array == null);
+                m_SendingQueue = new ConcurrentBatchQueue<ArraySegment<byte>>(Math.Max(SendingQueueSize, 1024), (t) => t.Array == null || t.Count == 0);
                 return m_SendingQueue;
             }
         }
@@ -265,32 +281,58 @@ namespace SuperSocket.ClientEngine
 
         public override bool TrySend(ArraySegment<byte> segment)
         {
-            DetectConnected();
+            if (segment.Array == null || segment.Count == 0)
+            {
+                throw new Exception("The data to be sent cannot be empty.");
+            }
 
-            if (!GetSendingQueue().Enqueue(segment))
-                return false;
+            if (!DetectConnected())
+            {
+                //may be return false? 
+                return true;
+            }
+
+            var isEnqueued = GetSendingQueue().Enqueue(segment);
 
             if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
-                return true;
+                return isEnqueued;
 
             DequeueSend();
 
-            return true;
+            return isEnqueued;
         }
 
         public override bool TrySend(IList<ArraySegment<byte>> segments)
         {
-            DetectConnected();
+            if (segments == null || segments.Count == 0)
+            {
+                throw new ArgumentNullException("segments");
+            }
 
-            if (!GetSendingQueue().Enqueue(segments))
-                return false;
+            for (var i = 0; i < segments.Count; i++)
+            {
+                var seg = segments[i];
+                
+                if (seg.Count == 0)
+                {
+                    throw new Exception("The data piece to be sent cannot be empty.");
+                }
+            }
+
+            if (!DetectConnected())
+            {
+                //may be return false? 
+                return true;
+            }
+
+            var isEnqueued = GetSendingQueue().Enqueue(segments);
 
             if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
-                return true;
+                return isEnqueued;
 
             DequeueSend();
 
-            return true;
+            return isEnqueued;
         }
 
         private void DequeueSend()

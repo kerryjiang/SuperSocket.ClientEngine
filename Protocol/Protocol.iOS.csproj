@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B368313E-61F3-465F-9486-4F654C968F3B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SuperSocket.ClientEngine.Protocol</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>SuperSocket.ClientEngine.Protocol</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.iOS.csproj">
+      <Project>{6B504618-9BFE-463C-9160-FE656E0DCF35}</Project>
+      <Name>Common.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.iOS.csproj">
+      <Project>{E5069119-EB33-4CE9-AA54-4A4B295AB85E}</Project>
+      <Name>Core.iOS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.iOS.cs" />
+    <Compile Include="ArraySegmentEx.cs" />
+    <Compile Include="ArraySegmentList.cs" />
+    <Compile Include="AssemblyUtil.cs" />
+    <Compile Include="BinaryCommandInfo.cs" />
+    <Compile Include="CommandInfo.cs" />
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="IClientCommandReader.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="ICommandInfo.cs" />
+    <Compile Include="StringCommandInfo.cs" />
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+</Project>

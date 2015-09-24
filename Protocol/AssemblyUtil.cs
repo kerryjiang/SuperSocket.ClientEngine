@@ -4,7 +4,7 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 
-#if SILVERLIGHT
+#if SILVERLIGHT || NETFX_CORE
 #else
 using System.Runtime.Serialization.Formatters.Binary;
 #endif
@@ -75,8 +75,16 @@ namespace SuperSocket.ClientEngine.Protocol
 
         public static IEnumerable<Type> GetImplementTypes<TBaseType>(this Assembly assembly)
         {
+#if NETFX_CORE
+            return assembly.GetExportedTypes().Where(t =>
+            {
+                var typeInfo = t.GetTypeInfo();
+                return typeInfo.IsSubclassOf(typeof(TBaseType)) && typeInfo.IsClass && !typeInfo.IsAbstract;
+            });
+#else
             return assembly.GetExportedTypes().Where(t =>
                 t.IsSubclassOf(typeof(TBaseType)) && t.IsClass && !t.IsAbstract);
+#endif
         }
 
         public static IEnumerable<TBaseInterface> GetImplementedObjectsByInterface<TBaseInterface>(this Assembly assembly)
@@ -90,9 +98,13 @@ namespace SuperSocket.ClientEngine.Protocol
             for (int i = 0; i < arrType.Length; i++)
             {
                 var currentImplementType = arrType[i];
-
+#if NETFX_CORE
+                if (currentImplementType.GetTypeInfo().IsAbstract)
+                    continue;
+#else
                 if (currentImplementType.IsAbstract)
                     continue;
+#endif
 
                 var foundInterface = currentImplementType.GetInterfaces().SingleOrDefault(x => x == interfaceType);
 
@@ -105,7 +117,7 @@ namespace SuperSocket.ClientEngine.Protocol
             return result;
         }
 
-#if SILVERLIGHT
+#if SILVERLIGHT || NETFX_CORE
 #else
         public static T BinaryClone<T>(this T target)
         {
@@ -123,10 +135,10 @@ namespace SuperSocket.ClientEngine.Protocol
 
         public static void CopyPropertiesTo(this object source, object target)
         {
-            PropertyInfo[] properties = source.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+            PropertyInfo[] properties = source.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
             Dictionary<string, PropertyInfo> sourcePropertiesDict = properties.ToDictionary(p => p.Name);
 
-            PropertyInfo[] targetProperties = target.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+            PropertyInfo[] targetProperties = target.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
             for (int i = 0; i < targetProperties.Length; i++)
             {
                 var p = targetProperties[i];
@@ -149,7 +161,11 @@ namespace SuperSocket.ClientEngine.Protocol
 
             foreach (var a in assemblies)
             {
+#if NETFX_CORE                
+                result.Add(Assembly.Load(new AssemblyName(a)));
+#else
                 result.Add(Assembly.Load(a));
+#endif
             }
 
             return result;
