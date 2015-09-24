@@ -4,6 +4,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
+using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SuperSocket.ClientEngine
@@ -19,20 +20,23 @@ namespace SuperSocket.ClientEngine
             public PosList<ArraySegment<byte>> SendingItems { get; set; }
         }
 
+        private readonly SslProtocols m_enabledSslProtocols;
+
         private SslStream m_SslStream;
 
         public bool AllowUnstrustedCertificate { get; set; }
 
-        public SslStreamTcpSession(EndPoint remoteEndPoint)
+        
+        public SslStreamTcpSession(EndPoint remoteEndPoint, SslProtocols enabledSslProtocols)
             : base(remoteEndPoint)
         {
-
+            this.m_enabledSslProtocols = enabledSslProtocols;
         }
 
-        public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize)
+        public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize, SslProtocols enabledSslProtocols)
             : base(remoteEndPoint, receiveBufferSize)
         {
-
+            this.m_enabledSslProtocols = enabledSslProtocols;
         }
 
         protected override void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e)
@@ -50,7 +54,7 @@ namespace SuperSocket.ClientEngine
                 var sslStream = new SslStream(new NetworkStream(Client));
 #endif
 
-                sslStream.BeginAuthenticateAsClient(HostName, OnAuthenticated, sslStream);
+                sslStream.BeginAuthenticateAsClient(HostName, new X509CertificateCollection(), m_enabledSslProtocols, false, OnAuthenticated, sslStream);
             }
             catch (Exception exc)
             {
