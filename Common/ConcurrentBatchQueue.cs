@@ -187,8 +187,17 @@ namespace SuperSocket.ClientEngine
 
             if (count <= 0)
                 return false;
-            
+
+#if UNITY
+            var oldEntity = m_Entity;
+
+            if (m_Entity == entity)
+            {
+                m_Entity = m_BackEntity;
+            }
+#else
             var oldEntity = Interlocked.CompareExchange(ref m_Entity, m_BackEntity, entity);
+#endif
 
             if (!ReferenceEquals(oldEntity, entity))
                 return false;
