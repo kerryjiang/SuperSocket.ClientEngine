@@ -58,7 +58,10 @@ namespace System.Net.Security
 
             try
             {
+#pragma warning disable 0612,0618
                 m_TlsHandler.Connect(new LegacyTlsClient(new AlwaysValidVerifyer()));
+#pragma warning restore 0612,0618
+
                 m_SecureStream = m_TlsHandler.Stream;
             }
             catch (Exception e)
