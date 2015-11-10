@@ -107,6 +107,7 @@
     <Compile Include="Core\SslStream.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="GlobalAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.WP80.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />

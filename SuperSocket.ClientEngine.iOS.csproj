@@ -2,45 +2,43 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8FD00E43-2FA2-47F4-9240-B77AE3426122}</ProjectGuid>
+    <ProjectGuid>{248C3574-53DB-4C21-B58E-80CC99B3296C}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
-    <AssemblyName>SuperSocket.ClientEngine</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <RootNamespace>SuperSocket.ClientEngine.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>SuperSocket.ClientEngine.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NO_SPINWAIT_CLASS</DefineConstants>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NO_SPINWAIT_CLASS</DefineConstants>
+    <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Common\ConcurrentBatchQueue.Net20.cs" />
+    <Compile Include="Common\ASCIIEncoding.cs" />
+    <Compile Include="Common\ConcurrentBatchQueue.cs" />
     <Compile Include="Common\ConnectAsyncExtension.cs" />
+    <Compile Include="Common\ConnectAsyncExtension.MonoDroid.cs" />
     <Compile Include="Common\ConnectAsyncExtension.Net.cs" />
-    <Compile Include="Common\ConnectAsyncExtension.Net35.cs" />
-    <Compile Include="Common\DnsEndPoint.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\IBatchQueue.cs" />
     <Compile Include="Common\IProxyConnector.cs" />
@@ -49,7 +47,6 @@
     <Compile Include="Common\SearchMarkState.cs" />
     <Compile Include="Core\AsyncTcpSession.cs" />
     <Compile Include="Core\ClientSession.cs" />
-    <Compile Include="Core\ConcurrentQueue.cs" />
     <Compile Include="Core\DataEventArgs.cs" />
     <Compile Include="Core\ErrorEventArgs.cs" />
     <Compile Include="Core\IBufferSetter.cs" />
@@ -57,9 +54,10 @@
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.Net35.cs" />
+    <Compile Include="Properties\AssemblyInfo.iOS.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />
+    <Compile Include="Protocol\AssemblyUtil.cs" />
     <Compile Include="Protocol\BinaryCommandInfo.cs" />
     <Compile Include="Protocol\CommandInfo.cs" />
     <Compile Include="Protocol\DelegateCommand.cs" />
@@ -73,12 +71,13 @@
     <Compile Include="Proxy\Socks4Connector.cs" />
     <Compile Include="Proxy\Socks5Connector.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
