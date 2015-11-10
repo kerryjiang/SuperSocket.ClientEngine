@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{161B7DBF-CDE1-4C6D-B555-E190E7D6A0AC}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;NO_SPINWAIT_CLASS</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;NO_SPINWAIT_CLASS</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.0.0.0, Culture=neutral, PublicKeyToken=414dbeade6b65799, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\BouncyCastle\SL50\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core">
+      <HintPath>$(TargetFrameworkDirectory)System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\ASCIIEncoding.cs" />
+    <Compile Include="Common\ConcurrentBatchQueue.Net20.cs" />
+    <Compile Include="Common\ConnectAsyncExtension.cs" />
+    <Compile Include="Common\ConnectAsyncExtension.Silverlight.cs" />
+    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\IBatchQueue.cs" />
+    <Compile Include="Common\IProxyConnector.cs" />
+    <Compile Include="Common\NameValueCollection.cs" />
+    <Compile Include="Common\PosList.cs" />
+    <Compile Include="Common\ProxyEventArgs.cs" />
+    <Compile Include="Common\SearchMarkState.cs" />
+    <Compile Include="Core\AsyncTcpSession.cs" />
+    <Compile Include="Core\ClientSession.cs" />
+    <Compile Include="Core\ConcurrentQueue.cs" />
+    <Compile Include="Core\DataEventArgs.cs" />
+    <Compile Include="Core\ErrorEventArgs.cs" />
+    <Compile Include="Core\IBufferSetter.cs" />
+    <Compile Include="Core\IClientSession.cs" />
+    <Compile Include="Core\NetworkStream.cs" />
+    <Compile Include="Core\SslStream.cs" />
+    <Compile Include="Core\SslStreamTcpSession.cs" />
+    <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.SL50.cs" />
+    <Compile Include="Protocol\ArraySegmentEx.cs" />
+    <Compile Include="Protocol\ArraySegmentList.cs" />
+    <Compile Include="Protocol\AssemblyUtil.cs" />
+    <Compile Include="Protocol\BinaryCommandInfo.cs" />
+    <Compile Include="Protocol\CommandInfo.cs" />
+    <Compile Include="Protocol\DelegateCommand.cs" />
+    <Compile Include="Protocol\IClientCommandReader.cs" />
+    <Compile Include="Protocol\ICommand.cs" />
+    <Compile Include="Protocol\ICommandInfo.cs" />
+    <Compile Include="Protocol\StringCommandInfo.cs" />
+    <Compile Include="Proxy\HttpConnectProxy.cs" />
+    <Compile Include="Proxy\ProxyConnectorBase.cs" />
+    <Compile Include="Proxy\Socks4aConnector.cs" />
+    <Compile Include="Proxy\Socks4Connector.cs" />
+    <Compile Include="Proxy\Socks5Connector.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
