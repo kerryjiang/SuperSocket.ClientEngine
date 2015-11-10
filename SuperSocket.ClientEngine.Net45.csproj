@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8BBFBE4A-B91A-4DCC-92D5-FB0436E2544F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
+    <AssemblyName>SuperSocket.ClientEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\ConcurrentBatchQueue.cs" />
+    <Compile Include="Common\ConnectAsyncExtension.cs" />
+    <Compile Include="Common\ConnectAsyncExtension.Net.cs" />
+    <Compile Include="Common\ConnectAsyncExtension.Net40.cs" />
+    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\IBatchQueue.cs" />
+    <Compile Include="Common\IProxyConnector.cs" />
+    <Compile Include="Common\PosList.cs" />
+    <Compile Include="Common\ProxyEventArgs.cs" />
+    <Compile Include="Common\SearchMarkState.cs" />
+    <Compile Include="Core\AsyncTcpSession.cs" />
+    <Compile Include="Core\ClientSession.cs" />
+    <Compile Include="Core\DataEventArgs.cs" />
+    <Compile Include="Core\ErrorEventArgs.cs" />
+    <Compile Include="Core\IBufferSetter.cs" />
+    <Compile Include="Core\IClientSession.cs" />
+    <Compile Include="Core\SslStreamTcpSession.cs" />
+    <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.Net45.cs" />
+    <Compile Include="Protocol\ArraySegmentEx.cs" />
+    <Compile Include="Protocol\ArraySegmentList.cs" />
+    <Compile Include="Protocol\BinaryCommandInfo.cs" />
+    <Compile Include="Protocol\CommandInfo.cs" />
+    <Compile Include="Protocol\DelegateCommand.cs" />
+    <Compile Include="Protocol\IClientCommandReader.cs" />
+    <Compile Include="Protocol\ICommand.cs" />
+    <Compile Include="Protocol\ICommandInfo.cs" />
+    <Compile Include="Protocol\StringCommandInfo.cs" />
+    <Compile Include="Proxy\HttpConnectProxy.cs" />
+    <Compile Include="Proxy\ProxyConnectorBase.cs" />
+    <Compile Include="Proxy\Socks4aConnector.cs" />
+    <Compile Include="Proxy\Socks4Connector.cs" />
+    <Compile Include="Proxy\Socks5Connector.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
