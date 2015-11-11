@@ -20,23 +20,22 @@ namespace SuperSocket.ClientEngine
             public PosList<ArraySegment<byte>> SendingItems { get; set; }
         }
 
-        private readonly SslProtocols m_enabledSslProtocols;
+        private readonly SslProtocols m_EnabledSslProtocols;
 
         private SslStream m_SslStream;
 
         public bool AllowUnstrustedCertificate { get; set; }
 
-        
         public SslStreamTcpSession(EndPoint remoteEndPoint, SslProtocols enabledSslProtocols)
             : base(remoteEndPoint)
         {
-            this.m_enabledSslProtocols = enabledSslProtocols;
+            this.m_EnabledSslProtocols = enabledSslProtocols;
         }
 
         public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize, SslProtocols enabledSslProtocols)
             : base(remoteEndPoint, receiveBufferSize)
         {
-            this.m_enabledSslProtocols = enabledSslProtocols;
+            this.m_EnabledSslProtocols = enabledSslProtocols;
         }
 
         protected override void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e)
@@ -54,7 +53,7 @@ namespace SuperSocket.ClientEngine
                 var sslStream = new SslStream(new NetworkStream(Client));
 #endif
 
-                sslStream.BeginAuthenticateAsClient(HostName, new X509CertificateCollection(), m_enabledSslProtocols, false, OnAuthenticated, sslStream);
+                sslStream.BeginAuthenticateAsClient(HostName, new X509CertificateCollection(), m_EnabledSslProtocols, false, OnAuthenticated, sslStream);
             }
             catch (Exception exc)
             {
