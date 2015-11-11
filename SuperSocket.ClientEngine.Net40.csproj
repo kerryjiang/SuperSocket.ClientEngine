@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SuperSocket.ProtoBase">
+      <HintPath>References\SuperSocket.ProtoBase.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -48,6 +51,7 @@
     <Compile Include="Common\PosList.cs" />
     <Compile Include="Common\ProxyEventArgs.cs" />
     <Compile Include="Common\SearchMarkState.cs" />
+    <Compile Include="EasyClientBase.cs" />
     <Compile Include="Core\AsyncTcpSession.cs" />
     <Compile Include="Core\ClientSession.cs" />
     <Compile Include="Core\DataEventArgs.cs" />
@@ -56,7 +60,9 @@
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="EasyClient.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
+    <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.Net40.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />

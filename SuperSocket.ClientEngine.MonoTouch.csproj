@@ -52,7 +52,10 @@
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="EasyClient.cs" />
+    <Compile Include="EasyClientBase.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
+    <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.MonoTouch.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />
@@ -73,6 +76,10 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\SuperSocket.ProtoBase.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -81,7 +88,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="6447caeb-757a-4d47-91ba-71e521aa7b42" />
+      <UserProperties ProjectLinkReference="6447caeb-757a-4d47-91ba-71e521aa7b42" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

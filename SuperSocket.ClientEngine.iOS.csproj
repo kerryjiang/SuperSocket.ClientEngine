@@ -53,7 +53,10 @@
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="EasyClient.cs" />
+    <Compile Include="EasyClientBase.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
+    <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.iOS.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />
@@ -74,6 +77,9 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="SuperSocket.ProtoBase">
+      <HintPath>References\SuperSocket.ProtoBase.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
