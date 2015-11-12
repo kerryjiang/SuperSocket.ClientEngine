@@ -6,6 +6,7 @@ using SuperSocket.ProtoBase;
 
 namespace SuperSocket.ClientEngine
 {
+#if !NOEASYCLIENT
     public class PackageEventArgs<TPackageInfo> : EventArgs
         where TPackageInfo : IPackageInfo
     {
@@ -16,4 +17,5 @@ namespace SuperSocket.ClientEngine
             Package = package;
         }
     }
+#endif
 }

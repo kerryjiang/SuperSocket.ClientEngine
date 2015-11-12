@@ -40,7 +40,6 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\IBatchQueue.cs" />
     <Compile Include="Common\IProxyConnector.cs" />
-    <Compile Include="Common\NameValueCollection.cs" />
     <Compile Include="Common\PosList.cs" />
     <Compile Include="Common\ProxyEventArgs.cs" />
     <Compile Include="Common\SearchMarkState.cs" />
@@ -74,21 +73,22 @@
     <Compile Include="Proxy\Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="packages.SuperSocket.ClientEngine.MonoTouch.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\SuperSocket.ProtoBase.dll</HintPath>
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.3\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="6447caeb-757a-4d47-91ba-71e521aa7b42" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="6447caeb-757a-4d47-91ba-71e521aa7b42" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

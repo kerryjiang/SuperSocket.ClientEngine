@@ -52,14 +52,13 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\SuperSocket.ProtoBase.dll</HintPath>
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.3\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="system" />
     <Reference Include="System.Core">
       <HintPath>$(TargetFrameworkDirectory)System.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +104,9 @@
     <Compile Include="Proxy\Socks4aConnector.cs" />
     <Compile Include="Proxy\Socks4Connector.cs" />
     <Compile Include="Proxy\Socks5Connector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.SuperSocket.ClientEngine.SL50.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

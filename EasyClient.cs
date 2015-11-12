@@ -8,6 +8,7 @@ using System.Net;
 
 namespace SuperSocket.ClientEngine
 {
+#if !NOEASYCLIENT
     public class EasyClient : EasyClientBase
     {
         public void Initialize<TPackageInfo>(IReceiveFilter<TPackageInfo> receiveFilter, Action<TPackageInfo> handler)
@@ -58,4 +59,5 @@ namespace SuperSocket.ClientEngine
             handler(this, new PackageEventArgs<TPackageInfo>(package));
         }
     }
+#endif
 }
