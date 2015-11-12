@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>SuperSocket.ClientEngine</id>
+	<title>SuperSocket.ClientEngine, a socket client util</title>
+    <version>0.6</version>
+    <authors>Kerry Jiang</authors>
+    <owners>Kerry Jiang</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>http://www.supersocket.net/</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>It's a .NET socket tool which can simplify the socket client developing</description>
+    <tags>SuperSocket, Socket Client</tags>
+	<references>	  
+	  <reference file="SuperSocket.ClientEngine.dll" />
+	</references>
+  </metadata>
+</package>
