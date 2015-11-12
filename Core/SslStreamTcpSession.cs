@@ -4,7 +4,9 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
+#if !SILVERLIGHT
 using System.Security.Authentication;
+#endif
 using System.Security.Cryptography.X509Certificates;
 
 namespace SuperSocket.ClientEngine
@@ -20,11 +22,12 @@ namespace SuperSocket.ClientEngine
             public PosList<ArraySegment<byte>> SendingItems { get; set; }
         }
 
-        private readonly SslProtocols m_EnabledSslProtocols;
-
         private SslStream m_SslStream;
 
         public bool AllowUnstrustedCertificate { get; set; }
+
+#if !SILVERLIGHT
+        private readonly SslProtocols m_EnabledSslProtocols = SslProtocols.Default;
 
         public SslStreamTcpSession(EndPoint remoteEndPoint, SslProtocols enabledSslProtocols)
             : base(remoteEndPoint)
@@ -37,6 +40,21 @@ namespace SuperSocket.ClientEngine
         {
             this.m_EnabledSslProtocols = enabledSslProtocols;
         }
+#else
+
+        public SslStreamTcpSession(EndPoint remoteEndPoint)
+            : base(remoteEndPoint)
+        {
+
+        }
+
+        public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize)
+            : base(remoteEndPoint, receiveBufferSize)
+        {
+
+        }
+
+#endif
 
         protected override void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e)
         {
@@ -49,11 +67,13 @@ namespace SuperSocket.ClientEngine
             {
 #if !SILVERLIGHT
                 var sslStream = new SslStream(new NetworkStream(Client), false, ValidateRemoteCertificate);
+                sslStream.BeginAuthenticateAsClient(HostName, new X509CertificateCollection(), m_EnabledSslProtocols, false, OnAuthenticated, sslStream);
 #else
                 var sslStream = new SslStream(new NetworkStream(Client));
+                sslStream.BeginAuthenticateAsClient(HostName, OnAuthenticated, sslStream);
 #endif
 
-                sslStream.BeginAuthenticateAsClient(HostName, new X509CertificateCollection(), m_EnabledSslProtocols, false, OnAuthenticated, sslStream);
+
             }
             catch (Exception exc)
             {
