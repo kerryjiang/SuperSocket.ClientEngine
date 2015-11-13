@@ -61,6 +61,15 @@
     </Reference>
     <Reference Include="System.Net" />
   </ItemGroup>
+  <Choose>
+    <When Condition=" '$(NoEasyClient)'!='true' ">
+      <ItemGroup>
+        <Compile Include="EasyClient.cs" />
+        <Compile Include="EasyClientBase.cs" />
+        <Compile Include="PackageEventArgs.cs" />
+      </ItemGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <Compile Include="Common\ASCIIEncoding.cs" />
     <Compile Include="Common\ConcurrentBatchQueue.Net20.cs" />
@@ -84,10 +93,7 @@
     <Compile Include="Core\SslStream.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
-    <Compile Include="EasyClient.cs" />
-    <Compile Include="EasyClientBase.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
-    <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.SL50.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />

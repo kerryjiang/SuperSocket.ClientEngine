@@ -8,7 +8,6 @@ using System.Net;
 
 namespace SuperSocket.ClientEngine
 {
-#if !NOEASYCLIENT
     public abstract class EasyClientBase : IBufferState
     {
         private IClientSession m_Session;
@@ -148,5 +147,4 @@ namespace SuperSocket.ClientEngine
 
         }
     }
-#endif
 }

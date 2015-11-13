@@ -8,10 +8,10 @@ if not exist %fdir% (
 
 set msbuild=%fdir%\v4.0.30319\msbuild.exe
 
-%msbuild% SuperSocket.ClientEngine.MonoTouch.sln /p:Configuration=Debug /t:Clean;Rebuild /p:OutputPath=..\bin\MonoTouch\Debug
+%msbuild% SuperSocket.ClientEngine.MonoTouch.csproj /p:Configuration=Debug /t:Clean;Rebuild /p:OutputPath=..\bin\monotouch10\Debug
 FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
 
-%msbuild% SuperSocket.ClientEngine.MonoTouch.sln /p:Configuration=Release /t:Clean;Rebuild /p:OutputPath=..\bin\MonoTouch\Release
+%msbuild% SuperSocket.ClientEngine.MonoTouch.csproj /p:Configuration=Release /t:Clean;Rebuild /p:OutputPath=..\bin\monotouch10\Release
 FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
 
 

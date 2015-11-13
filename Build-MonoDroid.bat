@@ -8,10 +8,10 @@ if not exist %fdir% (
 
 set msbuild=%fdir%\v4.0.30319\msbuild.exe
 
-%msbuild% SuperSocket.ClientEngine.MonoDroid.sln /p:Configuration=Debug /t:Clean;Rebuild /p:OutputPath=..\bin\MonoDroid\Debug
+%msbuild% SuperSocket.ClientEngine.MonoDroid.csproj /p:Configuration=Debug /t:Clean;Rebuild /p:OutputPath=..\bin\monoandroid10\Debug
 FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
 
-%msbuild% SuperSocket.ClientEngine.MonoDroid.sln /p:Configuration=Release /t:Clean;Rebuild /p:OutputPath=..\bin\MonoDroid\Release
+%msbuild% SuperSocket.ClientEngine.MonoDroid.csproj /p:Configuration=Release /t:Clean;Rebuild /p:OutputPath=..\bin\monoandroid10\Release
 FOR /F "tokens=*" %%G IN ('DIR /B /AD /S obj') DO RMDIR /S /Q "%%G"
 
 

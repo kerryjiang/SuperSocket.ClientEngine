@@ -8,9 +8,9 @@
     <ProjectGuid>{248C3574-53DB-4C21-B58E-80CC99B3296C}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>SuperSocket.ClientEngine.iOS</RootNamespace>
+    <RootNamespace>SuperSocket.ClientEngine</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>SuperSocket.ClientEngine.iOS</AssemblyName>
+    <AssemblyName>SuperSocket.ClientEngine</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +33,15 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
+  <Choose>
+    <When Condition=" '$(NoEasyClient)'!='true' ">
+      <ItemGroup>
+        <Compile Include="EasyClient.cs" />
+        <Compile Include="EasyClientBase.cs" />
+        <Compile Include="PackageEventArgs.cs" />
+      </ItemGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <Compile Include="Common\ASCIIEncoding.cs" />
     <Compile Include="Common\ConcurrentBatchQueue.cs" />
@@ -53,10 +62,7 @@
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
-    <Compile Include="EasyClient.cs" />
-    <Compile Include="EasyClientBase.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
-    <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.iOS.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />
@@ -75,7 +81,6 @@
     <Compile Include="Proxy\Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="packages.SuperSocket.ClientEngine.iOS.config" />
   </ItemGroup>
   <ItemGroup>
