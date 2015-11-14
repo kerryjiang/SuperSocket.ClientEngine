@@ -12,19 +12,24 @@
     <description>It's a .NET socket tool which can simplify the socket client developing</description>
     <tags>SuperSocket, Socket Client</tags>
 	<dependencies>
-      <dependency id="SuperSocket.ProtoBase" version="1.7.0.3" />
+      <group>
+        <dependency id="SuperSocket.ProtoBase" version="1.7.0.3" />
+	  </group>
+	  <group targetFramework="sl50">		
+		<dependency id="Portable.BouncyCastle-Signed" version="1.7.0.2" />
+	  </group>
     </dependencies>
 	<references>	  
 	  <reference file="SuperSocket.ClientEngine.dll" />
 	</references>
   </metadata>
   <files>
-	<file src="output\release\net40\SuperSocket.ProtoBase.dll" target="lib/net40" />
-	<file src="output\release\net45\SuperSocket.ProtoBase.dll" target="lib/net45" />
-	<file src="output\release\sl50\SuperSocket.ProtoBase.dll" target="lib/sl50" />
-	<file src="output\release\wp80\SuperSocket.ProtoBase.dll" target="lib/wp80" />
-	<file src="output\release\monoandroid10\SuperSocket.ProtoBase.dll" target="lib/monoandroid10" />
-	<file src="output\release\monotouch10\SuperSocket.ProtoBase.dll" target="lib/monotouch10" />
-	<file src="output\release\xamarinios10\SuperSocket.ProtoBase.dll" target="lib/xamarinios10" />
+	<file src="output\net40\release\SuperSocket.ClientEngine.dll" target="lib/net40" />
+	<file src="output\net45\release\SuperSocket.ClientEngine.dll" target="lib/net45" />
+	<file src="output\sl50\release\SuperSocket.ClientEngine.dll" target="lib/sl50" />
+	<file src="output\wp80\release\SuperSocket.ClientEngine.dll" target="lib/wp80" />
+	<file src="output\monoandroid10\release\SuperSocket.ClientEngine.dll" target="lib/monoandroid10" />
+	<file src="output\monotouch10\release\SuperSocket.ClientEngine.dll" target="lib/monotouch10" />
+	<file src="output\xamarinios10\release\SuperSocket.ClientEngine.dll" target="lib/xamarinios10" />
   </files>
 </package>

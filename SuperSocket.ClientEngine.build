@@ -1,10 +1,14 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="All">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
 	<PropertyGroup>
 		<Configuration>Release</Configuration>
-    </PropertyGroup>	
-	<Target Name="All">
+    </PropertyGroup>
+	<Target Name="Build">
 		<CallTarget Targets="BuildWithoutEasyClient"/>
 		<CallTarget Targets="BuildWithEasyClient"/>
+	</Target>
+	<Target Name="Pack">
+		<Exec Command="nuget pack SuperSocket.ClientEngine.Core.nuspec"/>
+		<Exec Command="nuget pack SuperSocket.ClientEngine.nuspec"/>
 	</Target>
     <Target Name="BuildWithoutEasyClient">
 		<PropertyGroup>
