@@ -46,9 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.0.0.0, Culture=neutral, PublicKeyToken=414dbeade6b65799, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\BouncyCastle\SL50\BouncyCastle.Crypto.dll</HintPath>
+    <Reference Include="crypto, Version=1.7.0.0, Culture=neutral, PublicKeyToken=52d7d8cd84e8295f, processorArchitecture=MSIL">
+      <HintPath>packages\Portable.BouncyCastle-Signed.1.7.0.2\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch10+MonoAndroid10+xamarinmac20+xamarinios10\crypto.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
