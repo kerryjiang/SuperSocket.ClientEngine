@@ -29,6 +29,12 @@ namespace SuperSocket.ClientEngine
 #if !SILVERLIGHT
         private readonly SslProtocols m_EnabledSslProtocols = SslProtocols.Default;
 
+        public SslStreamTcpSession(EndPoint remoteEndPoint)
+            : this(remoteEndPoint, SslProtocols.Default)
+        {
+
+        }
+
         public SslStreamTcpSession(EndPoint remoteEndPoint, SslProtocols enabledSslProtocols)
             : base(remoteEndPoint)
         {
