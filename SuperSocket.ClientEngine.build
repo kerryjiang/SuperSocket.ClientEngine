@@ -14,27 +14,27 @@
 		<PropertyGroup>
 			<NoEasyClient>true</NoEasyClient>
 		</PropertyGroup>
-        <MSBuild Projects="SuperSocket.ClientEngine.Net20.csproj" Properties="Configuration=Release;OutputPath=output_core\net20\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net35.csproj" Properties="Configuration=Release;OutputPath=output_core\net35\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Properties="Configuration=Release;OutputPath=output_core\net40\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Properties="Configuration=Release;OutputPath=output_core\net45\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.SL40.csproj" Properties="Configuration=Release;OutputPath=output_core\sl40\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Properties="Configuration=Release;OutputPath=output_core\sl50\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.WP80.csproj" Properties="Configuration=Release;OutputPath=output_core\wp80\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.MonoDroid.csproj" Properties="Configuration=Release;OutputPath=output_core\monoandroid10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.MonoTouch.csproj" Properties="Configuration=Release;OutputPath=output_core\monotouch10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.iOS.csproj" Properties="Configuration=Release;OutputPath=output_core\xamarinios10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+        <MSBuild Projects="SuperSocket.ClientEngine.Net20.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net20\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net35.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net35\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net40\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net45\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.SL40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\sl40\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\sl50\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.WP80.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\wp80\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.MonoDroid.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\monoandroid10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.MonoTouch.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\monotouch10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.iOS.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\xamarinios10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
     </Target>
 	<Target Name="BuildWithEasyClient">
 		<PropertyGroup>
 			<NoEasyClient>false</NoEasyClient>
 		</PropertyGroup> 
-		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Properties="Configuration=Release;OutputPath=output\net40\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Properties="Configuration=Release;OutputPath=output\net45\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Properties="Configuration=Release;OutputPath=output\sl50\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.WP80.csproj" Properties="Configuration=Release;OutputPath=output\wp80\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.MonoDroid.csproj" Properties="Configuration=Release;OutputPath=output\monoandroid10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.MonoTouch.csproj" Properties="Configuration=Release;OutputPath=output\monotouch10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.iOS.csproj" Properties="Configuration=Release;OutputPath=output\xamarinios10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net40\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net45\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\sl50\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.WP80.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\wp80\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.MonoDroid.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\monoandroid10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.MonoTouch.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\monotouch10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.iOS.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\xamarinios10\$(Configuration);NoEasyClient=$(NoEasyClient)"/>
     </Target>
 </Project>

@@ -3,7 +3,7 @@
   <metadata>
     <id>SuperSocket.ClientEngine</id>
 	<title>SuperSocket.ClientEngine, a socket client util</title>
-    <version>0.6</version>
+    <version>0.6.0.2</version>
     <authors>Kerry Jiang</authors>
     <owners>Kerry Jiang</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
