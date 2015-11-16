@@ -3,7 +3,7 @@
   <metadata>
     <id>SuperSocket.ClientEngine</id>
 	<title>SuperSocket.ClientEngine, a socket client util</title>
-    <version>0.6.0.2</version>
+    <version>$version$</version>
     <authors>Kerry Jiang</authors>
     <owners>Kerry Jiang</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
@@ -13,7 +13,7 @@
     <tags>SuperSocket, Socket Client</tags>
 	<dependencies>
       <group>
-        <dependency id="SuperSocket.ProtoBase" version="1.7.0.3" />
+        <dependency id="SuperSocket.ProtoBase" version="1.7.0.4" />
 	  </group>
 	  <group targetFramework="sl50">		
 		<dependency id="Portable.BouncyCastle-Signed" version="1.7.0.2" />
@@ -24,7 +24,9 @@
 	</references>
   </metadata>
   <files>
-	<file src="output\net40\release\SuperSocket.ClientEngine.dll" target="lib/net40" />
+	<file src="output\net20\release\SuperSocket.ClientEngine.dll" target="lib/net20" />
+	<file src="output\net35-client\release\SuperSocket.ClientEngine.dll" target="lib/net35-client" />
+	<file src="output\net40-client\release\SuperSocket.ClientEngine.dll" target="lib/net40-client" />
 	<file src="output\net45\release\SuperSocket.ClientEngine.dll" target="lib/net45" />
 	<file src="output\sl50\release\SuperSocket.ClientEngine.dll" target="lib/sl50" />
 	<file src="output\wp80\release\SuperSocket.ClientEngine.dll" target="lib/wp80" />

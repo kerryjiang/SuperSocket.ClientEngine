@@ -1,0 +1,137 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using SuperSocket.ProtoBase;
+using System.Net;
+
+namespace SuperSocket.ClientEngine
+{
+    public abstract class EasyClientBase : IBufferState
+    {
+        private IClientSession m_Session;
+        private AutoResetEvent m_ConnectEvent = new AutoResetEvent(false);
+        private AutoResetEvent m_CloseEvent = new AutoResetEvent(false);
+        private bool m_Connected = false;
+
+        protected IPipelineProcessor PipeLineProcessor { get; set; }
+
+        public int ReceiveBufferSize { get; set; }
+
+        public EasyClientBase()
+        {
+
+        }
+
+        public bool IsConnected { get { return m_Connected; } }
+
+        public void BeginConnect(EndPoint serverEndPoint)
+        {
+            if (PipeLineProcessor == null)
+                throw new Exception("This client has not been initialized.");
+
+            m_Session = new AsyncTcpSession(serverEndPoint, 4096);
+            m_Session.Connected += new EventHandler(m_Session_Connected);
+            m_Session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
+            m_Session.Closed += new EventHandler(m_Session_Closed);
+            m_Session.DataReceived += new EventHandler<DataEventArgs>(m_Session_DataReceived);
+
+            if (ReceiveBufferSize > 0)
+                m_Session.ReceiveBufferSize = ReceiveBufferSize;
+
+            m_Session.Connect();
+        }
+
+        public void Send(ArraySegment<byte> segment)
+        {
+            if (!m_Connected || m_Session == null)
+                throw new Exception("The socket is not connected.");
+
+            m_Session.Send(segment);
+        }
+
+        public void Send(List<ArraySegment<byte>> segments)
+        {
+            if (!m_Connected || m_Session == null)
+                throw new Exception("The socket is not connected.");
+
+            m_Session.Send(segments);
+        }
+
+        public void Close()
+        {
+            if (m_Session != null && !m_Connected)
+            {
+                m_Session.Close();
+            }
+        }
+
+        void m_Session_DataReceived(object sender, DataEventArgs e)
+        {
+            PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length), this as IBufferState);
+        }
+
+        void m_Session_Error(object sender, ErrorEventArgs e)
+        {
+            if (!m_Connected)
+            {
+                m_ConnectEvent.Set();
+            }
+
+            OnError(e);
+        }
+
+        private void OnError(Exception e)
+        {
+            OnError(new ErrorEventArgs(e));
+        }
+
+        private void OnError(ErrorEventArgs args)
+        {
+            var handler = Error;
+
+            if (handler != null)
+                handler(this, args);
+        }
+
+        public event EventHandler<ErrorEventArgs> Error;
+
+        void m_Session_Closed(object sender, EventArgs e)
+        {
+            m_Connected = false;
+
+            var handler = Closed;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+
+            m_ConnectEvent.Set();
+        }
+
+        public event EventHandler Closed;
+
+        void m_Session_Connected(object sender, EventArgs e)
+        {
+            m_ConnectEvent.Set();
+
+            var handler = Connected;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler Connected;
+
+        int IBufferState.DecreaseReference()
+        {
+            return 0;
+        }
+
+        void IBufferState.IncreaseReference()
+        {
+
+        }
+    }
+}

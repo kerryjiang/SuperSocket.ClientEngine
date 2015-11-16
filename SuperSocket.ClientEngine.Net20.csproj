@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.4, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.4\lib\net20\SuperSocket.ProtoBase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -41,8 +45,6 @@
     <Compile Include="Common\DnsEndPoint.cs" />
     <Compile Include="Common\ExtensionAttribute.cs" />
     <Compile Include="Common\Extensions.cs" />
-    <Compile Include="Common\GenericDelegates.Action.cs" />
-    <Compile Include="Common\GenericDelegates.Func.cs" />
     <Compile Include="Common\IBatchQueue.cs" />
     <Compile Include="Common\IProxyConnector.cs" />
     <Compile Include="Common\PosList.cs" />
@@ -57,7 +59,10 @@
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="EasyClient.cs" />
+    <Compile Include="EasyClientBase.Net20.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
+    <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.Net20.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />

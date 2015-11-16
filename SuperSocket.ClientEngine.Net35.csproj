@@ -12,6 +12,7 @@
     <AssemblyName>SuperSocket.ClientEngine</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SuperSocket.ProtoBase">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.4\lib\net35-client\SuperSocket.ProtoBase.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -55,7 +59,10 @@
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
+    <Compile Include="EasyClient.cs" />
+    <Compile Include="EasyClientBase.Net20.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
+    <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.Net35.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />
