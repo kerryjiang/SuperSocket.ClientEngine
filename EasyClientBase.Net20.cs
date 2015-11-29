@@ -12,7 +12,6 @@ namespace SuperSocket.ClientEngine
     {
         private IClientSession m_Session;
         private AutoResetEvent m_ConnectEvent = new AutoResetEvent(false);
-        private AutoResetEvent m_CloseEvent = new AutoResetEvent(false);
         private bool m_Connected = false;
 
         protected IPipelineProcessor PipeLineProcessor { get; set; }
