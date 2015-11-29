@@ -84,6 +84,11 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
+    <Compile Include="EasyClient.cs" />
+    <Compile Include="EasyClientBase.cs" />
+	<Compile Include="PackageEventArgs.cs" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ASCIIEncoding.cs" />
     <Compile Include="Common\ConcurrentBatchQueue.Net20.cs" />
@@ -106,11 +111,8 @@
     <Compile Include="Core\NetworkStream.cs" />
     <Compile Include="Core\SslStream.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
-    <Compile Include="Core\TcpClientSession.cs" />
-    <Compile Include="EasyClient.cs" />
-    <Compile Include="EasyClientBase.cs" />
+    <Compile Include="Core\TcpClientSession.cs" />    
     <Compile Include="GlobalAssemblyInfo.cs" />
-    <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.WP80.cs" />
     <Compile Include="Protocol\ArraySegmentEx.cs" />
     <Compile Include="Protocol\ArraySegmentList.cs" />

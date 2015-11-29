@@ -43,15 +43,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
-  <Choose>
-    <When Condition=" '$(NoEasyClient)'!='true' ">
-      <ItemGroup>
-        <Compile Include="EasyClient.cs" />
-        <Compile Include="EasyClientBase.cs" />
-        <Compile Include="PackageEventArgs.cs" />
-      </ItemGroup>
-    </When>
-  </Choose>
+  <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
+    <Compile Include="EasyClient.cs" />
+    <Compile Include="EasyClientBase.cs" />
+	<Compile Include="PackageEventArgs.cs" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConcurrentBatchQueue.cs" />
     <Compile Include="Common\ConnectAsyncExtension.cs" />
