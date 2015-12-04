@@ -31,6 +31,7 @@
 	<file src="output\sl50\release\SuperSocket.ClientEngine.dll" target="lib/sl50" />
 	<file src="output\wp80\release\SuperSocket.ClientEngine.dll" target="lib/wp80" />
 	<file src="output\win\release\SuperSocket.ClientEngine.dll" target="lib/win" />
+	<file src="output\win\release\SuperSocket.ClientEngine.pri" target="lib/win" />
 	<file src="output\monoandroid10\release\SuperSocket.ClientEngine.dll" target="lib/monoandroid10" />
 	<file src="output\monotouch10\release\SuperSocket.ClientEngine.dll" target="lib/monotouch10" />
 	<file src="output\xamarinios10\release\SuperSocket.ClientEngine.dll" target="lib/xamarinios10" />
