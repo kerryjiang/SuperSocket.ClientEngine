@@ -112,6 +112,7 @@ namespace SuperSocket.ClientEngine
 
         void m_Session_Connected(object sender, EventArgs e)
         {
+            m_Connected = true;
             m_ConnectEvent.Set();
 
             var handler = Connected;
