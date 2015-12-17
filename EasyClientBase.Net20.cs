@@ -60,9 +60,11 @@ namespace SuperSocket.ClientEngine
 
         public void Close()
         {
-            if (m_Session != null && !m_Connected)
+            var session = m_Session;
+            
+            if (session != null && m_Connected)
             {
-                m_Session.Close();
+                session.Close();
             }
         }
 

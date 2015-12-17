@@ -63,11 +63,14 @@ namespace SuperSocket.ClientEngine
 
         public Task<bool> Close()
         {
-            if(m_Session != null && !m_Connected)
+            var session = m_Session;
+            
+            if(session != null && m_Connected)
             {
-                m_CloseTaskSource = new TaskCompletionSource<bool>();
-                m_Session.Close();
-                return m_CloseTaskSource.Task;
+                var closeTaskSrc = new TaskCompletionSource<bool>();
+                session.Close();
+                m_CloseTaskSource = closeTaskSrc;
+                return closeTaskSrc.Task;
             }
 
             return null;
