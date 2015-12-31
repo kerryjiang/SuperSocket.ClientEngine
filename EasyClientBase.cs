@@ -78,7 +78,10 @@ namespace SuperSocket.ClientEngine
 
         void m_Session_DataReceived(object sender, DataEventArgs e)
         {
-            PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length), this as IBufferState);
+            //PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length), this as IBufferState);
+            var buffer = new byte[e.Length - e.Offset];
+            Array.Copy(e.Data, e.Offset, buffer, 0, buffer.Length);
+            PipeLineProcessor.Process(new ArraySegment<byte>(buffer), this as IBufferState);
         }
 
         void m_Session_Error(object sender, ErrorEventArgs e)
