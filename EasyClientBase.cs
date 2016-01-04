@@ -78,7 +78,23 @@ namespace SuperSocket.ClientEngine
 
         void m_Session_DataReceived(object sender, DataEventArgs e)
         {
-            PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length), this as IBufferState);
+            var result = PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length), this as IBufferState);
+
+            // allocate new receive buffer if the previous one was cached
+            if (result.State == ProcessState.Cached)
+            {
+                var session = m_Session;
+
+                if (session != null)
+                {
+                    var bufferSetter = session as IBufferSetter;
+
+                    if (bufferSetter != null)
+                    {
+                        bufferSetter.SetBuffer(new ArraySegment<byte>(new byte[session.ReceiveBufferSize]));
+                    }
+                }
+            }
         }
 
         void m_Session_Error(object sender, ErrorEventArgs e)
