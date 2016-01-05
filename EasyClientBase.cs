@@ -101,8 +101,11 @@ namespace SuperSocket.ClientEngine
         {
             if (!m_Connected)
             {
-                m_ConnectTaskSource.SetResult(false);
-                m_ConnectTaskSource = null;
+                if(m_ConnectTaskSource != null)
+                {
+                    m_ConnectTaskSource.SetResult(false);
+                    m_ConnectTaskSource = null;
+                }
             }
 
             OnError(e);
