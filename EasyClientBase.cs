@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SuperSocket.ProtoBase;
 using System.Net;
+using System.Threading;
 
 namespace SuperSocket.ClientEngine
 {
@@ -101,14 +102,23 @@ namespace SuperSocket.ClientEngine
         {
             if (!m_Connected)
             {
-                if(m_ConnectTaskSource != null)
-                {
-                    m_ConnectTaskSource.SetResult(false);
-                    m_ConnectTaskSource = null;
-                }
+                FinishConnectTask(false);
             }
 
             OnError(e);
+        }
+
+        bool FinishConnectTask(bool result)
+        {
+            var connectTaskSource = m_ConnectTaskSource;
+
+            if (Interlocked.CompareExchange(ref m_ConnectTaskSource, null, connectTaskSource) == connectTaskSource)
+            {
+                connectTaskSource.SetResult(result);
+                return true;
+            }
+
+            return false;
         }
 
         private void OnError(Exception e)
@@ -147,8 +157,7 @@ namespace SuperSocket.ClientEngine
         void m_Session_Connected(object sender, EventArgs e)
         {
             m_Connected = true;
-            m_ConnectTaskSource.SetResult(true);
-            m_ConnectTaskSource = null;
+            FinishConnectTask(true);
 
             var handler = Connected;
             if(handler != null)
