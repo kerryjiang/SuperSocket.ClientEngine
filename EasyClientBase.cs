@@ -112,6 +112,9 @@ namespace SuperSocket.ClientEngine
         {
             var connectTaskSource = m_ConnectTaskSource;
 
+            if (connectTaskSource == null)
+                return false;
+
             if (Interlocked.CompareExchange(ref m_ConnectTaskSource, null, connectTaskSource) == connectTaskSource)
             {
                 connectTaskSource.SetResult(result);
