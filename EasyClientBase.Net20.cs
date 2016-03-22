@@ -25,12 +25,12 @@ namespace SuperSocket.ClientEngine
 
         public bool IsConnected { get { return m_Connected; } }
 
-        public void BeginConnect(EndPoint serverEndPoint)
+        public void BeginConnect(EndPoint remoteEndPoint)
         {
             if (PipeLineProcessor == null)
                 throw new Exception("This client has not been initialized.");
 
-            m_Session = new AsyncTcpSession(serverEndPoint, 4096);
+            m_Session = new AsyncTcpSession(remoteEndPoint, 4096);
             m_Session.Connected += new EventHandler(m_Session_Connected);
             m_Session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
             m_Session.Closed += new EventHandler(m_Session_Closed);

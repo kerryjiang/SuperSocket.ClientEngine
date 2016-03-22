@@ -27,23 +27,44 @@ namespace SuperSocket.ClientEngine
 
         public bool IsConnected { get { return m_Connected; } }
 
-        public Task<bool> ConnectAsync(EndPoint serverEndPoint)
+
+
+#if AWAIT
+        public async Task<bool> ConnectAsync(EndPoint remoteEndPoint)
         {
             if (PipeLineProcessor == null)
                 throw new Exception("This client has not been initialized.");
 
-            m_ConnectTaskSource = new TaskCompletionSource<bool>();
-            m_Session = new AsyncTcpSession(serverEndPoint, 4096);
-            m_Session.Connected += new EventHandler(m_Session_Connected);
-            m_Session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
-            m_Session.Closed +=new EventHandler(m_Session_Closed);
-            m_Session.DataReceived += new EventHandler<DataEventArgs>(m_Session_DataReceived);
+            m_ConnectTaskSource = InitConnect(remoteEndPoint);
+            return await m_ConnectTaskSource.Task;
+        }
+#else
+        public Task<bool> ConnectAsync(EndPoint remoteEndPoint)
+        {
+            if (PipeLineProcessor == null)
+                throw new Exception("This client has not been initialized.");
+
+            m_ConnectTaskSource = InitConnect(remoteEndPoint);
+            return m_ConnectTaskSource.Task;
+        }
+#endif
+
+        private TaskCompletionSource<bool> InitConnect(EndPoint remoteEndPoint)
+        {
+            var session = new AsyncTcpSession(remoteEndPoint, 4096);
+            session.Connected += new EventHandler(m_Session_Connected);
+            session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
+            session.Closed += new EventHandler(m_Session_Closed);
+            session.DataReceived += new EventHandler<DataEventArgs>(m_Session_DataReceived);
 
             if (ReceiveBufferSize > 0)
-                m_Session.ReceiveBufferSize = ReceiveBufferSize;
+                session.ReceiveBufferSize = ReceiveBufferSize;
 
-            m_Session.Connect();
-            return m_ConnectTaskSource.Task;
+            m_Session = session;
+
+            session.Connect();
+            
+            return new TaskCompletionSource<bool>();
         }
 
         public void Send(ArraySegment<byte> segment)
