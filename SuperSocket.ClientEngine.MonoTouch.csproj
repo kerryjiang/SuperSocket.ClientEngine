@@ -2,9 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C3792DC0-53BF-44AF-B0FF-C6F5D3D09150}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -17,7 +15,7 @@
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;__IOS__;__MOBILE__</DefineConstants>
+    <DefineConstants>DEBUG;__IOS__;__MOBILE__;AWAIT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
@@ -29,12 +27,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <DefineConstants>__IOS__;__MOBILE__</DefineConstants>
+    <DefineConstants>__IOS__;__MOBILE__;AWAIT</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
     <Compile Include="EasyClient.cs" />
     <Compile Include="EasyClientBase.cs" />
-	<Compile Include="PackageEventArgs.cs" />
+    <Compile Include="PackageEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ASCIIEncoding.cs" />
@@ -75,13 +73,12 @@
     <Compile Include="Proxy\Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.4, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.4\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.4, Culture=neutral, PublicKeyToken=6c80000676988ebb">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.4\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.SuperSocket.ClientEngine.MonoTouch.config" />
