@@ -41,7 +41,7 @@
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
     <Compile Include="EasyClient.cs" />
     <Compile Include="EasyClientBase.Net20.cs" />
-	<Compile Include="PackageEventArgs.cs" />
+    <Compile Include="PackageEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConcurrentBatchQueue.Net20.cs" />
@@ -62,6 +62,7 @@
     <Compile Include="Core\ErrorEventArgs.cs" />
     <Compile Include="Core\IBufferSetter.cs" />
     <Compile Include="Core\IClientSession.cs" />
+    <Compile Include="Core\SecurityOption.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />

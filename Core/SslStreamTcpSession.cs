@@ -27,24 +27,36 @@ namespace SuperSocket.ClientEngine
         public bool AllowUnstrustedCertificate { get; set; }
 
 #if !SILVERLIGHT
-        private readonly SslProtocols m_EnabledSslProtocols = SslProtocols.Default;
+        private readonly SecurityOption m_Security;
 
         public SslStreamTcpSession(EndPoint remoteEndPoint)
-            : this(remoteEndPoint, SslProtocols.Default)
+            : this(remoteEndPoint, new SecurityOption())
         {
 
         }
 
         public SslStreamTcpSession(EndPoint remoteEndPoint, SslProtocols enabledSslProtocols)
+            : this(remoteEndPoint, new SecurityOption(enabledSslProtocols))
+        {
+
+        }
+
+        public SslStreamTcpSession(EndPoint remoteEndPoint, SecurityOption security)
             : base(remoteEndPoint)
         {
-            this.m_EnabledSslProtocols = enabledSslProtocols;
+            m_Security = security;
         }
 
         public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize, SslProtocols enabledSslProtocols)
+            : this(remoteEndPoint, receiveBufferSize, new SecurityOption(enabledSslProtocols))
+        {
+
+        }
+
+        public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize, SecurityOption security)
             : base(remoteEndPoint, receiveBufferSize)
         {
-            this.m_EnabledSslProtocols = enabledSslProtocols;
+            m_Security = security;
         }
 #else
 
@@ -73,12 +85,11 @@ namespace SuperSocket.ClientEngine
             {
 #if !SILVERLIGHT
                 var sslStream = new SslStream(new NetworkStream(Client), false, ValidateRemoteCertificate);
-                sslStream.BeginAuthenticateAsClient(HostName, new X509CertificateCollection(), m_EnabledSslProtocols, false, OnAuthenticated, sslStream);
+                sslStream.BeginAuthenticateAsClient(HostName, m_Security.Certificates, m_Security.EnabledSslProtocols, false, OnAuthenticated, sslStream);
 #else
                 var sslStream = new SslStream(new NetworkStream(Client));
                 sslStream.BeginAuthenticateAsClient(HostName, OnAuthenticated, sslStream);
 #endif
-
 
             }
             catch (Exception exc)
