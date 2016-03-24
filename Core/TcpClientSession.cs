@@ -14,8 +14,10 @@ namespace SuperSocket.ClientEngine
 
         private bool m_InConnecting = false;
 
+        public const int DefaultReceiveBufferSize = 4096;
+
         public TcpClientSession(EndPoint remoteEndPoint)
-            : this(remoteEndPoint, 1024)
+            : this(remoteEndPoint, DefaultReceiveBufferSize)
         {
 
         }
