@@ -16,30 +16,28 @@ namespace SuperSocket.ClientEngine
 
         public const int DefaultReceiveBufferSize = 4096;
 
-        public TcpClientSession(EndPoint remoteEndPoint)
-            : this(remoteEndPoint, DefaultReceiveBufferSize)
+        public TcpClientSession()
+            : base()
         {
 
         }
 
-        public TcpClientSession(EndPoint remoteEndPoint, int receiveBufferSize)
-            : base(remoteEndPoint)
+        public override EndPoint LocalEndPoint
         {
-            ReceiveBufferSize = receiveBufferSize;
-
-            var dnsEndPoint = remoteEndPoint as DnsEndPoint;
-
-            if (dnsEndPoint != null)
+            get
             {
-                HostName = dnsEndPoint.Host;
-                return;
+                return base.LocalEndPoint;
             }
 
-            var ipEndPoint = remoteEndPoint as IPEndPoint;
+            set
+            {
+                if (m_InConnecting || IsConnected)
+                    throw new Exception("You cannot set LocalEdnPoint after you start the connection.");
 
-            if (ipEndPoint != null)
-                HostName = ipEndPoint.Address.ToString();
+                base.LocalEndPoint = value;
+            }
         }
+
 
         public override int ReceiveBufferSize
         {
@@ -92,8 +90,11 @@ namespace SuperSocket.ClientEngine
 
         protected abstract void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e);
 
-        public override void Connect()
+        public override void Connect(EndPoint remoteEndPoint)
         {
+            if (remoteEndPoint == null)
+                throw new ArgumentNullException("remoteEndPoint");
+
             if (m_InConnecting)
                 throw new Exception("The socket is connecting, cannot connect again!");
 
@@ -111,11 +112,13 @@ namespace SuperSocket.ClientEngine
 
             m_InConnecting = true;
 
-//WindowsPhone doesn't have this property
+            //WindowsPhone doesn't have this property
 #if SILVERLIGHT && !WINDOWS_PHONE
-            RemoteEndPoint.ConnectAsync(ClientAccessPolicyProtocol, ProcessConnect, null);
+            remoteEndPoint.ConnectAsync(ClientAccessPolicyProtocol, ProcessConnect, null);
+#elif WINDOWS_PHONE
+            remoteEndPoint.ConnectAsync(ProcessConnect, null);
 #else
-            RemoteEndPoint.ConnectAsync(ProcessConnect, null);
+            remoteEndPoint.ConnectAsync(LocalEndPoint, ProcessConnect, null);
 #endif
         }
 

@@ -18,6 +18,11 @@ namespace SuperSocket.ClientEngine
 
         protected IPipelineProcessor PipeLineProcessor { get; set; }
 
+#if !SILVERLIGHT
+
+        public EndPoint LocalEndPoint { get; set; }
+#endif
+
         public int ReceiveBufferSize { get; set; }
 
         public EasyClientBase()
@@ -51,7 +56,18 @@ namespace SuperSocket.ClientEngine
 
         private TaskCompletionSource<bool> InitConnect(EndPoint remoteEndPoint)
         {
-            var session = new AsyncTcpSession(remoteEndPoint, 4096);
+            var session = new AsyncTcpSession();
+
+#if !SILVERLIGHT
+            var localEndPoint = LocalEndPoint;
+
+            if (localEndPoint != null)
+            {
+                session.LocalEndPoint = localEndPoint;
+            }
+#endif
+
+            session.ReceiveBufferSize = 4096;
             session.Connected += new EventHandler(m_Session_Connected);
             session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
             session.Closed += new EventHandler(m_Session_Closed);
@@ -62,7 +78,7 @@ namespace SuperSocket.ClientEngine
 
             m_Session = session;
 
-            session.Connect();
+            session.Connect(remoteEndPoint);
             
             return new TaskCompletionSource<bool>();
         }

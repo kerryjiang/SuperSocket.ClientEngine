@@ -24,9 +24,11 @@ namespace SuperSocket.ClientEngine
             public object State { get; set; }
 
             public ConnectedCallback Callback { get; set; }
+
+            public EndPoint LocalEndPoint { get; set; }
         }
 
-        private static void ConnectAsyncInternal(this EndPoint remoteEndPoint, ConnectedCallback callback, object state)
+        private static void ConnectAsyncInternal(this EndPoint remoteEndPoint, EndPoint localEndPoint, ConnectedCallback callback, object state)
         {
             if (remoteEndPoint is DnsEndPoint)
             {
@@ -37,7 +39,8 @@ namespace SuperSocket.ClientEngine
                     {
                         Port = dnsEndPoint.Port,
                         Callback = callback,
-                        State = state
+                        State = state,
+                        LocalEndPoint = localEndPoint
                     });
 
                 if (asyncResult.CompletedSynchronously)
@@ -47,6 +50,13 @@ namespace SuperSocket.ClientEngine
             {
                 var e = CreateSocketAsyncEventArgs(remoteEndPoint, callback, state);
                 var socket = new Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+                if (localEndPoint != null)
+                {
+                    socket.ExclusiveAddressUse = false;
+                    socket.Bind(localEndPoint);
+                }
+
                 socket.ConnectAsync(e);
             }
         }
@@ -115,6 +125,12 @@ namespace SuperSocket.ClientEngine
             {
                 connectState.Callback(null, connectState.State, null);
                 return;
+            }
+
+            if (connectState.LocalEndPoint != null)
+            {
+                attempSocket.ExclusiveAddressUse = false;
+                attempSocket.Bind(connectState.LocalEndPoint);
             }
 
             var socketEventArgs = new SocketAsyncEventArgs();

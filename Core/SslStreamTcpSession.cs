@@ -26,51 +26,16 @@ namespace SuperSocket.ClientEngine
 
         public bool AllowUnstrustedCertificate { get; set; }
 
+        public SslStreamTcpSession()
+            : base()
+        {
+
+        }
+
+
 #if !SILVERLIGHT
-        private readonly SecurityOption m_Security;
 
-        public SslStreamTcpSession(EndPoint remoteEndPoint)
-            : this(remoteEndPoint, new SecurityOption())
-        {
-
-        }
-
-        public SslStreamTcpSession(EndPoint remoteEndPoint, SslProtocols enabledSslProtocols)
-            : this(remoteEndPoint, new SecurityOption(enabledSslProtocols))
-        {
-
-        }
-
-        public SslStreamTcpSession(EndPoint remoteEndPoint, SecurityOption security)
-            : base(remoteEndPoint)
-        {
-            m_Security = security;
-        }
-
-        public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize, SslProtocols enabledSslProtocols)
-            : this(remoteEndPoint, receiveBufferSize, new SecurityOption(enabledSslProtocols))
-        {
-
-        }
-
-        public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize, SecurityOption security)
-            : base(remoteEndPoint, receiveBufferSize)
-        {
-            m_Security = security;
-        }
-#else
-
-        public SslStreamTcpSession(EndPoint remoteEndPoint)
-            : base(remoteEndPoint)
-        {
-
-        }
-
-        public SslStreamTcpSession(EndPoint remoteEndPoint, int receiveBufferSize)
-            : base(remoteEndPoint, receiveBufferSize)
-        {
-
-        }
+        public SecurityOption Security { get; set; }
 
 #endif
 
@@ -84,8 +49,15 @@ namespace SuperSocket.ClientEngine
             try
             {
 #if !SILVERLIGHT
+                var securityOption = Security;
+
+                if (securityOption == null)
+                {
+                    throw new Exception("securityOption was not configured");
+                }
+
                 var sslStream = new SslStream(new NetworkStream(Client), false, ValidateRemoteCertificate);
-                sslStream.BeginAuthenticateAsClient(HostName, m_Security.Certificates, m_Security.EnabledSslProtocols, false, OnAuthenticated, sslStream);
+                sslStream.BeginAuthenticateAsClient(HostName, securityOption.Certificates, securityOption.EnabledSslProtocols, false, OnAuthenticated, sslStream);
 #else
                 var sslStream = new SslStream(new NetworkStream(Client));
                 sslStream.BeginAuthenticateAsClient(HostName, OnAuthenticated, sslStream);

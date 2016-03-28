@@ -49,8 +49,7 @@
   <ItemGroup>
     <Compile Include="Common\ConcurrentBatchQueue.cs" />
     <Compile Include="Common\ConnectAsyncExtension.cs" />
-    <Compile Include="Common\ConnectAsyncExtension.Net.cs" />
-    <Compile Include="Common\ConnectAsyncExtension.Net40.cs" />
+    <Compile Include="Common\ConnectAsyncExtension.Net45.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\IBatchQueue.cs" />
     <Compile Include="Common\IProxyConnector.cs" />

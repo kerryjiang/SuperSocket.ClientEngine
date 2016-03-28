@@ -18,6 +18,8 @@ namespace SuperSocket.ClientEngine
 
         public int ReceiveBufferSize { get; set; }
 
+        public EndPoint LocalEndPoint { get; set; }
+
         public EasyClientBase()
         {
 
@@ -30,16 +32,25 @@ namespace SuperSocket.ClientEngine
             if (PipeLineProcessor == null)
                 throw new Exception("This client has not been initialized.");
 
-            m_Session = new AsyncTcpSession(remoteEndPoint, 4096);
-            m_Session.Connected += new EventHandler(m_Session_Connected);
-            m_Session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
-            m_Session.Closed += new EventHandler(m_Session_Closed);
-            m_Session.DataReceived += new EventHandler<DataEventArgs>(m_Session_DataReceived);
+            var session = new AsyncTcpSession();
+
+            var localEndPoint = LocalEndPoint;
+
+            if (localEndPoint != null)
+            {
+                session.LocalEndPoint = localEndPoint;
+            }
+
+            session.Connected += new EventHandler(m_Session_Connected);
+            session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
+            session.Closed += new EventHandler(m_Session_Closed);
+            session.DataReceived += new EventHandler<DataEventArgs>(m_Session_DataReceived);
 
             if (ReceiveBufferSize > 0)
-                m_Session.ReceiveBufferSize = ReceiveBufferSize;
+                session.ReceiveBufferSize = ReceiveBufferSize;
 
-            m_Session.Connect();
+            m_Session = session;
+            session.Connect(remoteEndPoint);
         }
 
         public void Send(ArraySegment<byte> segment)

@@ -108,8 +108,10 @@ namespace SuperSocket.ClientEngine.Proxy
             {
 #if SILVERLIGHT && !WINDOWS_PHONE
                 ProxyEndPoint.ConnectAsync(ClientAccessPolicyProtocol, ProcessConnect, remoteEndPoint);
-#else
+#elif WINDOWS_PHONE
                 ProxyEndPoint.ConnectAsync(ProcessConnect, remoteEndPoint);
+#else
+                ProxyEndPoint.ConnectAsync(null, ProcessConnect, remoteEndPoint);
 #endif
             }
             catch (Exception e)

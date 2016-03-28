@@ -13,6 +13,10 @@ namespace SuperSocket.ClientEngine
 
         protected EndPoint RemoteEndPoint { get; set; }
 
+#if !SILVERLIGHT
+        public virtual EndPoint LocalEndPoint { get; set; }
+#endif
+
         public bool IsConnected { get; private set; }
 
 #if !__IOS__
@@ -24,17 +28,9 @@ namespace SuperSocket.ClientEngine
 
         }
 
-        public ClientSession(EndPoint remoteEndPoint)
-        {
-            if (remoteEndPoint == null)
-                throw new ArgumentNullException("remoteEndPoint");
-
-            RemoteEndPoint = remoteEndPoint;
-        }
-
         public int SendingQueueSize { get; set; }
 
-        public abstract void Connect();
+        public abstract void Connect(EndPoint remoteEndPoint);
 
         public abstract bool TrySend(ArraySegment<byte> segment);
 

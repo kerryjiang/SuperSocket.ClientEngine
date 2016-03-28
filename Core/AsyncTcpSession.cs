@@ -12,14 +12,8 @@ namespace SuperSocket.ClientEngine
         private SocketAsyncEventArgs m_SocketEventArgs;
         private SocketAsyncEventArgs m_SocketEventArgsSend;
 
-        public AsyncTcpSession(EndPoint remoteEndPoint)
-            : base(remoteEndPoint)
-        {
-
-        }
-
-        public AsyncTcpSession(EndPoint remoteEndPoint, int receiveBufferSize)
-            : base(remoteEndPoint, receiveBufferSize)
+        public AsyncTcpSession()
+            : base()
         {
 
         }

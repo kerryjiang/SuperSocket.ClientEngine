@@ -16,7 +16,7 @@ namespace SuperSocket.ClientEngine
 
         bool IsConnected { get; }
 
-        void Connect();
+        void Connect(EndPoint remoteEndPoint);
 
         void Send(ArraySegment<byte> segment);
 
