@@ -22,6 +22,7 @@ namespace SuperSocket.ClientEngine
 
         }
 
+#if !SILVERLIGHT
         public override EndPoint LocalEndPoint
         {
             get
@@ -37,7 +38,7 @@ namespace SuperSocket.ClientEngine
                 base.LocalEndPoint = value;
             }
         }
-
+#endif
 
         public override int ReceiveBufferSize
         {

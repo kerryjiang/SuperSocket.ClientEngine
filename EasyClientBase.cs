@@ -65,8 +65,22 @@ namespace SuperSocket.ClientEngine
 #else
             var security = Security;
 
+            if (security == null)
+            {
+                return new AsyncTcpSession();
+            }
+
+    #if SILVERLIGHT
             // no SSL/TLS enabled
-            if (security == null || security.EnabledSslProtocols == System.Security.Authentication.SslProtocols.None)
+            if (!security.EnabledSslProtocols)
+            {
+                return new AsyncTcpSession();
+            }
+
+            return new SslStreamTcpSession();
+    #else
+            // no SSL/TLS enabled
+            if (security.EnabledSslProtocols == System.Security.Authentication.SslProtocols.None)
             {
                 return new AsyncTcpSession();
             }
@@ -75,8 +89,8 @@ namespace SuperSocket.ClientEngine
             {
                 Security = security
             };
+    #endif
 #endif
-
         }
 
         private TaskCompletionSource<bool> InitConnect(EndPoint remoteEndPoint)

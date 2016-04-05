@@ -64,7 +64,7 @@
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
     <Compile Include="EasyClient.cs" />
     <Compile Include="EasyClientBase.cs" />
-	<Compile Include="PackageEventArgs.cs" />
+    <Compile Include="PackageEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ASCIIEncoding.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="Core\IBufferSetter.cs" />
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\NetworkStream.cs" />
+    <Compile Include="Core\SecurityOption.Silverlight.cs" />
     <Compile Include="Core\SslStream.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
