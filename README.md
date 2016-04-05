@@ -14,8 +14,15 @@ SuperSocket.ClientEngine is a .NET library for socket client rapid development. 
 	
 	// Initialize the client with the receive filter and request handler
 	client.Initialize(new TerminatorReceiveFilter<StringPackageInfo>(), (request) => {
+		// handle the received request
 		Console.WriteLine(request.Key);
 	});
 	
-	// send data to the server
-	client.Send("ECHO kerry");
+	// Connect to the server
+	var connected = await client.ConnectAsync(new IPEndPoint(IPAddress.Parse("192.168.10.11"), 25));
+	
+	if (connected)
+	{
+		// Send data to the server
+		client.Send("LOGIN kerry");
+	}
