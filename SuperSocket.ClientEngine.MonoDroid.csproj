@@ -47,8 +47,8 @@
   <ItemGroup>
     <Compile Include="Common\ConcurrentBatchQueue.cs" />
     <Compile Include="Common\ConnectAsyncExtension.cs" />
-    <Compile Include="Common\ConnectAsyncExtension.MonoDroid.cs" />
     <Compile Include="Common\ConnectAsyncExtension.Net.cs" />
+    <Compile Include="Common\ConnectAsyncExtension.Net45.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\IBatchQueue.cs" />
     <Compile Include="Common\IProxyConnector.cs" />
@@ -61,6 +61,7 @@
     <Compile Include="Core\ErrorEventArgs.cs" />
     <Compile Include="Core\IBufferSetter.cs" />
     <Compile Include="Core\IClientSession.cs" />
+    <Compile Include="Core\SecurityOption.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
