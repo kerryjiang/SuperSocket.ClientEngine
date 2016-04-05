@@ -20,6 +20,8 @@ namespace SuperSocket.ClientEngine
 
         public EndPoint LocalEndPoint { get; set; }
 
+        public SecurityOption Security { get; set; }
+
         public EasyClientBase()
         {
 
@@ -27,12 +29,28 @@ namespace SuperSocket.ClientEngine
 
         public bool IsConnected { get { return m_Connected; } }
 
+        private TcpClientSession GetUnderlyingSession()
+        {
+            var security = Security;
+
+            // no SSL/TLS enabled
+            if (security == null || security.EnabledSslProtocols == System.Security.Authentication.SslProtocols.None)
+            {
+                return new AsyncTcpSession();
+            }
+
+            return new SslStreamTcpSession()
+            {
+                Security = security
+            };
+        }
+
         public void BeginConnect(EndPoint remoteEndPoint)
         {
             if (PipeLineProcessor == null)
                 throw new Exception("This client has not been initialized.");
 
-            var session = new AsyncTcpSession();
+            var session = GetUnderlyingSession();
 
             var localEndPoint = LocalEndPoint;
 

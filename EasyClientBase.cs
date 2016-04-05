@@ -18,6 +18,10 @@ namespace SuperSocket.ClientEngine
 
         protected IPipelineProcessor PipeLineProcessor { get; set; }
 
+#if !NETFX_CORE
+        public SecurityOption Security { get; set; }
+#endif
+
 #if !SILVERLIGHT
 
         public EndPoint LocalEndPoint { get; set; }
@@ -54,9 +58,30 @@ namespace SuperSocket.ClientEngine
         }
 #endif
 
+        private TcpClientSession GetUnderlyingSession()
+        {
+#if NETFX_CORE
+            return new AsyncTcpSession();
+#else
+            var security = Security;
+
+            // no SSL/TLS enabled
+            if (security == null || security.EnabledSslProtocols == System.Security.Authentication.SslProtocols.None)
+            {
+                return new AsyncTcpSession();
+            }
+
+            return new SslStreamTcpSession()
+            {
+                Security = security
+            };
+#endif
+
+        }
+
         private TaskCompletionSource<bool> InitConnect(EndPoint remoteEndPoint)
         {
-            var session = new AsyncTcpSession();
+            var session = GetUnderlyingSession();
 
 #if !SILVERLIGHT
             var localEndPoint = LocalEndPoint;
