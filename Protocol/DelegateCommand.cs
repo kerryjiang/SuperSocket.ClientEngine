@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using System.Text;
 using SuperSocket.ClientEngine;
+using SuperSocket.ProtoBase;
 
 namespace SuperSocket.ClientEngine.Protocol
 {
-    public delegate void CommandDelegate<TClientSession, TCommandInfo>(TClientSession session, TCommandInfo commandInfo);
+    public delegate void CommandDelegate<TClientSession, TPackageInfo>(TClientSession session, TPackageInfo packageInfo);
 
-    class DelegateCommand<TClientSession, TCommandInfo> : ICommand<TClientSession, TCommandInfo>
+    class DelegateCommand<TClientSession, TPackageInfo> : ICommand<TClientSession, TPackageInfo>
         where TClientSession : IClientSession
-        where TCommandInfo : ICommandInfo
+        where TPackageInfo : IPackageInfo
     {
-        private CommandDelegate<TClientSession, TCommandInfo> m_Execution;
+        private CommandDelegate<TClientSession, TPackageInfo> m_Execution;
 
-        public DelegateCommand(string name, CommandDelegate<TClientSession, TCommandInfo> execution)
+        public DelegateCommand(string name, CommandDelegate<TClientSession, TPackageInfo> execution)
         {
             Name = name;
             m_Execution = execution;
         }
 
-        public void ExecuteCommand(TClientSession session, TCommandInfo commandInfo)
+        public void ExecuteCommand(TClientSession session, TPackageInfo packageInfo)
         {
-            m_Execution(session, commandInfo);
+            m_Execution(session, packageInfo);
         }
 
         public string Name { get; private set; }

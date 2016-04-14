@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SuperSocket.ProtoBase;
 
 namespace SuperSocket.ClientEngine.Protocol
 {
@@ -9,9 +10,10 @@ namespace SuperSocket.ClientEngine.Protocol
         string Name { get; }
     }
 
-    public interface ICommand<TSession, TCommandInfo> : ICommand
-        where TCommandInfo : ICommandInfo
+    public interface ICommand<TSession, TPackageInfo> : ICommand
+        where TPackageInfo : IPackageInfo
+        where TSession : IClientSession
     {
-        void ExecuteCommand(TSession session, TCommandInfo commandInfo);
+        void ExecuteCommand(TSession session, TPackageInfo packageInfo);
     }
 }

@@ -92,16 +92,8 @@
     <Compile Include="Core\TcpClientSession.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.SL50.cs" />
-    <Compile Include="Protocol\ArraySegmentEx.cs" />
-    <Compile Include="Protocol\ArraySegmentList.cs" />
-    <Compile Include="Protocol\AssemblyUtil.cs" />
-    <Compile Include="Protocol\BinaryCommandInfo.cs" />
-    <Compile Include="Protocol\CommandInfo.cs" />
     <Compile Include="Protocol\DelegateCommand.cs" />
-    <Compile Include="Protocol\IClientCommandReader.cs" />
     <Compile Include="Protocol\ICommand.cs" />
-    <Compile Include="Protocol\ICommandInfo.cs" />
-    <Compile Include="Protocol\StringCommandInfo.cs" />
     <Compile Include="Proxy\HttpConnectProxy.cs" />
     <Compile Include="Proxy\ProxyConnectorBase.cs" />
     <Compile Include="Proxy\Socks4aConnector.cs" />
