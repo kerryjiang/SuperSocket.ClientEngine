@@ -55,6 +55,10 @@
       <HintPath>References\BouncyCastle\SL40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.5, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.5\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -92,6 +96,9 @@
     <Compile Include="Proxy\Socks4aConnector.cs" />
     <Compile Include="Proxy\Socks4Connector.cs" />
     <Compile Include="Proxy\Socks5Connector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

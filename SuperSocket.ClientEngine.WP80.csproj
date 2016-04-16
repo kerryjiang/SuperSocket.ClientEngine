@@ -109,6 +109,7 @@
     <Compile Include="Core\IBufferSetter.cs" />
     <Compile Include="Core\IClientSession.cs" />
     <Compile Include="Core\NetworkStream.cs" />
+    <Compile Include="Core\SecurityOption.Silverlight.cs" />
     <Compile Include="Core\SslStream.cs" />
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
@@ -127,8 +128,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\BouncyCastle\WP80\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.4, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.4\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.5, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.5\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
