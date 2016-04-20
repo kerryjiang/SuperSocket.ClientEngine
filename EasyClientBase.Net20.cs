@@ -20,6 +20,8 @@ namespace SuperSocket.ClientEngine
 
         public EndPoint LocalEndPoint { get; set; }
 
+        public bool NoDelay { get; set; }
+
         public SecurityOption Security { get; set; }
 
         public EasyClientBase()
@@ -58,6 +60,8 @@ namespace SuperSocket.ClientEngine
             {
                 session.LocalEndPoint = localEndPoint;
             }
+
+            session.NoDelay = NoDelay;
 
             session.Connected += new EventHandler(m_Session_Connected);
             session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);

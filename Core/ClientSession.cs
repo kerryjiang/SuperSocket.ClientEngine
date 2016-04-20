@@ -20,7 +20,7 @@ namespace SuperSocket.ClientEngine
         public bool IsConnected { get; private set; }
 
 #if !__IOS__
-        public bool NoDeplay { get; set; }
+        public bool NoDelay { get; set; }
 #endif
 
         public ClientSession()
@@ -155,8 +155,8 @@ namespace SuperSocket.ClientEngine
 #if !__IOS__
             if(client != null)
             {
-                if(client.NoDelay != NoDeplay)
-                    client.NoDelay = NoDeplay;
+                if(client.NoDelay != NoDelay)
+                    client.NoDelay = NoDelay;
             }
 #endif
 

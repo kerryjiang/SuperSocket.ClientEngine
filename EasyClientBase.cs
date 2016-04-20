@@ -27,6 +27,10 @@ namespace SuperSocket.ClientEngine
         public EndPoint LocalEndPoint { get; set; }
 #endif
 
+#if !__IOS__
+        public bool NoDelay { get; set; }
+#endif
+
         public int ReceiveBufferSize { get; set; }
 
         public EasyClientBase()
@@ -106,7 +110,10 @@ namespace SuperSocket.ClientEngine
             }
 #endif
 
-            session.ReceiveBufferSize = 4096;
+#if !__IOS__
+            session.NoDelay = NoDelay;
+#endif
+
             session.Connected += new EventHandler(m_Session_Connected);
             session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
             session.Closed += new EventHandler(m_Session_Closed);
