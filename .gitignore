@@ -44,3 +44,9 @@ obj
 
 # mstest test results
 TestResults
+
+#Created by Visual Studio
+.vs
+
+#Created by NuGet
+packages
