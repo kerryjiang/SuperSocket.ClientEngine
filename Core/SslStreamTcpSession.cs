@@ -23,8 +23,7 @@ namespace SuperSocket.ClientEngine
         }
 
         private SslStream m_SslStream;
-
-        public bool AllowUnstrustedCertificate { get; set; }
+                
 
         public SslStreamTcpSession()
             : base()
@@ -184,7 +183,7 @@ namespace SuperSocket.ClientEngine
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
 
-            if (!AllowUnstrustedCertificate)
+            if (!Security.AllowUnstrustedCertificate)
             {
                 OnError(new Exception(sslPolicyErrors.ToString()));
                 return false;

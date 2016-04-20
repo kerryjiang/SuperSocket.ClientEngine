@@ -22,6 +22,11 @@ namespace SuperSocket.ClientEngine
         /// </summary>
         public X509CertificateCollection Certificates { get; set; }
 
+        /// <summary>
+        /// Whether allow untrusted certificate
+        /// </summary>
+        public bool AllowUnstrustedCertificate { get; set; }
+
         public SecurityOption()
         {
             EnabledSslProtocols = SslProtocols.Default;
