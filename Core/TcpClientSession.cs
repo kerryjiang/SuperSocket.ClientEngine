@@ -174,9 +174,10 @@ namespace SuperSocket.ClientEngine
             e.Completed += SocketEventArgsCompleted;
 
             Client = socket;
-
             m_InConnecting = false;
 			LocalEndPoint = socket.LocalEndPoint;
+            HostName = GetHostOfEndPoint(socket.RemoteEndPoint);
+
 
 #if !SILVERLIGHT && !NETFX_CORE
             try
@@ -190,6 +191,23 @@ namespace SuperSocket.ClientEngine
             
 #endif
             OnGetSocket(e);
+        }
+
+        private string GetHostOfEndPoint(EndPoint endPoint)
+        {
+            var dnsEndPoint = endPoint as DnsEndPoint;
+
+            if (dnsEndPoint != null)
+            {
+                return dnsEndPoint.Host;
+            }
+
+            var ipEndPoint = endPoint as IPEndPoint;
+
+            if (ipEndPoint != null)
+               return ipEndPoint.Address.ToString();
+
+            return string.Empty;
         }
 
         protected abstract void OnGetSocket(SocketAsyncEventArgs e);
