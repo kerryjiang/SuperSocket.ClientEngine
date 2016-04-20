@@ -183,21 +183,20 @@ namespace SuperSocket.ClientEngine
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
 
+            // only has certificate name mismatch error
+            if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
+            {
+                if (Security.AllowNameMismatchCertificate)
+                    return true;
+            }
+
             if (!Security.AllowUnstrustedCertificate)
             {
                 OnError(new Exception(sslPolicyErrors.ToString()));
                 return false;
             }
 
-#if DEBUG
-            //In debug mode, ignore certificate name mismatch error
-            if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
-            {
-                return true;
-            }
-#endif
-
-            //Not only a remote certificate error
+            // not only a remote certificate error
             if (sslPolicyErrors != SslPolicyErrors.None && sslPolicyErrors != SslPolicyErrors.RemoteCertificateChainErrors)
             {
                 OnError(new Exception(sslPolicyErrors.ToString()));

@@ -27,6 +27,11 @@ namespace SuperSocket.ClientEngine
         /// </summary>
         public bool AllowUnstrustedCertificate { get; set; }
 
+        /// <summary>
+        /// Whether allow the certificate whose name doesn't match current remote endpoint's host name
+        /// </summary>
+        public bool AllowNameMismatchCertificate { get; set; }
+
         public SecurityOption()
         {
             EnabledSslProtocols = SslProtocols.Default;
