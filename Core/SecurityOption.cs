@@ -33,9 +33,9 @@ namespace SuperSocket.ClientEngine
         public bool AllowNameMismatchCertificate { get; set; }
 
         public SecurityOption()
+            : this(SslProtocols.Default, new X509CertificateCollection())
         {
-            EnabledSslProtocols = SslProtocols.Default;
-            Certificates = new X509CertificateCollection();
+
         }
 
         public SecurityOption(SslProtocols enabledSslProtocols)
@@ -44,16 +44,16 @@ namespace SuperSocket.ClientEngine
             
         }
 
+        public SecurityOption(SslProtocols enabledSslProtocols, X509Certificate certificate)
+            : this(enabledSslProtocols, new X509CertificateCollection(new X509Certificate[] { certificate }))
+        {
+
+        }
+
         public SecurityOption(SslProtocols enabledSslProtocols, X509CertificateCollection certificates)
         {
             EnabledSslProtocols = enabledSslProtocols;
             Certificates = certificates;
-        }
-
-        public SecurityOption(SslProtocols enabledSslProtocols, X509Certificate certificate)
-        {
-            EnabledSslProtocols = enabledSslProtocols;
-            Certificates = new X509CertificateCollection(new X509Certificate[] { certificate });
         }
     }
 }
