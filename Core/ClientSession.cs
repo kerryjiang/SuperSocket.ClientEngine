@@ -46,6 +46,11 @@ namespace SuperSocket.ClientEngine
         {
             if (TrySend(segment))
                 return;
+		    
+		    if(IsConnected == false)
+			{
+				return;
+			}
 
             while (true)
             {
@@ -60,7 +65,12 @@ namespace SuperSocket.ClientEngine
         {
             if (TrySend(segments))
                 return;
-
+            
+		    if(IsConnected == false)
+			{
+				return;
+			}
+		    
             while (true)
             {
                 Thread.SpinWait(1);
@@ -70,12 +80,17 @@ namespace SuperSocket.ClientEngine
             }
         }
 #else
-        public void Send(ArraySegment<byte> segment)
+		public void Send(ArraySegment<byte> segment)
         {
             if (TrySend(segment))
                 return;
 
-            var spinWait = new SpinWait();
+			if(IsConnected == false)
+			{
+				return;
+			}
+
+			var spinWait = new SpinWait();
 
             while (true)
             {
@@ -91,7 +106,12 @@ namespace SuperSocket.ClientEngine
             if (TrySend(segments))
                 return;
 
-            var spinWait = new SpinWait();
+			if(IsConnected == false)
+			{
+				return;
+			}
+
+			var spinWait = new SpinWait();
 
             while (true)
             {
