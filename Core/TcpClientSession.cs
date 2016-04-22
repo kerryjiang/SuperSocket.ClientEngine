@@ -259,7 +259,7 @@ namespace SuperSocket.ClientEngine
             return fireOnClosedEvent;
         }
 
-	    private bool DetectConnected()
+	    protected override bool DetectConnected()
 	    {
 		    bool connected;
 		    if(m_InConnecting)
@@ -333,12 +333,7 @@ namespace SuperSocket.ClientEngine
             {
                 throw new Exception("The data to be sent cannot be empty.");
             }
-
-            if (!DetectConnected())
-            { 
-                return false;
-            }
-
+			
             var isEnqueued = GetSendingQueue().Enqueue(segment);
 
             if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
@@ -364,11 +359,6 @@ namespace SuperSocket.ClientEngine
                 {
                     throw new Exception("The data piece to be sent cannot be empty.");
                 }
-            }
-
-            if (!DetectConnected())
-            {
-                return false;
             }
 
             var isEnqueued = GetSendingQueue().Enqueue(segments);
