@@ -261,7 +261,6 @@ namespace SuperSocket.ClientEngine
 
 	    protected override bool DetectConnected()
 	    {
-		    bool connected;
 		    if(m_InConnecting)
 		    {
 			    var spinWait = new SpinWait();
@@ -269,28 +268,9 @@ namespace SuperSocket.ClientEngine
 			    {
 				    spinWait.SpinOnce();
 			    }
-			    connected = ClientIsNotNull();
 		    }
-		    else
-		    {
-			    connected = ClientIsNotNull();
-		    }
-		    return connected;
+		    return Client != null;
 	    }
-
-	    private bool ClientIsNotNull()
-	    {
-		    bool isNotNull = false;
-			if(Client != null)
-			{
-				isNotNull = true;
-			}
-			else
-			{
-				OnError(new SocketException((int)SocketError.NotConnected));
-			}
-			return isNotNull;
-		}
 
 	    private IBatchQueue<ArraySegment<byte>> m_SendingQueue;
 
