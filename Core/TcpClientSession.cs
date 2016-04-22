@@ -102,16 +102,14 @@ namespace SuperSocket.ClientEngine
             if (Client != null)
                 throw new Exception("The socket is connected, you needn't connect again!");
 
+	        m_InConnecting = true;
             //If there is a proxy set, connect the proxy server by proxy connector
             if (Proxy != null)
             {
                 Proxy.Completed += new EventHandler<ProxyEventArgs>(Proxy_Completed);
                 Proxy.Connect(RemoteEndPoint);
-                m_InConnecting = true;
                 return;
             }
-
-            m_InConnecting = true;
 
             //WindowsPhone doesn't have this property
 #if SILVERLIGHT && !WINDOWS_PHONE
@@ -261,15 +259,40 @@ namespace SuperSocket.ClientEngine
             return fireOnClosedEvent;
         }
 
-        private bool DetectConnected()
-        {
-            if (Client != null)
-                return true;
-            OnError(new SocketException((int)SocketError.NotConnected));
-            return false;
-        }
+	    private bool DetectConnected()
+	    {
+		    bool connected;
+		    if(m_InConnecting)
+		    {
+			    var spinWait = new SpinWait();
+			    while(m_InConnecting)
+			    {
+				    spinWait.SpinOnce();
+			    }
+			    connected = ClientIsNotNull();
+		    }
+		    else
+		    {
+			    connected = ClientIsNotNull();
+		    }
+		    return connected;
+	    }
 
-        private IBatchQueue<ArraySegment<byte>> m_SendingQueue;
+	    private bool ClientIsNotNull()
+	    {
+		    bool isNotNull = false;
+			if(Client != null)
+			{
+				isNotNull = true;
+			}
+			else
+			{
+				OnError(new SocketException((int)SocketError.NotConnected));
+			}
+			return isNotNull;
+		}
+
+	    private IBatchQueue<ArraySegment<byte>> m_SendingQueue;
 
         private IBatchQueue<ArraySegment<byte>> GetSendingQueue()
         {
@@ -312,9 +335,8 @@ namespace SuperSocket.ClientEngine
             }
 
             if (!DetectConnected())
-            {
-                //may be return false? 
-                return true;
+            { 
+                return false;
             }
 
             var isEnqueued = GetSendingQueue().Enqueue(segment);
@@ -346,8 +368,7 @@ namespace SuperSocket.ClientEngine
 
             if (!DetectConnected())
             {
-                //may be return false? 
-                return true;
+                return false;
             }
 
             var isEnqueued = GetSendingQueue().Enqueue(segments);
