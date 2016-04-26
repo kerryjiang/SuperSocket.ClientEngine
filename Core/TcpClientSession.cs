@@ -44,12 +44,22 @@ namespace SuperSocket.ClientEngine
         {
             get
             {
-                return base.ReceiveBufferSize;
+				if(base.ReceiveBufferSize <= 0)
+				{
+					throw new Exception("ReceiveBufferSize must bigger than zero!");
+				}
+
+				return base.ReceiveBufferSize;
             }
 
             set
-            {
-                if (Buffer.Array != null)
+			{
+				if(value <= 0)
+				{
+					throw new Exception("ReceiveBufferSize must bigger than zero!");
+				}
+
+				if (Buffer.Array != null)
                     throw new Exception("ReceiveBufferSize cannot be set after the socket has been connected!");
 
                 base.ReceiveBufferSize = value;
