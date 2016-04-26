@@ -44,12 +44,22 @@ namespace SuperSocket.ClientEngine
         {
             get
             {
-                return base.ReceiveBufferSize;
+				if(base.ReceiveBufferSize <= 0)
+				{
+					throw new Exception("ReceiveBufferSize must bigger than zero!");
+				}
+
+				return base.ReceiveBufferSize;
             }
 
             set
-            {
-                if (Buffer.Array != null)
+			{
+				if(value <= 0)
+				{
+					throw new Exception("ReceiveBufferSize must bigger than zero!");
+				}
+
+				if (Buffer.Array != null)
                     throw new Exception("ReceiveBufferSize cannot be set after the socket has been connected!");
 
                 base.ReceiveBufferSize = value;
@@ -102,16 +112,14 @@ namespace SuperSocket.ClientEngine
             if (Client != null)
                 throw new Exception("The socket is connected, you needn't connect again!");
 
+	        m_InConnecting = true;
             //If there is a proxy set, connect the proxy server by proxy connector
             if (Proxy != null)
             {
                 Proxy.Completed += new EventHandler<ProxyEventArgs>(Proxy_Completed);
                 Proxy.Connect(RemoteEndPoint);
-                m_InConnecting = true;
                 return;
             }
-
-            m_InConnecting = true;
 
             //WindowsPhone doesn't have this property
 #if SILVERLIGHT && !WINDOWS_PHONE
@@ -175,8 +183,12 @@ namespace SuperSocket.ClientEngine
 
             Client = socket;
             m_InConnecting = false;
+
+#if !SILVERLIGHT
 			LocalEndPoint = socket.LocalEndPoint;
-            HostName = GetHostOfEndPoint(socket.RemoteEndPoint);
+#endif
+
+			HostName = GetHostOfEndPoint(socket.RemoteEndPoint);
 
 
 #if !SILVERLIGHT && !NETFX_CORE
@@ -261,15 +273,20 @@ namespace SuperSocket.ClientEngine
             return fireOnClosedEvent;
         }
 
-        private bool DetectConnected()
-        {
-            if (Client != null)
-                return true;
-            OnError(new SocketException((int)SocketError.NotConnected));
-            return false;
-        }
+	    protected override bool DetectConnected()
+	    {
+		    if(m_InConnecting)
+		    {
+			    var spinWait = new SpinWait();
+			    while(m_InConnecting)
+			    {
+				    spinWait.SpinOnce();
+			    }
+		    }
+		    return Client != null;
+	    }
 
-        private IBatchQueue<ArraySegment<byte>> m_SendingQueue;
+	    private IBatchQueue<ArraySegment<byte>> m_SendingQueue;
 
         private IBatchQueue<ArraySegment<byte>> GetSendingQueue()
         {
@@ -310,13 +327,7 @@ namespace SuperSocket.ClientEngine
             {
                 throw new Exception("The data to be sent cannot be empty.");
             }
-
-            if (!DetectConnected())
-            {
-                //may be return false? 
-                return true;
-            }
-
+			
             var isEnqueued = GetSendingQueue().Enqueue(segment);
 
             if (Interlocked.CompareExchange(ref m_IsSending, 1, 0) != 0)
@@ -342,12 +353,6 @@ namespace SuperSocket.ClientEngine
                 {
                     throw new Exception("The data piece to be sent cannot be empty.");
                 }
-            }
-
-            if (!DetectConnected())
-            {
-                //may be return false? 
-                return true;
             }
 
             var isEnqueued = GetSendingQueue().Enqueue(segments);

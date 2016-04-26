@@ -36,9 +36,11 @@ namespace SuperSocket.ClientEngine
 
         public abstract bool TrySend(IList<ArraySegment<byte>> segments);
 
-        public void Send(byte[] data, int offset, int length)
-        {
-            this.Send(new ArraySegment<byte>(data, offset, length));
+	    protected abstract bool DetectConnected();
+		
+		public void Send(byte[] data, int offset, int length)
+		{
+			this.Send(new ArraySegment<byte>(data, offset, length));
         }
 
 #if NO_SPINWAIT_CLASS
@@ -46,7 +48,7 @@ namespace SuperSocket.ClientEngine
         {
             if (TrySend(segment))
                 return;
-
+		    
             while (true)
             {
                 Thread.SpinWait(1);
@@ -60,7 +62,7 @@ namespace SuperSocket.ClientEngine
         {
             if (TrySend(segments))
                 return;
-
+            
             while (true)
             {
                 Thread.SpinWait(1);
@@ -70,12 +72,16 @@ namespace SuperSocket.ClientEngine
             }
         }
 #else
-        public void Send(ArraySegment<byte> segment)
-        {
-            if (TrySend(segment))
+		public void Send(ArraySegment<byte> segment)
+		{
+			if(!DetectConnected())
+			{
+				throw new Exception("The socket is not connected");
+			}
+			if (TrySend(segment))
                 return;
 
-            var spinWait = new SpinWait();
+			var spinWait = new SpinWait();
 
             while (true)
             {
@@ -88,10 +94,14 @@ namespace SuperSocket.ClientEngine
 
         public void Send(IList<ArraySegment<byte>> segments)
         {
-            if (TrySend(segments))
+			if(!DetectConnected())
+			{
+				throw new Exception("The socket is not connected");
+			}
+			if (TrySend(segments))
                 return;
 
-            var spinWait = new SpinWait();
+			var spinWait = new SpinWait();
 
             while (true)
             {
