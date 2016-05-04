@@ -175,7 +175,11 @@ namespace SuperSocket.ClientEngine
 
             Client = socket;
             m_InConnecting = false;
-			LocalEndPoint = socket.LocalEndPoint;
+
+#if !SILVERLIGHT
+            LocalEndPoint = socket.LocalEndPoint;
+#endif
+
             HostName = GetHostOfEndPoint(socket.RemoteEndPoint);
 
 
