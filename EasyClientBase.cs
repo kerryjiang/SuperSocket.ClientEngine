@@ -243,6 +243,15 @@ namespace SuperSocket.ClientEngine
         void m_Session_Connected(object sender, EventArgs e)
         {
             m_Connected = true;
+
+#if !SILVERLIGHT
+            TcpClientSession session = sender as TcpClientSession;
+            if (session != null)
+            {
+                LocalEndPoint = session.LocalEndPoint;
+            }
+#endif
+
             FinishConnectTask(true);
 
             var handler = Connected;
