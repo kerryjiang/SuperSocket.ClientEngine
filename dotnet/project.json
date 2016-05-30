@@ -4,8 +4,24 @@
     "emitEntryPoint": false,
     "compile": {
       "include": ["../**/*.cs"],
-      "exclude": ["../dotnet/**/*.cs", "../**/Properties/*.cs", "../Properties/*.cs"],
-      "excludeFiles": ["../Common/GenericDelegates.Func.cs", "../Common/GenericDelegates.Action.cs"]
+      "exclude": [
+          "../dotnet/**/*.cs",
+          "../**/Properties/*.cs",
+          "../Properties/*.cs",
+          "../**/*.Net20.cs",
+          "../**/*.Silverlight.cs",
+          "../**/*.Net40.cs",
+          "../**/*.Net35.cs",
+          "../**/*.WindowsPhone.cs",
+          "../Protocol/**/*.cs",
+          "../Common/DnsEndPoint.cs"
+        ],
+      "excludeFiles": [
+          "../Common/GenericDelegates.Func.cs",
+          "../Common/GenericDelegates.Action.cs",
+          "../Core/SslStream.cs",
+          "../Core/NetworkStream.cs"
+        ]
     }
   },
   "dependencies": {
@@ -17,7 +33,9 @@
         "System.Linq": "4.1.0-rc2-*",
         "System.Net.Sockets": "4.1.0-rc2-*",
         "System.Runtime.Extensions": "4.1.0-rc2-*",
-        "System.Runtime.InteropServices": "4.1.0-rc2-*"
+        "System.Runtime.InteropServices": "4.1.0-rc2-*",
+        "System.Security.Cryptography.X509Certificates": "4.1.0-rc2-*",
+        "System.Net.Security": "4.0.0-rc2-*"
       }
     }
   }
