@@ -33,7 +33,7 @@ namespace SuperSocket.ClientEngine
         public bool AllowNameMismatchCertificate { get; set; }
 
         public SecurityOption()
-            : this(SslProtocols.Default, new X509CertificateCollection())
+            : this(GetDefaultProtocol(), new X509CertificateCollection())
         {
 
         }
@@ -54,6 +54,15 @@ namespace SuperSocket.ClientEngine
         {
             EnabledSslProtocols = enabledSslProtocols;
             Certificates = certificates;
+        }
+        
+        private static SslProtocols GetDefaultProtocol()
+        {
+#if NETFX_CORE
+            return SslProtocols.Tls11 | SslProtocols.Tls12;
+#else
+            return SslProtocols.Default;
+#endif
         }
     }
 }
