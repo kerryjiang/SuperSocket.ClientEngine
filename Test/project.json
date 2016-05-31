@@ -1,7 +1,7 @@
 {
   "version": "1.0.0-*",
   "buildOptions": {
-    "emitEntryPoint": true
+    "emitEntryPoint": false
   },
   "dependencies": {
     "SuperSocket.ClientEngine": "[0.7.0.2]",
