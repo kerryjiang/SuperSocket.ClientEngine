@@ -1,12 +1,12 @@
 {
   "name": "SuperSocket.ClientEngine",
-  "version": "1.0.0-*",
+  "version": "0.7.0.2",
   "buildOptions": {
     "emitEntryPoint": false,
     "compile": {
       "include": ["../**/*.cs"],
       "exclude": [
-          "../dotnet/**/*.cs",
+          "../SuperSocket.ClientEngine/**/*.cs",
           "../**/Properties/*.cs",
           "../Properties/*.cs",
           "../**/*.Net20.cs",
