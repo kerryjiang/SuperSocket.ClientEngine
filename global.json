@@ -1,0 +1,9 @@
+{
+  "projects": [
+    "dotnet",
+    "Test"
+  ],
+  "sdk": {
+    "version": "1.0.0-rc2-*"
+  }
+}

@@ -1,4 +1,5 @@
 {
+  "name": "SuperSocket.ClientEngine",
   "version": "1.0.0-*",
   "buildOptions": {
     "emitEntryPoint": false,
