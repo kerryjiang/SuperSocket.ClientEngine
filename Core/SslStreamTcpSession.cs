@@ -4,6 +4,8 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
+using System.Threading;
+using System.Threading.Tasks;
 #if !SILVERLIGHT
 using System.Security.Authentication;
 #endif
@@ -47,7 +49,10 @@ namespace SuperSocket.ClientEngine
         {
             try
             {
-#if !SILVERLIGHT
+#if SILVERLIGHT
+                var sslStream = new SslStream(new NetworkStream(Client));
+                sslStream.BeginAuthenticateAsClient(HostName, OnAuthenticated, sslStream);
+#else
                 var securityOption = Security;
 
                 if (securityOption == null)
@@ -55,11 +60,16 @@ namespace SuperSocket.ClientEngine
                     throw new Exception("securityOption was not configured");
                 }
 
+    #if NETSTANDARD
+
+                AuthenticateAsClientAsync(new SslStream(new NetworkStream(Client)), Security);             
+ 
+    #else
+
                 var sslStream = new SslStream(new NetworkStream(Client), false, ValidateRemoteCertificate);
                 sslStream.BeginAuthenticateAsClient(HostName, securityOption.Certificates, securityOption.EnabledSslProtocols, false, OnAuthenticated, sslStream);
-#else
-                var sslStream = new SslStream(new NetworkStream(Client));
-                sslStream.BeginAuthenticateAsClient(HostName, OnAuthenticated, sslStream);
+                
+    #endif
 #endif
 
             }
@@ -70,6 +80,37 @@ namespace SuperSocket.ClientEngine
             }
         }
 
+#if NETSTANDARD       
+        private async void AuthenticateAsClientAsync(SslStream sslStream, SecurityOption securityOption)
+        {
+            try
+            {
+                await sslStream.AuthenticateAsClientAsync(HostName, securityOption.Certificates, securityOption.EnabledSslProtocols, false);
+            }
+            catch(Exception e)
+            {
+                EnsureSocketClosed();
+                OnError(e);
+                return;
+            }
+            
+            OnSslStreamConnected(sslStream);
+        }
+#endif
+        
+        private void OnSslStreamConnected(SslStream sslStream)
+        {
+            m_SslStream = sslStream;
+
+            OnConnected();
+
+            if(Buffer.Array == null)
+                Buffer = new ArraySegment<byte>(new byte[ReceiveBufferSize], 0, ReceiveBufferSize);
+
+            BeginRead();
+        }
+        
+#if !NETSTANDARD
         private void OnAuthenticated(IAsyncResult result)
         {
             var sslStream = result.AsyncState as SslStream;
@@ -92,14 +133,7 @@ namespace SuperSocket.ClientEngine
                 return;
             }
 
-            m_SslStream = sslStream;
-
-            OnConnected();
-
-            if(Buffer.Array == null)
-                Buffer = new ArraySegment<byte>(new byte[ReceiveBufferSize], 0, ReceiveBufferSize);
-
-            BeginRead();
+            OnSslStreamConnected(sslStream);
         }
 
         private void OnDataRead(IAsyncResult result)
@@ -142,27 +176,82 @@ namespace SuperSocket.ClientEngine
             OnDataReceived(Buffer.Array, Buffer.Offset, length);
             BeginRead();
         }
+#endif
 
         void BeginRead()
         {
-            var client = Client;
-
-            if (client == null || m_SslStream == null)
-                return;
-
-            try
+#if NETSTANDARD
+            ReadAsync();
+#else
+            StartRead();
+#endif
+        }
+        
+#if NETSTANDARD
+        private async void ReadAsync()
+        {
+            while (IsConnected)
             {
-                m_SslStream.BeginRead(Buffer.Array, Buffer.Offset, Buffer.Count, OnDataRead, new SslAsyncState { SslStream = m_SslStream, Client = client });
-            }
-            catch (Exception e)
-            {
-                if (!IsIgnorableException(e))
-                    OnError(e);
+                var client = Client;
 
-                if (EnsureSocketClosed(client))
-                    OnClosed();
+                if (client == null || m_SslStream == null)
+                    return;
+                
+                var buffer = Buffer;
+                
+                var length = 0;
+                
+                try
+                {
+                    length = await m_SslStream.ReadAsync(buffer.Array, buffer.Offset, buffer.Count, CancellationToken.None);
+                }
+                catch (Exception e)
+                {
+                    if (!IsIgnorableException(e))
+                        OnError(e);
+
+                    if (EnsureSocketClosed(Client))
+                        OnClosed();
+
+                    return;
+                }
+
+                if (length == 0)
+                {
+                    if (EnsureSocketClosed(Client))
+                        OnClosed();
+
+                    return;
+                }
+
+                OnDataReceived(buffer.Array, buffer.Offset, length);
             }
         }
+#else
+
+    void ReadAsync()
+    {
+        var client = Client;
+
+        if (client == null || m_SslStream == null)
+            return;
+
+        try
+        {
+            var buffer = Buffer;
+            m_SslStream.BeginRead(buffer.Array, buffer.Offset, buffer.Count, OnDataRead, new SslAsyncState { SslStream = m_SslStream, Client = client });
+        }
+        catch (Exception e)
+        {
+            if (!IsIgnorableException(e))
+                OnError(e);
+
+            if (EnsureSocketClosed(client))
+                OnClosed();
+        }
+    }
+
+#endif
 
 #if !SILVERLIGHT
         /// <summary>
@@ -255,7 +344,7 @@ namespace SuperSocket.ClientEngine
 
             return false;
         }
-
+#if !NETSTANDARD
         protected override void SendInternal(PosList<ArraySegment<byte>> items)
         {
             var client = this.Client;
@@ -331,6 +420,39 @@ namespace SuperSocket.ClientEngine
 
             OnSendingCompleted();
         }
+#else
+        protected override void SendInternal(PosList<ArraySegment<byte>> items)
+        {
+            SendInternalAsync(items);
+        }
+        
+        private async void SendInternalAsync(PosList<ArraySegment<byte>> items)
+        {
+            try
+            {
+                for (int i = items.Position; i < items.Count; i++)
+                {
+                    var item = items[items.Position];
+                    await m_SslStream.WriteAsync(item.Array, item.Offset, item.Count, CancellationToken.None);
+                }
+                
+                m_SslStream.Flush();
+            }
+            catch (Exception e)
+            {
+                if (!IsIgnorableException(e))
+                    OnError(e);
+
+                if (EnsureSocketClosed(Client))
+                    OnClosed();
+                    
+                return;
+            }
+            
+            OnSendingCompleted();
+        }
+        
+#endif
 
         public override void Close()
         {
@@ -338,7 +460,9 @@ namespace SuperSocket.ClientEngine
 
             if (sslStream != null)
             {
+#if !NETSTANDARD
                 sslStream.Close();
+#endif
                 sslStream.Dispose();
                 m_SslStream = null;
             }

@@ -58,7 +58,7 @@ namespace SuperSocket.ClientEngine
         
         private static SslProtocols GetDefaultProtocol()
         {
-#if NETFX_CORE
+#if NETSTANDARD
             return SslProtocols.Tls11 | SslProtocols.Tls12;
 #else
             return SslProtocols.Default;
