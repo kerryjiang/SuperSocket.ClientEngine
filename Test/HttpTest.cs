@@ -14,9 +14,11 @@ namespace SuperSocket.ClientEngine.Test
         {
             var client = new EasyClient();
             
+            var taskCompleteSrc = new TaskCompletionSource<HttpPackageInfo>();
+            
             client.Initialize(new HttpReceiveFilter(), (p) =>
             {
-                Console.WriteLine(p.Body);
+                taskCompleteSrc.SetResult(p);
             });
             
             var ret = await client.ConnectAsync(new DnsEndPoint("github.com", 443));
@@ -25,11 +27,20 @@ namespace SuperSocket.ClientEngine.Test
             
             var sb = new StringBuilder();
             
-            sb.AppendLine("HTTP 1.1/GET");
+            sb.AppendLine("GET https://github.com/ HTTP/1.1");
+            sb.AppendLine("Accept: text/html, application/xhtml+xml, image/jxr, */*");
+            sb.AppendLine("Accept-Language: en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3");
+            sb.AppendLine("Accept-Encoding: gzip, deflate");
+            sb.AppendLine("Host: github.com");
+            sb.AppendLine("Connection: Keep-Alive");
             
             var data = Encoding.ASCII.GetBytes(sb.ToString());
             
             client.Send(new ArraySegment<byte>(data, 0, data.Length));
+            
+            var response = await taskCompleteSrc.Task;
+            
+            Console.WriteLine(response.Body);
         }
     }
 }
