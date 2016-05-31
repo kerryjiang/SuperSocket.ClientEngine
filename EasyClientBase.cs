@@ -48,8 +48,8 @@ namespace SuperSocket.ClientEngine
             if (PipeLineProcessor == null)
                 throw new Exception("This client has not been initialized.");
 
-            m_ConnectTaskSource = InitConnect(remoteEndPoint);
-            return await m_ConnectTaskSource.Task;
+            var connectTaskSrc = m_ConnectTaskSource = InitConnect(remoteEndPoint);
+            return await connectTaskSrc.Task;
         }
 #else
         public Task<bool> ConnectAsync(EndPoint remoteEndPoint)
@@ -57,8 +57,8 @@ namespace SuperSocket.ClientEngine
             if (PipeLineProcessor == null)
                 throw new Exception("This client has not been initialized.");
 
-            m_ConnectTaskSource = InitConnect(remoteEndPoint);
-            return m_ConnectTaskSource.Task;
+            var connectTaskSrc = m_ConnectTaskSource = InitConnect(remoteEndPoint);
+            return connectTaskSrc.Task;
         }
 #endif
 
