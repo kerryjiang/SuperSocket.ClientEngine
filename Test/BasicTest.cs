@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Xunit;
 using System.Net;
-using SuperSocket.ClientEngine;
+using System.Net.Sockets;
 
 namespace SuperSocket.ClientEngine.Test
 {
@@ -12,7 +12,12 @@ namespace SuperSocket.ClientEngine.Test
         {
             var client = new EasyClient();
             
-            var ret = await client.ConnectAsync(new DnsEndPoint("github.com", 433));
+            client.Initialize(new FakeReceiveFilter(), (p) =>
+            {
+                // do nothing
+            });
+            
+            var ret = await client.ConnectAsync(new DnsEndPoint("github.com", 443));
             
             Assert.True(ret);
         }

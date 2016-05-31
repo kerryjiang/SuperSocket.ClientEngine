@@ -10,8 +10,13 @@ namespace SuperSocket.ClientEngine
         public static void ConnectAsync(this EndPoint remoteEndPoint, EndPoint localEndPoint, ConnectedCallback callback, object state)
         {
             var e = CreateSocketAsyncEventArgs(remoteEndPoint, callback, state);
+            
+#if NETSTANDARD
+            Socket.ConnectAsync(SocketType.Stream, ProtocolType.Tcp, e);
+#else
             var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
             socket.ConnectAsync(e);
+#endif
         }
     }
 }
