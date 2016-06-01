@@ -229,7 +229,7 @@ namespace SuperSocket.ClientEngine
         }
 #else
 
-    void ReadAsync()
+    void StartRead()
     {
         var client = Client;
 
