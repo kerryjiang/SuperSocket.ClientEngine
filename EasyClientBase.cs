@@ -145,7 +145,7 @@ namespace SuperSocket.ClientEngine
             m_Session.Send(segments);
         }
 
-        public Task<bool> Close()
+        public async Task<bool> Close()
         {
             var session = m_Session;
             
@@ -154,10 +154,10 @@ namespace SuperSocket.ClientEngine
                 var closeTaskSrc = new TaskCompletionSource<bool>();
                 session.Close();
                 m_CloseTaskSource = closeTaskSrc;
-                return closeTaskSrc.Task;
+                return await closeTaskSrc.Task.ConfigureAwait(false);
             }
 
-            return null;
+            return await Task.FromResult(false);
         }
 
         void OnSessionDataReceived(object sender, DataEventArgs e)
