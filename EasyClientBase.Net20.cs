@@ -63,10 +63,10 @@ namespace SuperSocket.ClientEngine
 
             session.NoDelay = NoDelay;
 
-            session.Connected += new EventHandler(m_Session_Connected);
-            session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
-            session.Closed += new EventHandler(m_Session_Closed);
-            session.DataReceived += new EventHandler<DataEventArgs>(m_Session_DataReceived);
+            session.Connected += new EventHandler(OnSessionConnected);
+            session.Error += new EventHandler<ErrorEventArgs>(OnSessionError);
+            session.Closed += new EventHandler(OnSessionClosed);
+            session.DataReceived += new EventHandler<DataEventArgs>(OnSessionDataReceived);
 
             if (ReceiveBufferSize > 0)
                 session.ReceiveBufferSize = ReceiveBufferSize;
@@ -101,7 +101,7 @@ namespace SuperSocket.ClientEngine
             }
         }
 
-        void m_Session_DataReceived(object sender, DataEventArgs e)
+        void OnSessionDataReceived(object sender, DataEventArgs e)
         {
             var result = PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length), this as IBufferState);
 
@@ -122,7 +122,7 @@ namespace SuperSocket.ClientEngine
             }
         }
 
-        void m_Session_Error(object sender, ErrorEventArgs e)
+        void OnSessionError(object sender, ErrorEventArgs e)
         {
             if (!m_Connected)
             {
@@ -147,7 +147,7 @@ namespace SuperSocket.ClientEngine
 
         public event EventHandler<ErrorEventArgs> Error;
 
-        void m_Session_Closed(object sender, EventArgs e)
+        void OnSessionClosed(object sender, EventArgs e)
         {
             m_Connected = false;
 
@@ -161,7 +161,7 @@ namespace SuperSocket.ClientEngine
 
         public event EventHandler Closed;
 
-        void m_Session_Connected(object sender, EventArgs e)
+        void OnSessionConnected(object sender, EventArgs e)
         {
             m_Connected = true;
             m_ConnectEvent.Set();

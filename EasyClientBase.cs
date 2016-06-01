@@ -49,7 +49,7 @@ namespace SuperSocket.ClientEngine
                 throw new Exception("This client has not been initialized.");
 
             var connectTaskSrc = m_ConnectTaskSource = InitConnect(remoteEndPoint);
-            return await connectTaskSrc.Task;
+            return await connectTaskSrc.Task.ConfigureAwait(false);
         }
 #else
         public Task<bool> ConnectAsync(EndPoint remoteEndPoint)
@@ -114,10 +114,10 @@ namespace SuperSocket.ClientEngine
             session.NoDelay = NoDelay;
 #endif
 
-            session.Connected += new EventHandler(m_Session_Connected);
-            session.Error += new EventHandler<ErrorEventArgs>(m_Session_Error);
-            session.Closed += new EventHandler(m_Session_Closed);
-            session.DataReceived += new EventHandler<DataEventArgs>(m_Session_DataReceived);
+            session.Connected += new EventHandler(OnSessionConnected);
+            session.Error += new EventHandler<ErrorEventArgs>(OnSessionError);
+            session.Closed += new EventHandler(OnSessionClosed);
+            session.DataReceived += new EventHandler<DataEventArgs>(OnSessionDataReceived);
 
             if (ReceiveBufferSize > 0)
                 session.ReceiveBufferSize = ReceiveBufferSize;
@@ -160,7 +160,7 @@ namespace SuperSocket.ClientEngine
             return null;
         }
 
-        void m_Session_DataReceived(object sender, DataEventArgs e)
+        void OnSessionDataReceived(object sender, DataEventArgs e)
         {
             var result = PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length), this as IBufferState);
 
@@ -181,7 +181,7 @@ namespace SuperSocket.ClientEngine
             }
         }
 
-        void m_Session_Error(object sender, ErrorEventArgs e)
+        void OnSessionError(object sender, ErrorEventArgs e)
         {
             if (!m_Connected)
             {
@@ -222,7 +222,7 @@ namespace SuperSocket.ClientEngine
 
         public event EventHandler<ErrorEventArgs> Error;
 
-        void m_Session_Closed(object sender, EventArgs e)
+        void OnSessionClosed(object sender, EventArgs e)
         {
             m_Connected = false;
 
@@ -231,16 +231,20 @@ namespace SuperSocket.ClientEngine
             if (handler != null)
                 handler(this, EventArgs.Empty);
 
-            if(m_CloseTaskSource != null)
+            var closeTaskSrc = m_CloseTaskSource;
+            
+            if(closeTaskSrc != null)
             {
-                m_CloseTaskSource.SetResult(true);
-                m_CloseTaskSource = null;
+                if(Interlocked.CompareExchange(ref m_CloseTaskSource, null, closeTaskSrc) == closeTaskSrc)
+                {
+                    closeTaskSrc.SetResult(true);
+                }
             }
         }
 
         public event EventHandler Closed;
 
-        void m_Session_Connected(object sender, EventArgs e)
+        void OnSessionConnected(object sender, EventArgs e)
         {
             m_Connected = true;
 
