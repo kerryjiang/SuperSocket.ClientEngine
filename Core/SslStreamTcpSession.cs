@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
 using System.Threading;
+#if NETSTANDARD
 using System.Threading.Tasks;
+#endif
 #if !SILVERLIGHT
 using System.Security.Authentication;
 #endif
@@ -60,16 +62,16 @@ namespace SuperSocket.ClientEngine
                     throw new Exception("securityOption was not configured");
                 }
 
-    #if NETSTANDARD
+#if NETSTANDARD
 
                 AuthenticateAsClientAsync(new SslStream(new NetworkStream(Client)), Security);             
  
-    #else
+#else
 
                 var sslStream = new SslStream(new NetworkStream(Client), false, ValidateRemoteCertificate);
                 sslStream.BeginAuthenticateAsClient(HostName, securityOption.Certificates, securityOption.EnabledSslProtocols, false, OnAuthenticated, sslStream);
                 
-    #endif
+#endif
 #endif
 
             }
@@ -80,7 +82,7 @@ namespace SuperSocket.ClientEngine
             }
         }
 
-#if NETSTANDARD       
+#if NETSTANDARD
         private async void AuthenticateAsClientAsync(SslStream sslStream, SecurityOption securityOption)
         {
             try

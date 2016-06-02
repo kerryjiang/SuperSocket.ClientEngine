@@ -145,7 +145,7 @@ namespace SuperSocket.ClientEngine
             m_Session.Send(segments);
         }
 
-#AWAIT
+#if AWAIT
         public async Task<bool> Close()
         {
             var session = m_Session;
@@ -173,7 +173,7 @@ namespace SuperSocket.ClientEngine
                 return closeTaskSrc.Task;
             }
 
-            return false;
+            return new Task<bool>(() => false);
         }
  #endif
 
