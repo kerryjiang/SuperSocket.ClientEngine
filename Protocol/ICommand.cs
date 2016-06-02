@@ -12,7 +12,7 @@ namespace SuperSocket.ClientEngine.Protocol
 
     public interface ICommand<TSession, TPackageInfo> : ICommand
         where TPackageInfo : IPackageInfo
-        where TSession : IClientSession
+        where TSession : class
     {
         void ExecuteCommand(TSession session, TPackageInfo packageInfo);
     }

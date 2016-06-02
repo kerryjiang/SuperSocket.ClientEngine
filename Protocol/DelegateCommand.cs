@@ -9,7 +9,7 @@ namespace SuperSocket.ClientEngine.Protocol
     public delegate void CommandDelegate<TClientSession, TPackageInfo>(TClientSession session, TPackageInfo packageInfo);
 
     class DelegateCommand<TClientSession, TPackageInfo> : ICommand<TClientSession, TPackageInfo>
-        where TClientSession : IClientSession
+        where TClientSession : class
         where TPackageInfo : IPackageInfo
     {
         private CommandDelegate<TClientSession, TPackageInfo> m_Execution;
