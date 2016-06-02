@@ -128,21 +128,30 @@ namespace SuperSocket.ClientEngine
             
             return new TaskCompletionSource<bool>();
         }
+        
+        public void Send(byte[] data)
+        {
+            Send(new ArraySegment<byte>(data, 0, data.Length));
+        }
 
         public void Send(ArraySegment<byte> segment)
         {
-            if(!m_Connected || m_Session == null)
+            var session = m_Session;
+            
+            if(!m_Connected || session == null)
                 throw new Exception("The socket is not connected.");
 
-            m_Session.Send(segment);
+            session.Send(segment);
         }
 
         public void Send(List<ArraySegment<byte>> segments)
         {
-            if(!m_Connected || m_Session == null)
+            var session = m_Session;
+            
+            if(!m_Connected || session == null)
                 throw new Exception("The socket is not connected.");
 
-            m_Session.Send(segments);
+            session.Send(segments);
         }
 
 #if AWAIT
