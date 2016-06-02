@@ -33,7 +33,7 @@
   "frameworks": {
     "netstandard1.3": {
       "buildOptions": {
-        "define": [ "NETFX_CORE", "NETSTANDARD" ]
+        "define": [ "NETFX_CORE", "NETSTANDARD", "AWAIT" ]
       },
       "dependencies": {
         "System.Linq": "4.1.0-rc2-*",
