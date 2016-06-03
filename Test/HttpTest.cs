@@ -34,6 +34,7 @@ namespace SuperSocket.ClientEngine.Test
             sb.AppendLine("Host: github.com");
             sb.AppendLine("Connection: Keep-Alive");
             
+            /*
             var data = Encoding.ASCII.GetBytes(sb.ToString());
             
             client.Send(new ArraySegment<byte>(data, 0, data.Length));
@@ -41,6 +42,7 @@ namespace SuperSocket.ClientEngine.Test
             var response = await taskCompleteSrc.Task;
             
             Console.WriteLine(response.Body);
+            */
         }
     }
 }

@@ -18,7 +18,17 @@ namespace SuperSocket.ClientEngine
 
         public int ReceiveBufferSize { get; set; }
 
-        public EndPoint LocalEndPoint { get; set; }
+        private EndPoint m_EndPointToBind;
+        private EndPoint m_LocalEndPoint;
+
+        public EndPoint LocalEndPoint
+        {
+            get { return m_LocalEndPoint };
+            set
+            {
+                m_EndPointToBind = m_LocalEndPoint = value;
+            }
+        }
 
         public bool NoDelay { get; set; }
 
@@ -54,7 +64,7 @@ namespace SuperSocket.ClientEngine
 
             var session = GetUnderlyingSession();
 
-            var localEndPoint = LocalEndPoint;
+            var localEndPoint = m_EndPointToBind;
 
             if (localEndPoint != null)
             {
@@ -159,7 +169,8 @@ namespace SuperSocket.ClientEngine
         void OnSessionClosed(object sender, EventArgs e)
         {
             m_Connected = false;
-
+            m_LocalEndPoint = null;
+            
             var handler = Closed;
 
             if (handler != null)
@@ -173,9 +184,18 @@ namespace SuperSocket.ClientEngine
         void OnSessionConnected(object sender, EventArgs e)
         {
             m_Connected = true;
+            
+            var session = sender as TcpClientSession;
+            
+            if (session != null)
+            {
+                m_LocalEndPoint = session.LocalEndPoint;
+            }
+            
             m_ConnectEvent.Set();
 
             var handler = Connected;
+            
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);

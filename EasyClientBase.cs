@@ -24,7 +24,17 @@ namespace SuperSocket.ClientEngine
 
 #if !SILVERLIGHT
 
-        public EndPoint LocalEndPoint { get; set; }
+        private EndPoint m_EndPointToBind;
+        private EndPoint m_LocalEndPoint;
+
+        public EndPoint LocalEndPoint
+        {
+            get { return m_LocalEndPoint };
+            set
+            {
+                m_EndPointToBind = m_LocalEndPoint = value;
+            }
+        }
 #endif
 
 #if !__IOS__
@@ -57,7 +67,7 @@ namespace SuperSocket.ClientEngine
             if (PipeLineProcessor == null)
                 throw new Exception("This client has not been initialized.");
 
-            var connectTaskSrc = m_ConnectTaskSource = InitConnect(remoteEndPoint);
+            var connectTaskSrc = InitConnect(remoteEndPoint);
             return connectTaskSrc.Task;
         }
 #endif
@@ -102,11 +112,11 @@ namespace SuperSocket.ClientEngine
             var session = GetUnderlyingSession();
 
 #if !SILVERLIGHT
-            var localEndPoint = LocalEndPoint;
+            var localEndPoint = m_EndPointToBind;
 
             if (localEndPoint != null)
             {
-                session.LocalEndPoint = localEndPoint;
+                session.LocalEndPoint = m_EndPointToBind;
             }
 #endif
 
@@ -123,10 +133,12 @@ namespace SuperSocket.ClientEngine
                 session.ReceiveBufferSize = ReceiveBufferSize;
 
             m_Session = session;
+            
+            var taskSrc = m_ConnectTaskSource = new TaskCompletionSource<bool>();
 
             session.Connect(remoteEndPoint);
             
-            return new TaskCompletionSource<bool>();
+            return taskSrc;
         }
         
         public void Send(byte[] data)
@@ -162,8 +174,8 @@ namespace SuperSocket.ClientEngine
             if(session != null && m_Connected)
             {
                 var closeTaskSrc = new TaskCompletionSource<bool>();
-                session.Close();
                 m_CloseTaskSource = closeTaskSrc;
+                session.Close();
                 return await closeTaskSrc.Task.ConfigureAwait(false);
             }
 
@@ -177,8 +189,8 @@ namespace SuperSocket.ClientEngine
             if(session != null && m_Connected)
             {
                 var closeTaskSrc = new TaskCompletionSource<bool>();
-                session.Close();
                 m_CloseTaskSource = closeTaskSrc;
+                session.Close();
                 return closeTaskSrc.Task;
             }
 
@@ -251,6 +263,7 @@ namespace SuperSocket.ClientEngine
         void OnSessionClosed(object sender, EventArgs e)
         {
             m_Connected = false;
+            m_LocalEndPoint = null;
 
             var handler = Closed;
 
@@ -278,7 +291,7 @@ namespace SuperSocket.ClientEngine
             TcpClientSession session = sender as TcpClientSession;
             if (session != null)
             {
-                LocalEndPoint = session.LocalEndPoint;
+                m_LocalEndPoint = session.LocalEndPoint;
             }
 #endif
 
