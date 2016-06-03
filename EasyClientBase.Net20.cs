@@ -23,7 +23,7 @@ namespace SuperSocket.ClientEngine
 
         public EndPoint LocalEndPoint
         {
-            get { return m_LocalEndPoint };
+            get { return m_LocalEndPoint; }
             set
             {
                 m_EndPointToBind = m_LocalEndPoint = value;
