@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/bin/Debug/<target-framework>/<project-name.dll>",
+            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/Test.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false
@@ -16,7 +16,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/bin/Debug/<target-framework>/<project-name.dll>",
+            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/Test.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
@@ -40,6 +40,16 @@
             "type": "coreclr",
             "request": "attach",
             "processName": "<example>"
+        },
+        {
+            "name": ".NET Core Test",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "dotnet test",
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "stopAtEntry": false
         }
     ]
 }

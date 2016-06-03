@@ -64,7 +64,7 @@ namespace SuperSocket.ClientEngine
 
 #if NETSTANDARD
 
-                AuthenticateAsClientAsync(new SslStream(new NetworkStream(Client)), Security);             
+                AuthenticateAsClientAsync(new SslStream(new NetworkStream(Client), false, ValidateRemoteCertificate), Security);             
  
 #else
 

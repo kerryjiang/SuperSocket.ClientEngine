@@ -18,7 +18,7 @@ namespace SuperSocket.ClientEngine
 
         protected IPipelineProcessor PipeLineProcessor { get; set; }
 
-#if !NETFX_CORE
+#if !NETFX_CORE || NETSTANDARD
         public SecurityOption Security { get; set; }
 #endif
 
@@ -29,10 +29,16 @@ namespace SuperSocket.ClientEngine
 
         public EndPoint LocalEndPoint
         {
-            get { return m_LocalEndPoint; }
+            get
+            {
+                if (m_LocalEndPoint != null)
+                    return m_LocalEndPoint;
+                    
+                return m_EndPointToBind;
+            }
             set
             {
-                m_EndPointToBind = m_LocalEndPoint = value;
+                m_EndPointToBind = value;
             }
         }
 #endif
@@ -74,7 +80,7 @@ namespace SuperSocket.ClientEngine
 
         private TcpClientSession GetUnderlyingSession()
         {
-#if NETFX_CORE
+#if NETFX_CORE && !NETSTANDARD
             return new AsyncTcpSession();
 #else
             var security = Security;
