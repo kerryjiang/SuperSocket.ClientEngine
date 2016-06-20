@@ -42,7 +42,14 @@ namespace SuperSocket.ClientEngine
         protected override void OnGetSocket(SocketAsyncEventArgs e)
         {
             if (Buffer.Array == null)
-                Buffer = new ArraySegment<byte>(new byte[ReceiveBufferSize], 0, ReceiveBufferSize);
+            {
+                var receiveBufferSize = ReceiveBufferSize;
+
+                if (receiveBufferSize <= 0)
+                    receiveBufferSize = DefaultReceiveBufferSize;
+
+                Buffer = new ArraySegment<byte>(new byte[receiveBufferSize]);
+            }
 
             e.SetBuffer(Buffer.Array, Buffer.Offset, Buffer.Count);
 

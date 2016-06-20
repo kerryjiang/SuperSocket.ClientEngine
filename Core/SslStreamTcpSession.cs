@@ -107,7 +107,14 @@ namespace SuperSocket.ClientEngine
             OnConnected();
 
             if(Buffer.Array == null)
-                Buffer = new ArraySegment<byte>(new byte[ReceiveBufferSize], 0, ReceiveBufferSize);
+            {
+                var receiveBufferSize = ReceiveBufferSize;
+
+                if (receiveBufferSize <= 0)
+                    receiveBufferSize = DefaultReceiveBufferSize;
+
+                Buffer = new ArraySegment<byte>(new byte[receiveBufferSize]);
+            }
 
             BeginRead();
         }

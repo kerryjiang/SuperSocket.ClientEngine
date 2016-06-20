@@ -9,6 +9,8 @@ namespace SuperSocket.ClientEngine
 {
     public abstract class ClientSession : IClientSession, IBufferSetter
     {
+        public const int DefaultReceiveBufferSize = 4096;
+        
         protected Socket Client { get; set; }
 
         protected EndPoint RemoteEndPoint { get; set; }

@@ -12,9 +12,7 @@ namespace SuperSocket.ClientEngine
     {
         protected string HostName { get; private set; }
 
-        private bool m_InConnecting = false;
-
-        public const int DefaultReceiveBufferSize = 4096;
+        private bool m_InConnecting = false;        
 
         public TcpClientSession()
             : base()
