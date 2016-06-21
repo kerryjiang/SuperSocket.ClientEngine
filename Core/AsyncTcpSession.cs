@@ -48,6 +48,8 @@ namespace SuperSocket.ClientEngine
                 if (receiveBufferSize <= 0)
                     receiveBufferSize = DefaultReceiveBufferSize;
 
+                ReceiveBufferSize = receiveBufferSize;
+
                 Buffer = new ArraySegment<byte>(new byte[receiveBufferSize]);
             }
 
