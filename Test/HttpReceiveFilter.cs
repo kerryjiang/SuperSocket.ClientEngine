@@ -1,4 +1,5 @@
 using SuperSocket.ProtoBase;
+using System;
 
 namespace SuperSocket.ClientEngine.Test
 {

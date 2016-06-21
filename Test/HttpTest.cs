@@ -44,6 +44,7 @@ namespace SuperSocket.ClientEngine.Test
             sb.AppendLine("Accept-Encoding: gzip, deflate");
             sb.AppendLine("Host: github.com");
             sb.AppendLine("Connection: Keep-Alive");
+            sb.AppendLine();
             
             var data = Encoding.ASCII.GetBytes(sb.ToString());
             
