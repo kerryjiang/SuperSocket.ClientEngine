@@ -28,7 +28,7 @@
     }
   },
   "dependencies": {
-      "SuperSocket.ProtoBase": "[1.7.0-beta6]"
+      "SuperSocket.ProtoBase": "[1.7.0-beta7]"
   },
   "frameworks": {
     "netstandard1.3": {

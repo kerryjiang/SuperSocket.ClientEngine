@@ -9,30 +9,27 @@ namespace SuperSocket.ClientEngine
 {
     public class EasyClient : EasyClientBase
     {
+        private Action<IPackageInfo> m_Handler;
+
         public void Initialize<TPackageInfo>(IReceiveFilter<TPackageInfo> receiveFilter, Action<TPackageInfo> handler)
             where TPackageInfo : IPackageInfo
         {
-            PipeLineProcessor = new DefaultPipelineProcessor<TPackageInfo>(new PackageHandlerWrap<TPackageInfo>(handler), receiveFilter);
+            PipeLineProcessor = new DefaultPipelineProcessor<TPackageInfo>(receiveFilter);
+            m_Handler = (p) => handler((TPackageInfo)p);
         }
 
-        class PackageHandlerWrap<TPakcageInfo> : IPackageHandler<TPakcageInfo>
-            where TPakcageInfo : IPackageInfo
+        protected override void HandlePackage(IPackageInfo package)
         {
-            private Action<TPakcageInfo> m_Handler;
+            var handler = m_Handler;
 
-            public PackageHandlerWrap(Action<TPakcageInfo> handler)
-            {
-                m_Handler = handler;
-            }
+            if (handler == null)
+                return;
 
-            public void Handle(TPakcageInfo package)
-            {
-                m_Handler(package);
-            }
+            handler(package);
         }
     }
 
-    public class EasyClient<TPackageInfo> : EasyClientBase, IPackageHandler<TPackageInfo>
+    public class EasyClient<TPackageInfo> : EasyClientBase
         where TPackageInfo : IPackageInfo
     {
         public event EventHandler<PackageEventArgs<TPackageInfo>> NewPackageReceived;
@@ -44,17 +41,17 @@ namespace SuperSocket.ClientEngine
 
         public virtual void Initialize(IReceiveFilter<TPackageInfo> receiveFilter)
         {
-            PipeLineProcessor = new DefaultPipelineProcessor<TPackageInfo>(this, receiveFilter);
+            PipeLineProcessor = new DefaultPipelineProcessor<TPackageInfo>(receiveFilter);
         }
 
-        public void Handle(TPackageInfo package)
+        protected override void HandlePackage(IPackageInfo package)
         {
             var handler = NewPackageReceived;
 
             if (handler == null)
                 return;
 
-            handler(this, new PackageEventArgs<TPackageInfo>(package));
+            handler(this, new PackageEventArgs<TPackageInfo>((TPackageInfo)package));
         }
     }
 }

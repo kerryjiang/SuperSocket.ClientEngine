@@ -8,7 +8,7 @@ using System.Net;
 
 namespace SuperSocket.ClientEngine
 {
-    public abstract class EasyClientBase : IBufferState
+    public abstract class EasyClientBase
     {
         private IClientSession m_Session;
         private AutoResetEvent m_ConnectEvent = new AutoResetEvent(false);
@@ -128,11 +128,16 @@ namespace SuperSocket.ClientEngine
 
         void OnSessionDataReceived(object sender, DataEventArgs e)
         {
-            var result = PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length), this as IBufferState);
+            var result = PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length));
 
-            // allocate new receive buffer if the previous one was cached
-            if (result.State == ProcessState.Cached)
+            if (result.State == ProcessState.Error)
             {
+                m_Session.Close();
+                return;
+            }
+            else if (result.State == ProcessState.Cached)
+            {
+                // allocate new receive buffer if the previous one was cached
                 var session = m_Session;
 
                 if (session != null)
@@ -143,6 +148,14 @@ namespace SuperSocket.ClientEngine
                     {
                         bufferSetter.SetBuffer(new ArraySegment<byte>(new byte[session.ReceiveBufferSize]));
                     }
+                }
+            }
+
+            if (result.Packages != null && result.Packages.Count > 0)
+            {
+                foreach (var item in result.Packages)
+                {
+                    HandlePackage(item);
                 }
             }
         }
@@ -210,14 +223,6 @@ namespace SuperSocket.ClientEngine
 
         public event EventHandler Connected;
 
-        int IBufferState.DecreaseReference()
-        {
-            return 0;
-        }
-
-        void IBufferState.IncreaseReference()
-        {
-
-        }
+        protected abstract void HandlePackage(IPackageInfo package);
     }
 }
