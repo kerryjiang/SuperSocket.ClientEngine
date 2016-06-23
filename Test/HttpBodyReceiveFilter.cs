@@ -1,9 +1,10 @@
+using System;
 using System.Text;
 using SuperSocket.ProtoBase;
 
 namespace SuperSocket.ClientEngine.Test
 {
-    public class HttpBodyReceiveFilter : FixedSizeReceiveFilter<HttpPackageInfo>
+    public class HttpBodyReceiveFilter : FixedSizeReceiveFilter<HttpPackageInfo>, ICleanupReceiveFilter<HttpPackageInfo>
     {
         private HttpHeaderInfo m_HttpHeader;
         
@@ -21,7 +22,13 @@ namespace SuperSocket.ClientEngine.Test
 
         public override HttpPackageInfo ResolvePackage(IBufferStream bufferStream)
         {
-            return new HttpPackageInfo("Test", m_HttpHeader, bufferStream.Skip(m_HeaderSize).ReadString(m_Size - m_HeaderSize, Encoding.UTF8));
+            var total = (int)bufferStream.Length;
+            return new HttpPackageInfo("Test", m_HttpHeader, bufferStream.Skip(m_HeaderSize).ReadString(total - m_HeaderSize, Encoding.UTF8));
+        }
+
+        HttpPackageInfo ICleanupReceiveFilter<HttpPackageInfo>.ResolvePackage(BufferList data)
+        {
+            return ResolvePackage(this.GetBufferStream(data));
         }
     }
 }

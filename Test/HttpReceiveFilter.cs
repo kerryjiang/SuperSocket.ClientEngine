@@ -7,8 +7,15 @@ namespace SuperSocket.ClientEngine.Test
     {
         protected override IReceiveFilter<HttpPackageInfo> GetBodyReceiveFilter(HttpHeaderInfo header, int headerSize)
         {
-            var contentLength = int.Parse(header["Content-Length"]);
-            var totalLength = headerSize + contentLength;
+            var contentLength = 0;
+            var strContentLength = header.Get("Content-Length");
+
+            if (string.IsNullOrEmpty(strContentLength))
+                contentLength = -1;
+            else
+                contentLength = int.Parse(strContentLength);
+
+            var totalLength = contentLength < 0 ? int.MaxValue : headerSize + contentLength;
             return new HttpBodyReceiveFilter(header, totalLength, headerSize);
         }
 
