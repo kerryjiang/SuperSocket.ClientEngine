@@ -284,6 +284,23 @@ namespace SuperSocket.ClientEngine
             m_Connected = false;
             m_LocalEndPoint = null;
 
+            try
+            {
+                var result = PipeLineProcessor.CleanUp();
+
+                if (result.Packages != null && result.Packages.Count > 0)
+                {
+                    foreach (var item in result.Packages)
+                    {
+                        HandlePackage(item);
+                    }
+                }
+            }
+            catch (System.Exception exc)
+            {
+                OnError(exc);
+            }
+
             var handler = Closed;
 
             if (handler != null)
