@@ -40,6 +40,8 @@ namespace SuperSocket.ClientEngine
 
         public SecurityOption Security { get; set; }
 
+        public IProxyConnector Proxy { get; set; }
+
         public EasyClientBase()
         {
 
@@ -78,6 +80,9 @@ namespace SuperSocket.ClientEngine
             }
 
             session.NoDelay = NoDelay;
+
+            if (Proxy != null)
+                session.Proxy = Proxy;
 
             session.Connected += new EventHandler(OnSessionConnected);
             session.Error += new EventHandler<ErrorEventArgs>(OnSessionError);

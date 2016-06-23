@@ -49,6 +49,8 @@ namespace SuperSocket.ClientEngine
 
         public int ReceiveBufferSize { get; set; }
 
+        public IProxyConnector Proxy { get; set; }
+
         public EasyClientBase()
         {
 
@@ -129,7 +131,9 @@ namespace SuperSocket.ClientEngine
 #if !__IOS__
             session.NoDelay = NoDelay;
 #endif
-
+            if (Proxy != null)
+                session.Proxy = Proxy;
+                
             session.Connected += new EventHandler(OnSessionConnected);
             session.Error += new EventHandler<ErrorEventArgs>(OnSessionError);
             session.Closed += new EventHandler(OnSessionClosed);
