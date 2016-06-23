@@ -15,9 +15,9 @@ namespace SuperSocket.ClientEngine.Test
         {
             var client = new EasyClient();
             
-            client.Security =  new SecurityOption();
-            client.Security.AllowUnstrustedCertificate = true;
-            client.Security.AllowNameMismatchCertificate = true;
+            //client.Security =  new SecurityOption();
+            //client.Security.AllowUnstrustedCertificate = true;
+            //client.Security.AllowNameMismatchCertificate = true;
             
             client.Error += (s, e) =>
             {
@@ -31,18 +31,16 @@ namespace SuperSocket.ClientEngine.Test
                 taskCompleteSrc.SetResult(p);
             });
             
-            var ret = await client.ConnectAsync(new DnsEndPoint("github.com", 443));
+            var ret = await client.ConnectAsync(new DnsEndPoint("www.supersocket.net", 80));
             
             Assert.True(ret);
             Console.WriteLine("Get https connection established");
             
             var sb = new StringBuilder();
             
-            sb.AppendLine("GET https://github.com/ HTTP/1.1");
+            sb.AppendLine("GET / HTTP/1.1");
             sb.AppendLine("Accept: text/html, application/xhtml+xml, image/jxr, */*");
-            sb.AppendLine("Accept-Language: en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3");
-            sb.AppendLine("Accept-Encoding: gzip, deflate");
-            sb.AppendLine("Host: github.com");
+            sb.AppendLine("Host: www.supersocket.net");
             sb.AppendLine("Connection: Keep-Alive");
             sb.AppendLine();
             
