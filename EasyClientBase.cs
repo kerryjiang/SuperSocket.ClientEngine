@@ -286,7 +286,11 @@ namespace SuperSocket.ClientEngine
         void OnSessionClosed(object sender, EventArgs e)
         {
             m_Connected = false;
+
+
+#if !SILVERLIGHT
             m_LocalEndPoint = null;
+#endif
 
             try
             {
