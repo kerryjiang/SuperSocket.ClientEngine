@@ -69,12 +69,13 @@
     <Compile Include="Proxy\Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.7\lib\netstandard1.1\SuperSocket.ProtoBase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.5, Culture=neutral, PublicKeyToken=6c80000676988ebb">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.5\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.SuperSocket.ClientEngine.iOS.config" />

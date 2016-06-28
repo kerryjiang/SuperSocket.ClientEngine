@@ -35,8 +35,8 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.5, Culture=neutral, PublicKeyToken=6c80000676988ebb">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.5\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.7, Culture=neutral, PublicKeyToken=6c80000676988ebb">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.7\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
