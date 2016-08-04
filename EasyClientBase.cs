@@ -292,23 +292,6 @@ namespace SuperSocket.ClientEngine
             m_LocalEndPoint = null;
 #endif
 
-            try
-            {
-                var result = PipeLineProcessor.CleanUp();
-
-                if (result.Packages != null && result.Packages.Count > 0)
-                {
-                    foreach (var item in result.Packages)
-                    {
-                        HandlePackage(item);
-                    }
-                }
-            }
-            catch (System.Exception exc)
-            {
-                OnError(exc);
-            }
-
             var handler = Closed;
 
             if (handler != null)
