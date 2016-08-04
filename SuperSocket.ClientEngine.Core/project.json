@@ -6,6 +6,7 @@
     "compile": {
       "include": ["../**/*.cs"],
       "exclude": [
+          "../*.cs",
           "../SuperSocket.ClientEngine/**/*.cs",
 		  "../SuperSocket.ClientEngine.Core/**/*.cs",
           "../Test/**/*.cs",
@@ -19,6 +20,9 @@
           "../Protocol/**/*.cs",
           "../Common/DnsEndPoint.cs"
         ],
+	  "includeFiles": [
+	      "../GlobalAssemblyInfo.cs"
+		],
       "excludeFiles": [
           "../Common/ConnectAsyncExtension.Net.cs",
           "../Common/GenericDelegates.Func.cs",
@@ -29,7 +33,7 @@
     }
   },
   "dependencies": {
-      "SuperSocket.ProtoBase": "[1.7.0.9]"
+	
   },
   "frameworks": {
     "netstandard1.3": {
@@ -43,7 +47,8 @@
         "System.Runtime.InteropServices": "4.1.0",
         "System.Security.Cryptography.X509Certificates": "4.1.0",
         "System.Net.Security": "4.0.0",
-        "System.Net.NameResolution": "4.0.0"
+        "System.Net.NameResolution": "4.0.0",
+		"System.Threading": "4.0.11"
       }
     }
   }

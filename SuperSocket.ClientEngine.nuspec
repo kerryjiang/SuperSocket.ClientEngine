@@ -13,11 +13,20 @@
     <tags>SuperSocket, Socket Client</tags>
 	<dependencies>
       <group>
-        <dependency id="SuperSocket.ProtoBase" version="1.7.0.9" />
+        <dependency id="SuperSocket.ProtoBase" version="[1.7.0.9, 1.7.0.9]" />
 	  </group>
 	  <group targetFramework="sl50">		
 		<dependency id="Portable.BouncyCastle-Signed" version="1.7.0.2" />
 	  </group>
+	  <group targetFramework=".NETStandard1.3">
+        <dependency id="System.Linq" version="[4.1.0, )" />
+        <dependency id="System.Net.Sockets" version="[4.1.0, )" />
+        <dependency id="System.Runtime.Extensions" version="[4.1.0, )" />
+        <dependency id="System.Runtime.InteropServices" version="[4.1.0, )" />
+        <dependency id="System.Security.Cryptography.X509Certificates" version="[4.1.0, )" />
+        <dependency id="System.Net.Security" version="[4.0.0, )" />
+        <dependency id="System.Net.NameResolution" version="[4.0.0, )" />
+      </group>
     </dependencies>
 	<references>	  
 	  <reference file="SuperSocket.ClientEngine.dll" />
@@ -30,10 +39,9 @@
 	<file src="output\net45\release\SuperSocket.ClientEngine.dll" target="lib/net45" />
 	<file src="output\sl50\release\SuperSocket.ClientEngine.dll" target="lib/sl50" />
 	<file src="output\wp80\release\SuperSocket.ClientEngine.dll" target="lib/wp80" />
-	<file src="output\win\release\SuperSocket.ClientEngine.dll" target="lib/win" />
-	<file src="output\win\release\SuperSocket.ClientEngine.pri" target="lib/win" />
 	<file src="output\monoandroid10\release\SuperSocket.ClientEngine.dll" target="lib/monoandroid10" />
 	<file src="output\monotouch10\release\SuperSocket.ClientEngine.dll" target="lib/monotouch10" />
 	<file src="output\xamarinios10\release\SuperSocket.ClientEngine.dll" target="lib/xamarinios10" />
+	<file src="output\netstandard1.3\release\SuperSocket.ClientEngine.dll" target="lib/netstandard1.3" />
   </files>
 </package>
