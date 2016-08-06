@@ -175,7 +175,14 @@ namespace SuperSocket.ClientEngine
             m_InConnecting = false;
 
 #if !SILVERLIGHT
-            LocalEndPoint = socket.LocalEndPoint;
+            try
+            {
+                // mono may throw an exception here
+                LocalEndPoint = socket.LocalEndPoint;
+            }
+            catch
+            {
+            }
 #endif
 
             HostName = GetHostOfEndPoint(socket.RemoteEndPoint);
