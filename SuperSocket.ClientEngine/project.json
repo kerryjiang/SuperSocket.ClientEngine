@@ -7,7 +7,7 @@
       "include": ["../**/*.cs"],
       "exclude": [
           "../SuperSocket.ClientEngine/**/*.cs",
-		  "../SuperSocket.ClientEngine.Core/**/*.cs",
+		      "../SuperSocket.ClientEngine.Core/**/*.cs",
           "../Test/**/*.cs",
           "../**/Properties/*.cs",
           "../Properties/*.cs",
