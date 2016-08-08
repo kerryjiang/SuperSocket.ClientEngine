@@ -185,8 +185,20 @@ namespace SuperSocket.ClientEngine
             }
 #endif
 
-            HostName = GetHostOfEndPoint(socket.RemoteEndPoint);
-
+            if (e.RemoteEndPoint != null)
+            {
+                HostName = GetHostOfEndPoint(e.RemoteEndPoint);
+            }
+            else
+            {
+                try
+                {
+                    HostName = GetHostOfEndPoint(socket.RemoteEndPoint);
+                }
+                catch
+                {
+                }
+            }
 
 #if !SILVERLIGHT && !NETFX_CORE
             try
