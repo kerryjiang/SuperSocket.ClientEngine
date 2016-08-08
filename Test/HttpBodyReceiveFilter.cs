@@ -4,7 +4,7 @@ using SuperSocket.ProtoBase;
 
 namespace SuperSocket.ClientEngine.Test
 {
-    public class HttpBodyReceiveFilter : FixedSizeReceiveFilter<HttpPackageInfo>, ICleanupReceiveFilter<HttpPackageInfo>
+    public class HttpBodyReceiveFilter : FixedSizeReceiveFilter<HttpPackageInfo>
     {
         private HttpHeaderInfo m_HttpHeader;
         
@@ -24,11 +24,6 @@ namespace SuperSocket.ClientEngine.Test
         {
             var total = (int)bufferStream.Length;
             return new HttpPackageInfo("Test", m_HttpHeader, bufferStream.Skip(m_HeaderSize).ReadString(total - m_HeaderSize, Encoding.UTF8));
-        }
-
-        HttpPackageInfo ICleanupReceiveFilter<HttpPackageInfo>.ResolvePackage(BufferList data)
-        {
-            return ResolvePackage(this.GetBufferStream(data));
         }
     }
 }

@@ -1,5 +1,6 @@
 using SuperSocket.ProtoBase;
 using System;
+using System.Text;
 
 namespace SuperSocket.ClientEngine.Test
 {
@@ -7,6 +8,7 @@ namespace SuperSocket.ClientEngine.Test
     {
         protected override IReceiveFilter<HttpPackageInfo> GetBodyReceiveFilter(HttpHeaderInfo header, int headerSize)
         {
+
             var contentLength = 0;
             var strContentLength = header.Get("Content-Length");
 
@@ -15,8 +17,13 @@ namespace SuperSocket.ClientEngine.Test
             else
                 contentLength = int.Parse(strContentLength);
 
-            var totalLength = contentLength < 0 ? int.MaxValue : headerSize + contentLength;
-            return new HttpBodyReceiveFilter(header, totalLength, headerSize);
+            if (contentLength > 0)
+            {
+                var totalLength = headerSize + contentLength;
+                return new HttpBodyReceiveFilter(header, totalLength, headerSize);
+            }
+
+            return new HttpChunkReceiveFilter(header, headerSize, new StringBuilder());
         }
 
         protected override HttpPackageInfo ResolveHttpPackageWithoutBody(HttpHeaderInfo header)
