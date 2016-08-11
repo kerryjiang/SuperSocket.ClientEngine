@@ -36,6 +36,8 @@
     <Compile Include="EasyClient.cs" />
     <Compile Include="EasyClientBase.cs" />
     <Compile Include="PackageEventArgs.cs" />
+	<Compile Include="Protocol\DelegateCommand.cs" />
+    <Compile Include="Protocol\ICommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ASCIIEncoding.cs" />
@@ -60,8 +62,6 @@
     <Compile Include="Core\TcpClientSession.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.iOS.cs" />
-    <Compile Include="Protocol\DelegateCommand.cs" />
-    <Compile Include="Protocol\ICommand.cs" />
     <Compile Include="Proxy\HttpConnectProxy.cs" />
     <Compile Include="Proxy\ProxyConnectorBase.cs" />
     <Compile Include="Proxy\Socks4aConnector.cs" />
@@ -69,8 +69,8 @@
     <Compile Include="Proxy\Socks5Connector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.10\lib\netstandard1.1\SuperSocket.ProtoBase.dll</HintPath>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.11\lib\netstandard1.1\SuperSocket.ProtoBase.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

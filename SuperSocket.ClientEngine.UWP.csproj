@@ -112,6 +112,8 @@
     <Compile Include="EasyClient.cs" />
     <Compile Include="EasyClientBase.cs" />
     <Compile Include="PackageEventArgs.cs" />
+	<Compile Include="Protocol\DelegateCommand.cs" />
+    <Compile Include="Protocol\ICommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ASCIIEncoding.cs" />
@@ -134,8 +136,6 @@
     <Compile Include="Core\TcpClientSession.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.UWP.cs" />
-    <Compile Include="Protocol\DelegateCommand.cs" />
-    <Compile Include="Protocol\ICommand.cs" />
     <Compile Include="Proxy\HttpConnectProxy.cs" />
     <Compile Include="Proxy\ProxyConnectorBase.cs" />
     <Compile Include="Proxy\Socks4aConnector.cs" />

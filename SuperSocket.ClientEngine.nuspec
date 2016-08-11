@@ -13,7 +13,7 @@
     <tags>SuperSocket, Socket Client</tags>
 	<dependencies>
       <group>
-        <dependency id="SuperSocket.ProtoBase" version="[1.7.0.10, 1.7.0.10]" />
+        <dependency id="SuperSocket.ProtoBase" version="[1.7.0.11, 1.7.0.11]" />
 	  </group>
 	  <group targetFramework="sl50">		
 		<dependency id="Portable.BouncyCastle-Signed" version="1.7.0.2" />

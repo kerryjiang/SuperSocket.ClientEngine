@@ -1,6 +1,6 @@
 {
   "name": "SuperSocket.ClientEngine",
-  "version": "0.8.0.2",
+  "version": "0.8.0.3",
   "buildOptions": {
     "emitEntryPoint": false,
     "compile": {
@@ -29,7 +29,7 @@
     }
   },
   "dependencies": {
-      "SuperSocket.ProtoBase": "[1.7.0.10]"
+      "SuperSocket.ProtoBase": "[1.7.0.11]"
   },
   "frameworks": {
     "netstandard1.3": {

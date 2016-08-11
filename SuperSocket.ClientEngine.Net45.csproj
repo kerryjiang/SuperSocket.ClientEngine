@@ -33,8 +33,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.10, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.10\lib\net35-client\SuperSocket.ProtoBase.dll</HintPath>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.11, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.11\lib\net35-client\SuperSocket.ProtoBase.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -45,6 +45,8 @@
     <Compile Include="EasyClient.cs" />
     <Compile Include="EasyClientBase.cs" />
     <Compile Include="PackageEventArgs.cs" />
+    <Compile Include="Protocol\DelegateCommand.cs" />
+    <Compile Include="Protocol\ICommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConcurrentBatchQueue.cs" />
@@ -66,9 +68,7 @@
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.Net45.cs" />
-    <Compile Include="Protocol\DelegateCommand.cs" />
-    <Compile Include="Protocol\ICommand.cs" />
+    <Compile Include="Properties\AssemblyInfo.Net45.cs" />    
     <Compile Include="Proxy\HttpConnectProxy.cs" />
     <Compile Include="Proxy\ProxyConnectorBase.cs" />
     <Compile Include="Proxy\Socks4aConnector.cs" />
