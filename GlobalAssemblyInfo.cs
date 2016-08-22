@@ -2,11 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.8.0.3")]
-[assembly: AssemblyFileVersion("0.8.0.3")]
+[assembly: AssemblyVersion("0.8.0.4")]
+[assembly: AssemblyFileVersion("0.8.0.4")]
 [assembly: AssemblyCompany("SuperSocket")]
 [assembly: AssemblyProduct("SuperSocket ClientEngine")]
-[assembly: AssemblyInformationalVersion("0.8.0.3")]
+[assembly: AssemblyInformationalVersion("0.8.0.4")]
 [assembly: AssemblyCopyright("Copyright © clientengine.codeplex.com 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
