@@ -268,8 +268,7 @@ namespace SuperSocket.ClientEngine
             {
                 try
                 {
-#if NETFX_CORE
-                    client.Shutdown(SocketShutdown.Both);                    
+#if NETFX_CORE                  
                     client.Dispose();
 #else
                     client.Close();
