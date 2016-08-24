@@ -11,7 +11,7 @@ namespace SuperSocket.ClientEngine
     /// <typeparam name="T"></typeparam>
     public class ConcurrentBatchQueue<T> : IBatchQueue<T>
     {
-        private Entity m_Entity;
+        private object m_Entity;
         private Entity m_BackEntity;
 
         private static readonly T m_Null = default(T);
@@ -72,8 +72,9 @@ namespace SuperSocket.ClientEngine
         /// <param name="nullValidator">The null validator.</param>
         public ConcurrentBatchQueue(T[] array, Func<T, bool> nullValidator)
         {
-            m_Entity = new Entity();
-            m_Entity.Array = array;
+            var entity = new Entity();
+            entity.Array = array;
+            m_Entity = entity;
 
             m_BackEntity = new Entity();
             m_BackEntity.Array = new T[array.Length];
@@ -104,7 +105,7 @@ namespace SuperSocket.ClientEngine
 
             EnsureNotRebuild();
 
-            var entity = m_Entity;
+            var entity = m_Entity as Entity;
             var array = entity.Array;
             var count = entity.Count;
 
@@ -148,7 +149,7 @@ namespace SuperSocket.ClientEngine
         {
             full = false;
 
-            var entity = m_Entity;
+            var entity = m_Entity as Entity;
             var array = entity.Array;
             var count = entity.Count;
 
@@ -200,13 +201,16 @@ namespace SuperSocket.ClientEngine
         /// <returns></returns>
         public bool TryDequeue(IList<T> outputItems)
         {
-            var entity = m_Entity;
+            var entity = m_Entity as Entity;
             int count = entity.Count;
 
             if (count <= 0)
                 return false;
 
-            Interlocked.Exchange(ref m_Entity, m_BackEntity);
+            var oldEntity = Interlocked.CompareExchange(ref m_Entity, m_BackEntity, entity);
+
+            if (!ReferenceEquals(oldEntity, entity))
+                return false;
 
             Thread.SpinWait(1);
 
@@ -236,8 +240,8 @@ namespace SuperSocket.ClientEngine
                 i++;
             }
 
+            entity.Count = 0;
             m_BackEntity = entity;
-            m_BackEntity.Count = 0;
 
             return true;
         }
@@ -250,7 +254,7 @@ namespace SuperSocket.ClientEngine
         /// </value>
         public bool IsEmpty
         {
-            get { return m_Entity.Count <= 0; }
+            get { return Count <= 0; }
         }
 
         /// <summary>
@@ -258,7 +262,7 @@ namespace SuperSocket.ClientEngine
         /// </summary>
         public int Count
         {
-            get { return m_Entity.Count; }
+            get { return (m_Entity as Entity).Count; }
         }
     }
 }
