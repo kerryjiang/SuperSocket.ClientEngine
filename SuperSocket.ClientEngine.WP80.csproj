@@ -84,6 +84,18 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.0.0.0, Culture=neutral, PublicKeyToken=414dbeade6b65799, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\BouncyCastle\WP80\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.11, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.11\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
     <Compile Include="EasyClient.cs" />
     <Compile Include="EasyClientBase.cs" />
@@ -122,16 +134,6 @@
     <Compile Include="Proxy\Socks4aConnector.cs" />
     <Compile Include="Proxy\Socks4Connector.cs" />
     <Compile Include="Proxy\Socks5Connector.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.0.0.0, Culture=neutral, PublicKeyToken=414dbeade6b65799, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\BouncyCastle\WP80\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.11, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.11\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.SuperSocket.ClientEngine.WP80.config" />

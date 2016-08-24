@@ -31,11 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
     <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.11, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
       <HintPath>packages\SuperSocket.ProtoBase.1.7.0.11\lib\net20\SuperSocket.ProtoBase.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
     <Compile Include="EasyClient.cs" />
@@ -43,6 +45,10 @@
     <Compile Include="PackageEventArgs.cs" />
     <Compile Include="Protocol\DelegateCommand.cs" />
     <Compile Include="Protocol\ICommand.cs" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(NoEasyClient)'=='true' ">
+    <Compile Include="Func.cs" />
+    <Compile Include="Linq.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConcurrentBatchQueue.Net20.cs" />
