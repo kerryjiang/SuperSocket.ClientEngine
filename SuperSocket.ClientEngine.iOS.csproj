@@ -38,8 +38,8 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.11\lib\netstandard1.1\SuperSocket.ProtoBase.dll</HintPath>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.12\lib\netstandard1.1\SuperSocket.ProtoBase.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

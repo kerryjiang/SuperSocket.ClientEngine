@@ -35,8 +35,8 @@
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.11, Culture=neutral, PublicKeyToken=6c80000676988ebb">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.11\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.12, Culture=neutral, PublicKeyToken=6c80000676988ebb">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.12\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
@@ -79,8 +79,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.11, Culture=neutral, PublicKeyToken=6c80000676988ebb">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.11\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.12, Culture=neutral, PublicKeyToken=6c80000676988ebb">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.12\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\SuperSocket.ProtoBase.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
