@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 
@@ -7,6 +8,11 @@ namespace SuperSocket.ClientEngine
 {
     public static partial class ConnectAsyncExtension
     {
+        internal static bool PreferIPv4Stack()
+        {
+            return Environment.GetEnvironmentVariable("PREFER_IPv4_STACK") != null;
+        }
+
         public static void ConnectAsync(this EndPoint remoteEndPoint, EndPoint localEndPoint, ConnectedCallback callback, object state)
         {
             var e = CreateSocketAsyncEventArgs(remoteEndPoint, callback, state);
@@ -25,7 +31,9 @@ namespace SuperSocket.ClientEngine
                 Socket.ConnectAsync(SocketType.Stream, ProtocolType.Tcp, e);
             }            
 #else
-            var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+            var socket = PreferIPv4Stack()
+                ? new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) 
+                : new Socket(SocketType.Stream, ProtocolType.Tcp);
             
             if (localEndPoint != null)
             {
