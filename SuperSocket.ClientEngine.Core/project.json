@@ -8,7 +8,7 @@
       "exclude": [
           "../*.cs",
           "../SuperSocket.ClientEngine/**/*.cs",
-		  "../SuperSocket.ClientEngine.Core/**/*.cs",
+		      "../SuperSocket.ClientEngine.Core/**/*.cs",
           "../Test/**/*.cs",
           "../**/Properties/*.cs",
           "../Properties/*.cs",
@@ -17,8 +17,7 @@
           "../**/*.Net40.cs",
           "../**/*.Net35.cs",
           "../**/*.WindowsPhone.cs",
-          "../Protocol/**/*.cs",
-          "../Common/DnsEndPoint.cs"
+          "../Protocol/**/*.cs"          
         ],
 	  "includeFiles": [
 	      "../GlobalAssemblyInfo.cs"
@@ -28,7 +27,11 @@
           "../Common/GenericDelegates.Func.cs",
           "../Common/GenericDelegates.Action.cs",
           "../Core/SslStream.cs",
-          "../Core/NetworkStream.cs"
+          "../Core/NetworkStream.cs",
+          "../Common/DnsEndPoint.cs",
+          "../Common/ExtensionAttribute.cs",
+          "../Func.cs",
+          "../Action.cs"
         ]
     }
   },
@@ -48,7 +51,7 @@
         "System.Security.Cryptography.X509Certificates": "4.1.0",
         "System.Net.Security": "4.0.0",
         "System.Net.NameResolution": "4.0.0",
-		"System.Threading": "4.0.11"
+		    "System.Threading": "4.0.11"
       }
     }
   }

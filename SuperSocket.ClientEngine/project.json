@@ -16,15 +16,18 @@
           "../**/*.Net40.cs",
           "../**/*.Net35.cs",
           "../**/*.WindowsPhone.cs",
-          "../Protocol/**/*.cs",
-          "../Common/DnsEndPoint.cs"
+          "../Protocol/**/*.cs"
         ],
       "excludeFiles": [
           "../Common/ConnectAsyncExtension.Net.cs",
           "../Common/GenericDelegates.Func.cs",
           "../Common/GenericDelegates.Action.cs",
           "../Core/SslStream.cs",
-          "../Core/NetworkStream.cs"
+          "../Core/NetworkStream.cs",
+          "../Common/DnsEndPoint.cs",
+          "../Common/ExtensionAttribute.cs",
+          "../Func.cs",
+          "../Action.cs"
         ]
     }
   },
