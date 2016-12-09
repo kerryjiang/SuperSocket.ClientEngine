@@ -24,6 +24,7 @@
           "../Common/GenericDelegates.Action.cs",
           "../Core/SslStream.cs",
           "../Core/NetworkStream.cs",
+          "../Core/ConcurrentQueue.cs",
           "../Common/DnsEndPoint.cs",
           "../Common/ExtensionAttribute.cs",
           "../Func.cs",

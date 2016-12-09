@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Collections.Concurrent;
 using System.Threading;
 
 namespace SuperSocket.ClientEngine
