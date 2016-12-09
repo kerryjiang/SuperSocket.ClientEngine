@@ -104,7 +104,7 @@ namespace SuperSocket.ClientEngine
             if (Proxy != null)
             {
                 Proxy.Completed += new EventHandler<ProxyEventArgs>(Proxy_Completed);
-                Proxy.Connect(RemoteEndPoint);
+                Proxy.Connect(remoteEndPoint);
                 m_InConnecting = true;
                 return;
             }
