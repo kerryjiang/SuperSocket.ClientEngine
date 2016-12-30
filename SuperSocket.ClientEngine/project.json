@@ -33,7 +33,7 @@
     }
   },
   "dependencies": {
-      "SuperSocket.ProtoBase": "[1.7.0.12]"
+      "SuperSocket.ProtoBase": "[1.7.0.13]"
   },
   "frameworks": {
     "netstandard1.3": {
