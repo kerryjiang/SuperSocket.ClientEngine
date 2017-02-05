@@ -152,13 +152,17 @@ namespace SuperSocket.ClientEngine
         {
             var client = Client;
 
-#if !__IOS__
             if(client != null)
             {
-                if(client.NoDelay != NoDelay)
-                    client.NoDelay = NoDelay;
+                try
+                {
+                    if(client.NoDelay != NoDelay)
+                        client.NoDelay = NoDelay;
+                }
+                catch
+                {
+                }
             }
-#endif
 
             IsConnected = true;
 
