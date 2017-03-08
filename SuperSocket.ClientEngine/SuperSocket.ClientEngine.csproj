@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>0.8.0.8</VersionPrefix>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <AssemblyName>SuperSocket.ClientEngine</AssemblyName>
+    <OutputType>Library</OutputType>
+    <PackageId>SuperSocket.ClientEngine</PackageId>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs;..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs" />
+    <Compile Include="..\**\*.cs" Exclude="..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs;bin\**;obj\**;**\*.xproj;packages\**;..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <DefineConstants>$(DefineConstants);NETFX_CORE;NETSTANDARD;AWAIT</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="SuperSocket.ProtoBase" Version="1.7.0.14" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">   
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="System.Net.Sockets" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.0" />
+    <PackageReference Include="System.Net.Security" Version="4.3.0" />
+    <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
