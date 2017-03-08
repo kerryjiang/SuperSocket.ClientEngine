@@ -23,7 +23,7 @@ namespace SuperSocket.ClientEngine.Test
                 return new HttpBodyReceiveFilter(header, totalLength, headerSize);
             }
 
-            return new HttpChunkReceiveFilter(header, headerSize, new StringBuilder());
+            return new HttpChunkReceiveFilter(header, new StringBuilder());
         }
 
         protected override HttpPackageInfo ResolveHttpPackageWithoutBody(HttpHeaderInfo header)

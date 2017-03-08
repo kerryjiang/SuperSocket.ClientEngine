@@ -3,6 +3,8 @@ using Xunit;
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Collections.Generic;
+using SuperSocket.ProtoBase;
 
 namespace SuperSocket.ClientEngine.Test
 {
@@ -51,6 +53,21 @@ namespace SuperSocket.ClientEngine.Test
             Console.WriteLine("Closing");
             await client.Close();
             Console.WriteLine("Closed");
+        }
+
+        [Fact]
+        public void TestArraySegmentList()
+        {
+            var list = new BufferList();
+
+            list.Add(new ArraySegment<byte>(new byte[1024], 0, 100));
+            list.Add(new ArraySegment<byte>(new byte[1024], 2, 200));
+            list.Add(new ArraySegment<byte>(new byte[1024], 3, 300));
+
+            var lastOne = list.Last;
+
+            Assert.Equal(3, lastOne.Offset);
+            Assert.Equal(300, lastOne.Count);            
         }
     }
 }
