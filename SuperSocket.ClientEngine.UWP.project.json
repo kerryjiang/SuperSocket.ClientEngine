@@ -1,8 +1,8 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-    "SuperSocket.ProtoBase": "1.7.0.13",
-    "System.Collections.Specialized": "4.0.1"
+    "SuperSocket.ProtoBase": "1.7.0.14",
+    "System.Collections.Specialized": "4.3.0"
   },
   "frameworks": {
     "uap10.0": {}
