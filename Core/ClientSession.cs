@@ -19,9 +19,7 @@ namespace SuperSocket.ClientEngine
 
         public bool IsConnected { get; private set; }
 
-#if !__IOS__
         public bool NoDelay { get; set; }
-#endif
 
         public ClientSession()
         {

@@ -43,9 +43,7 @@ namespace SuperSocket.ClientEngine
         }
 #endif
 
-#if !__IOS__
         public bool NoDelay { get; set; }
-#endif
 
         public int ReceiveBufferSize { get; set; }
 
@@ -128,9 +126,8 @@ namespace SuperSocket.ClientEngine
             }
 #endif
 
-#if !__IOS__
             session.NoDelay = NoDelay;
-#endif
+
             if (Proxy != null)
                 session.Proxy = Proxy;
                 
