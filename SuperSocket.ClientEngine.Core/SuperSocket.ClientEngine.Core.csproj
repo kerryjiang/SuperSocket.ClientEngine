@@ -3,6 +3,7 @@
     <VersionPrefix>0.8.0.9</VersionPrefix>
     <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>SuperSocket.ClientEngine</AssemblyName>
+    <Description>SuperSocket.ClientEngine for .NET standard library</Description>
     <OutputType>Library</OutputType>
     <PackageId>SuperSocket.ClientEngine.Core</PackageId>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
