@@ -16,8 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs;..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs" />
-    <Compile Include="..\**\*.cs" Exclude="..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs;bin\**;obj\**;**\*.xproj;packages\**;..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs" />
+    <Compile Remove="..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs" />
+    <Compile Include="..\**\*.cs" Exclude="..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs;..\**\bin\**;..\**\obj\**;**\*.xproj;packages\**;..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs;..\LINQ.cs" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
