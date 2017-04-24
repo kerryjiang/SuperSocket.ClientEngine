@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Security;
 using System.Text;
 
 namespace SuperSocket.ClientEngine
@@ -30,10 +31,9 @@ namespace SuperSocket.ClientEngine
 
         private static void ConnectAsyncInternal(this EndPoint remoteEndPoint, EndPoint localEndPoint, ConnectedCallback callback, object state)
         {
-            if (remoteEndPoint is DnsEndPoint)
+            var dnsEndPoint = remoteEndPoint as DnsEndPoint;
+            if (dnsEndPoint != null)
             {
-                var dnsEndPoint = (DnsEndPoint)remoteEndPoint;
-
                 var asyncResult = Dns.BeginGetHostAddresses(dnsEndPoint.Host, OnGetHostAddresses,
                     new DnsConnectState
                     {
@@ -93,18 +93,18 @@ namespace SuperSocket.ClientEngine
 
         private static void OnGetHostAddresses(IAsyncResult result)
         {
-            var connectState = result.AsyncState as DnsConnectState;
+            var connectState = (DnsConnectState)result.AsyncState;
 
-            IPAddress[] addresses;
-
+            IPAddress[] addresses = null;
             try
             {
                 addresses = Dns.EndGetHostAddresses(result);
             }
-            catch
+            catch (ArgumentException)
             {
-                connectState.Callback(null, connectState.State, null);
-                return;
+            }
+            catch (SocketException)
+            {
             }
 
             if (addresses == null || addresses.Length <= 0)
@@ -112,36 +112,75 @@ namespace SuperSocket.ClientEngine
                 connectState.Callback(null, connectState.State, null);
                 return;
             }
-
             connectState.Addresses = addresses;
 
-            CreateAttempSocket(connectState);
+            Socket bindedSocket = null;
+            IPAddress nextAddress = null;
+            try
+            {
+                CreateAttempSocket(connectState);
+                Socket attempSocket;
+                var attempAddress = GetNextAddress(connectState, out attempSocket);
+                if (attempAddress == null)
+                {
+                    connectState.Callback(null, connectState.State, null);
+                    return;
+                }
 
-            Socket attempSocket;
+                if (connectState.LocalEndPoint != null)
+                {
+                    attempSocket.ExclusiveAddressUse = false;
+                    attempSocket.Bind(connectState.LocalEndPoint);
+                }
 
-            var address = GetNextAddress(connectState, out attempSocket);
+                nextAddress = attempAddress;
+                bindedSocket = attempSocket;
+            }
+            catch (ArgumentException)
+            {
+            }
+            catch (SocketException)
+            {
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+            catch (SecurityException)
+            {
+            }
 
-            if (address == null)
+            if (nextAddress == null || bindedSocket == null)
             {
                 connectState.Callback(null, connectState.State, null);
                 return;
             }
 
-            if (connectState.LocalEndPoint != null)
-            {
-                attempSocket.ExclusiveAddressUse = false;
-                attempSocket.Bind(connectState.LocalEndPoint);
-            }
-
             var socketEventArgs = new SocketAsyncEventArgs();
             socketEventArgs.Completed += new EventHandler<SocketAsyncEventArgs>(SocketConnectCompleted);
-            var ipEndPoint = new IPEndPoint(address, connectState.Port);
+            var ipEndPoint = new IPEndPoint(nextAddress, connectState.Port);
             socketEventArgs.RemoteEndPoint = ipEndPoint;
 
             socketEventArgs.UserToken = connectState;
-
-            if (!attempSocket.ConnectAsync(socketEventArgs))
-                SocketConnectCompleted(attempSocket, socketEventArgs);
+            try
+            {
+                if (bindedSocket.ConnectAsync(socketEventArgs)) return;
+            }
+            catch (ArgumentException)
+            {
+            }
+            catch (SocketException)
+            {
+            }
+            catch (InvalidOperationException)
+            {
+            }
+            catch (NotSupportedException)
+            {
+            }
+            catch (SecurityException)
+            {
+            }
+            SocketConnectCompleted(bindedSocket, socketEventArgs);
         }
 
         static void SocketConnectCompleted(object sender, SocketAsyncEventArgs e)
