@@ -98,8 +98,14 @@ namespace SuperSocket.ClientEngine.Proxy
         /// <param name="socket">The socket.</param>
         /// <param name="targetEndPoint">The target end point.</param>
         /// <param name="e">The <see cref="System.Net.Sockets.SocketAsyncEventArgs"/> instance containing the event data.</param>
-        protected override void ProcessConnect(Socket socket, object targetEndPoint, SocketAsyncEventArgs e)
+        protected override void ProcessConnect(Socket socket, object targetEndPoint, SocketAsyncEventArgs e, Exception exception)
         {
+            if (exception != null)
+            {
+                OnException(exception);
+                return;
+            }
+
             if (e != null)
             {
                 if (!ValidateAsyncResult(e))
@@ -112,7 +118,7 @@ namespace SuperSocket.ClientEngine.Proxy
                 return;
             }
 
-            if(e == null)
+            if (e == null)
                 e = new SocketAsyncEventArgs();
 
             int actualLength;

@@ -116,7 +116,7 @@ namespace SuperSocket.ClientEngine.Proxy
             }
         }
 
-        protected abstract void ProcessConnect(Socket socket, object targetEndPoint, SocketAsyncEventArgs e);
+        protected abstract void ProcessConnect(Socket socket, object targetEndPoint, SocketAsyncEventArgs e, Exception exception);
 
         protected abstract void ProcessSend(SocketAsyncEventArgs e);
 

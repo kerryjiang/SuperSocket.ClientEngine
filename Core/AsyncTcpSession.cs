@@ -22,7 +22,7 @@ namespace SuperSocket.ClientEngine
         {
             if (e.LastOperation == SocketAsyncOperation.Connect)
             {
-                ProcessConnect(sender as Socket, null, e);
+                ProcessConnect(sender as Socket, null, e, null);
                 return;
             }
 

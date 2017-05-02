@@ -126,7 +126,7 @@ namespace SuperSocket.ClientEngine
 
             if (e.Connected)
             {
-                ProcessConnect(e.Socket, null, null);
+                ProcessConnect(e.Socket, null, null, null);
                 return;
             }
 
@@ -134,8 +134,19 @@ namespace SuperSocket.ClientEngine
             m_InConnecting = false;
         }
 
-        protected void ProcessConnect(Socket socket, object state, SocketAsyncEventArgs e)
+        protected void ProcessConnect(Socket socket, object state, SocketAsyncEventArgs e, Exception exception)
         {
+            if (exception != null)
+            {
+                m_InConnecting = false;
+                OnError(exception);
+
+                if (e != null)
+                    e.Dispose();
+                
+                return;
+            }
+
             if (e != null && e.SocketError != SocketError.Success)
             {
                 m_InConnecting = false;

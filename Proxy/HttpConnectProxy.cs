@@ -80,8 +80,14 @@ namespace SuperSocket.ClientEngine.Proxy
             }
         }
 
-        protected override void ProcessConnect(Socket socket, object targetEndPoint, SocketAsyncEventArgs e)
+        protected override void ProcessConnect(Socket socket, object targetEndPoint, SocketAsyncEventArgs e, Exception exception)
         {
+            if (exception != null)
+            {
+                OnException(exception);
+                return;
+            }
+
             if (e != null)
             {
                 if (!ValidateAsyncResult(e))

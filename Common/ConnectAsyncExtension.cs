@@ -7,7 +7,7 @@ using System.Net;
 
 namespace SuperSocket.ClientEngine
 {
-    public delegate void ConnectedCallback(Socket socket, object state, SocketAsyncEventArgs e);
+    public delegate void ConnectedCallback(Socket socket, object state, SocketAsyncEventArgs e, Exception exception);
 
     public static partial class ConnectAsyncExtension
     {
@@ -23,7 +23,7 @@ namespace SuperSocket.ClientEngine
             e.Completed -= SocketAsyncEventCompleted;
             var token = (ConnectToken)e.UserToken;
             e.UserToken = null;
-            token.Callback(sender as Socket, token.State, e);
+            token.Callback(sender as Socket, token.State, e, null);
         }
 
         static SocketAsyncEventArgs CreateSocketAsyncEventArgs(EndPoint remoteEndPoint, ConnectedCallback callback, object state)

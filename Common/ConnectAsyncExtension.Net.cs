@@ -101,15 +101,15 @@ namespace SuperSocket.ClientEngine
             {
                 addresses = Dns.EndGetHostAddresses(result);
             }
-            catch
+            catch (Exception e)
             {
-                connectState.Callback(null, connectState.State, null);
+                connectState.Callback(null, connectState.State, null, e);
                 return;
             }
 
             if (addresses == null || addresses.Length <= 0)
             {
-                connectState.Callback(null, connectState.State, null);
+                connectState.Callback(null, connectState.State, null, new SocketException((int)SocketError.HostNotFound));
                 return;
             }
 
@@ -123,14 +123,22 @@ namespace SuperSocket.ClientEngine
 
             if (address == null)
             {
-                connectState.Callback(null, connectState.State, null);
+                connectState.Callback(null, connectState.State, null, new SocketException((int)SocketError.AddressFamilyNotSupported));
                 return;
             }
 
             if (connectState.LocalEndPoint != null)
             {
-                attempSocket.ExclusiveAddressUse = false;
-                attempSocket.Bind(connectState.LocalEndPoint);
+                try
+                {
+                    attempSocket.ExclusiveAddressUse = false;
+                    attempSocket.Bind(connectState.LocalEndPoint);
+                }
+                catch (Exception e)
+                {
+                    connectState.Callback(null, connectState.State, null, e);
+                    return;
+                }                
             }
 
             var socketEventArgs = new SocketAsyncEventArgs();
@@ -151,14 +159,14 @@ namespace SuperSocket.ClientEngine
             if (e.SocketError == SocketError.Success)
             {
                 ClearSocketAsyncEventArgs(e);
-                connectState.Callback((Socket)sender, connectState.State, e);
+                connectState.Callback((Socket)sender, connectState.State, e, null);
                 return;
             }
 
             if (e.SocketError != SocketError.HostUnreachable && e.SocketError != SocketError.ConnectionRefused)
             {
                 ClearSocketAsyncEventArgs(e);
-                connectState.Callback(null, connectState.State, e);
+                connectState.Callback(null, connectState.State, e, null);
                 return;
             }
 
@@ -170,7 +178,7 @@ namespace SuperSocket.ClientEngine
             {
                 ClearSocketAsyncEventArgs(e);
                 e.SocketError = SocketError.HostUnreachable;
-                connectState.Callback(null, connectState.State, e);
+                connectState.Callback(null, connectState.State, e, null);
                 return;
             }
 

@@ -22,8 +22,18 @@ namespace SuperSocket.ClientEngine
             if (localEndPoint != null)
             {
                 var socket = new Socket(localEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                socket.ExclusiveAddressUse = false;
-                socket.Bind(localEndPoint);
+
+                try
+                {
+                    socket.ExclusiveAddressUse = false;
+                    socket.Bind(localEndPoint);
+                }
+                catch (Exception exc)
+                {
+                    callback(null, state, null, exc);
+                    return;
+                }
+
                 socket.ConnectAsync(e);
             }
             else
@@ -37,8 +47,16 @@ namespace SuperSocket.ClientEngine
             
             if (localEndPoint != null)
             {
-                socket.ExclusiveAddressUse = false;
-                socket.Bind(localEndPoint);
+                try
+                {
+                    socket.ExclusiveAddressUse = false;
+                    socket.Bind(localEndPoint);
+                }
+                catch (Exception exc)
+                {
+                    callback(null, state, null, exc);
+                    return;
+                }
             }
                 
             socket.ConnectAsync(e);
