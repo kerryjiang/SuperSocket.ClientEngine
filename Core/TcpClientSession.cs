@@ -167,10 +167,18 @@ namespace SuperSocket.ClientEngine
             if (!socket.Connected)
             {
                 m_InConnecting = false;
-#if SILVERLIGHT || NETFX_CORE
-                var socketError = SocketError.ConnectionReset;
-#else
-                var socketError = (SocketError)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Error);
+
+                var socketError = SocketError.HostUnreachable;
+
+#if !SILVERLIGHT && !NETFX_CORE
+                try
+                {
+                    socketError = (SocketError)socket.GetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Error);
+                }
+                catch (Exception)
+                {
+                    socketError = SocketError.HostUnreachable;
+                }                
 #endif
                 OnError(new SocketException((int)socketError));
                 return;
