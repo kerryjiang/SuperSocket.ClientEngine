@@ -167,7 +167,7 @@ namespace SuperSocket.ClientEngine
                     {
                     }
 
-                    m_SocketEventArgsSend.SetBuffer(currentItem.Array, 0, currentItem.Count);
+                    m_SocketEventArgsSend.SetBuffer(currentItem.Array, currentItem.Offset, currentItem.Count);
                 }
                 
 
