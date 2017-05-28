@@ -34,6 +34,11 @@ namespace SuperSocket.ClientEngine.Test
             {
                 // do nothing
             });
+
+            client.Error += (s, e) =>
+            {
+                Console.WriteLine("Error:" + e.Exception.Message);
+            };
             
             Console.WriteLine("Connecting");
             var ret = await client.ConnectAsync(new DnsEndPoint("github.com", 443));
