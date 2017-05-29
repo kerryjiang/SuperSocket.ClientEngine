@@ -16,8 +16,8 @@
 
   <ItemGroup>
     <Compile Remove="..\*.cs;..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs" />
-    <Compile Include="..\GlobalAssemblyInfo.cs" Exclude="..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs" />
-    <Compile Include="..\**\*.cs" Exclude="..\*.cs;..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs;..\**\bin\**;..\**\obj\**;**\*.xproj;packages\**;..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs;..\LINQ.cs;" />
+    <Compile Include="..\GlobalAssemblyInfo.cs" Exclude="..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs;..\Common\NameValueCollection.cs" />
+    <Compile Include="..\**\*.cs" Exclude="..\*.cs;..\SuperSocket.ClientEngine\**\*.cs;..\SuperSocket.ClientEngine.Core\**\*.cs;..\Test\**\*.cs;..\**\Properties\*.cs;..\Properties\*.cs;..\**\*.Net20.cs;..\**\*.Silverlight.cs;..\**\*.Net40.cs;..\**\*.Net35.cs;..\**\*.WindowsPhone.cs;..\Protocol\**\*.cs;..\**\bin\**;..\**\obj\**;**\*.xproj;packages\**;..\Common\ConnectAsyncExtension.Net.cs;..\Common\GenericDelegates.Func.cs;..\Common\GenericDelegates.Action.cs;..\Core\SslStream.cs;..\Core\NetworkStream.cs;..\Core\ConcurrentQueue.cs;..\Common\DnsEndPoint.cs;..\Common\ExtensionAttribute.cs;..\Func.cs;..\Action.cs;..\LINQ.cs;..\Common\NameValueCollection.cs" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
@@ -33,6 +33,7 @@
     <PackageReference Include="System.Net.Security" Version="4.3.0" />
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
     <PackageReference Include="System.Threading" Version="4.3.0" />
+    <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
