@@ -302,6 +302,11 @@ namespace SuperSocket.ClientEngine
                     closeTaskSrc.SetResult(true);
                 }
             }
+
+            var pipelineProcessor = PipeLineProcessor;
+
+            if (pipelineProcessor != null)
+                pipelineProcessor.Reset();
         }
 
         public event EventHandler Closed;

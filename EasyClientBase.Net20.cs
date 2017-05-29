@@ -201,6 +201,11 @@ namespace SuperSocket.ClientEngine
                 handler(this, EventArgs.Empty);
 
             m_ConnectEvent.Set();
+
+            var pipelineProcessor = PipeLineProcessor;
+
+            if (pipelineProcessor != null)
+                pipelineProcessor.Reset();
         }
 
         public event EventHandler Closed;
