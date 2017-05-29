@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SuperSocket.ProtoBase" Version="1.7.0.15" />
+    <PackageReference Include="SuperSocket.ProtoBase" Version="1.7.0.16" />
   </ItemGroup>
 
   <ItemGroup>
