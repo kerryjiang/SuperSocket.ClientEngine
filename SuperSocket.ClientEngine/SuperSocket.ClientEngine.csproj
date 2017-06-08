@@ -25,7 +25,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="SuperSocket.ProtoBase" Version="1.7.0.16" />
+    <PackageReference Include="SuperSocket.ProtoBase" Version="1.7.0.17" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">   

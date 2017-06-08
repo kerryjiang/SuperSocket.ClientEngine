@@ -34,8 +34,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup Condition=" '$(NoEasyClient)'!='true' ">
-    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.16, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
-      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.16\lib\net20\SuperSocket.ProtoBase.dll</HintPath>
+    <Reference Include="SuperSocket.ProtoBase, Version=1.7.0.17, Culture=neutral, PublicKeyToken=6c80000676988ebb, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ProtoBase.1.7.0.17\lib\net20\SuperSocket.ProtoBase.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
