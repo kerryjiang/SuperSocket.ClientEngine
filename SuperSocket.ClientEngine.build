@@ -1,16 +1,13 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
 	<PropertyGroup>
 		<Configuration>Release</Configuration>
-		<SignParameter></SignParameter>
+		<KeyFile>..\..\SignKeys\SuperSocket.ClientEngine.snk</KeyFile>
     </PropertyGroup>
 	<Target Name="Build">
 		<CallTarget Targets="BuildWithoutEasyClient"/>
 		<CallTarget Targets="BuildWithEasyClient"/>
 	</Target>
 	<Target Name="BuildAndPack">
-		<PropertyGroup>
-			<SignParameter>SignAssembly=True;AssemblyOriginatorKeyFile=..\..\..\SignKeys\SuperSocket.ClientEngine.snk</SignParameter>
-		</PropertyGroup>
 		<CallTarget Targets="Build"/>
 		<CallTarget Targets="Pack"/>
 	</Target>
@@ -27,33 +24,33 @@
 			<NoEasyClient>true</NoEasyClient>
 		</PropertyGroup>
 		<Exec Command="nuget restore SuperSocket.ClientEngine.Net.sln"/>
-        <MSBuild Projects="SuperSocket.ClientEngine.Net20.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net20\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net35.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net35-client\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net40-client\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net45\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\sl50\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.WP80.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\wp80\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.MonoDroid.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\monoandroid10\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.MonoTouch.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\monotouch10\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.iOS.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\xamarinios10\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
+        <MSBuild Projects="SuperSocket.ClientEngine.Net20.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net20\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net35.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net35-client\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net40-client\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net45\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\sl50\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.WP80.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\wp80\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.MonoDroid.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\monoandroid10\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.MonoTouch.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\monotouch10\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.iOS.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\xamarinios10\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
 		<Exec Command="dotnet restore" WorkingDirectory="SuperSocket.ClientEngine.Core" />
-		<Exec Command="dotnet build -c $(Configuration) -f netstandard1.3 -o ..\output_core\netstandard1.3\$(Configuration)" WorkingDirectory="SuperSocket.ClientEngine.Core" />
+		<Exec Command="dotnet build -c $(Configuration) -f netstandard1.3 -o ..\output_core\netstandard1.3\$(Configuration) /p:SignAssembly=True /p:AssemblyOriginatorKeyFile=..\..\..\SignKeys\SuperSocket.ClientEngine.snk" WorkingDirectory="SuperSocket.ClientEngine.Core" />
     </Target>
 	<Target Name="BuildWithEasyClient">
 		<PropertyGroup>
 			<NoEasyClient>false</NoEasyClient>
 		</PropertyGroup>
 		<Exec Command="nuget restore SuperSocket.ClientEngine.Net.sln"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net20.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net20\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net35.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net35-client\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net40-client\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net45\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\sl50\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.WP80.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\wp80\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.MonoDroid.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\monoandroid10\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.MonoTouch.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\monotouch10\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.iOS.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\xamarinios10\$(Configuration);NoEasyClient=$(NoEasyClient);$(SignParameter)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net20.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net20\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net35.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net35-client\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net40-client\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net45\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\sl50\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.WP80.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\wp80\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.MonoDroid.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\monoandroid10\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.MonoTouch.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\monotouch10\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
+		<MSBuild Projects="SuperSocket.ClientEngine.iOS.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\xamarinios10\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
 		<Exec Command="dotnet restore" WorkingDirectory="SuperSocket.ClientEngine" />
-		<Exec Command="dotnet build -c $(Configuration) -f netstandard1.3 -o ..\output\netstandard1.3\$(Configuration)" WorkingDirectory="SuperSocket.ClientEngine" />
+		<Exec Command="dotnet build -c $(Configuration) -f netstandard1.3 -o ..\output\netstandard1.3\$(Configuration) /p:SignAssembly=True /p:AssemblyOriginatorKeyFile=..\..\..\SignKeys\SuperSocket.ClientEngine.snk" WorkingDirectory="SuperSocket.ClientEngine" />
     </Target>
 </Project>
