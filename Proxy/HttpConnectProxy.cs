@@ -44,13 +44,19 @@ namespace SuperSocket.ClientEngine.Proxy
         }
 #else
         public HttpConnectProxy(EndPoint proxyEndPoint)
-            : this(proxyEndPoint, 128)
+            : this(proxyEndPoint, 128, null)
         {
 
         }
 
-        public HttpConnectProxy(EndPoint proxyEndPoint, int receiveBufferSize)
-            : base(proxyEndPoint)
+        public HttpConnectProxy(EndPoint proxyEndPoint, string targetHostName)
+            : this(proxyEndPoint, 128, targetHostName)
+        {
+
+        }
+
+        public HttpConnectProxy(EndPoint proxyEndPoint, int receiveBufferSize, string targetHostName)
+            : base(proxyEndPoint, targetHostName)
         {
             m_ReceiveBufferSize = receiveBufferSize;
         }
@@ -215,7 +221,7 @@ namespace SuperSocket.ClientEngine.Proxy
                 return;
             }
 
-            OnCompleted(new ProxyEventArgs(context.Socket));
+            OnCompleted(new ProxyEventArgs(context.Socket, TargetHostHame));
         }
     }
 }

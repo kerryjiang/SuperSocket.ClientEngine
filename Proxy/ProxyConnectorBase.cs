@@ -10,6 +10,8 @@ namespace SuperSocket.ClientEngine.Proxy
     {
         public EndPoint ProxyEndPoint { get; private set; }
 
+        public string TargetHostHame { get; private set; }
+
         protected static Encoding ASCIIEncoding = new ASCIIEncoding();
 
 #if SILVERLIGHT && !WINDOWS_PHONE
@@ -23,8 +25,14 @@ namespace SuperSocket.ClientEngine.Proxy
 
 #else
         public ProxyConnectorBase(EndPoint proxyEndPoint)
+            : this(proxyEndPoint, null)
+        {
+
+        }
+        public ProxyConnectorBase(EndPoint proxyEndPoint, string targetHostHame)
         {
             ProxyEndPoint = proxyEndPoint;
+            TargetHostHame = targetHostHame;
         }
 #endif
 
