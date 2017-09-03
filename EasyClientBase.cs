@@ -302,6 +302,11 @@ namespace SuperSocket.ClientEngine
             m_LocalEndPoint = null;
 #endif
 
+            var pipelineProcessor = PipeLineProcessor;
+
+            if (pipelineProcessor != null)
+                pipelineProcessor.Reset();
+
             var handler = Closed;
 
             if (handler != null)
@@ -318,10 +323,7 @@ namespace SuperSocket.ClientEngine
                 }
             }
 
-            var pipelineProcessor = PipeLineProcessor;
-
-            if (pipelineProcessor != null)
-                pipelineProcessor.Reset();
+            
         }
 
         public event EventHandler Closed;

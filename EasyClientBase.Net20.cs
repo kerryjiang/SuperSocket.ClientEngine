@@ -207,6 +207,11 @@ namespace SuperSocket.ClientEngine
         {
             m_Connected = false;
             m_LocalEndPoint = null;
+
+            var pipelineProcessor = PipeLineProcessor;
+
+            if (pipelineProcessor != null)
+                pipelineProcessor.Reset();
             
             var handler = Closed;
 
@@ -214,11 +219,6 @@ namespace SuperSocket.ClientEngine
                 handler(this, EventArgs.Empty);
 
             m_ConnectEvent.Set();
-
-            var pipelineProcessor = PipeLineProcessor;
-
-            if (pipelineProcessor != null)
-                pipelineProcessor.Reset();
         }
 
         public event EventHandler Closed;
