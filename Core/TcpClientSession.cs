@@ -126,7 +126,13 @@ namespace SuperSocket.ClientEngine
 
             if (e.Connected)
             {
-                ProcessConnect(e.Socket, null, null, null);
+                SocketAsyncEventArgs se = null;
+                if (e.TargetHostName != null)
+                {
+                    se = new SocketAsyncEventArgs();
+                    se.RemoteEndPoint = new DnsEndPoint(e.TargetHostName, 0);
+                }
+                ProcessConnect(e.Socket, null, se, null);
                 return;
             }
 
