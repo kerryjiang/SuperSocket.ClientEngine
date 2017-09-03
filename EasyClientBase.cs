@@ -298,14 +298,15 @@ namespace SuperSocket.ClientEngine
         {
             m_Connected = false;
 
+#if !SILVERLIGHT
+            m_LocalEndPoint = null;
+#endif
+
             var handler = Closed;
 
             if (handler != null)
                 handler(this, EventArgs.Empty);
 
-#if !SILVERLIGHT
-            m_LocalEndPoint = null;
-#endif
 
             var closeTaskSrc = m_CloseTaskSource;
             
