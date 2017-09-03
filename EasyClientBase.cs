@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SuperSocket.ProtoBase;
 using System.Net;
 using System.Threading;
+using System.Net.Sockets;
 
 namespace SuperSocket.ClientEngine
 {
@@ -48,6 +49,19 @@ namespace SuperSocket.ClientEngine
         public int ReceiveBufferSize { get; set; }
 
         public IProxyConnector Proxy { get; set; }
+
+        public Socket Socket
+        {
+            get
+            {
+                var session = m_Session;
+
+                if (session == null)
+                    return null;
+
+                return session.Socket;
+            }
+        }
 
         public EasyClientBase()
         {

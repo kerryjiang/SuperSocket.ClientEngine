@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 
@@ -8,6 +9,8 @@ namespace SuperSocket.ClientEngine
 {
     public interface IClientSession
     {
+        Socket Socket { get; }
+        
         IProxyConnector Proxy { get; set; }
 
         int ReceiveBufferSize { get; set; }

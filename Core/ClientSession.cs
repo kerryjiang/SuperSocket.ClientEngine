@@ -13,6 +13,11 @@ namespace SuperSocket.ClientEngine
         
         protected Socket Client { get; set; }
 
+        Socket IClientSession.Socket
+        {
+            get { return Client; }
+        }
+
 #if !SILVERLIGHT
         public virtual EndPoint LocalEndPoint { get; set; }
 #endif

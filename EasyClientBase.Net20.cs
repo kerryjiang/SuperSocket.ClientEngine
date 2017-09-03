@@ -42,6 +42,19 @@ namespace SuperSocket.ClientEngine
 
         public IProxyConnector Proxy { get; set; }
 
+        public Socket Socket
+        {
+            get
+            {
+                var session = m_Session;
+
+                if (session == null)
+                    return null;
+
+                return session.Socket;
+            }
+        }
+
         public EasyClientBase()
         {
 
