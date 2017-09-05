@@ -31,11 +31,11 @@
 	</references>
   </metadata>
   <files>
-    <file src="output_core\net20\release\SuperSocket.ClientEngine.dll" target="lib/net20" />
-	<file src="output_core\net35-client\release\SuperSocket.ClientEngine.dll" target="lib/net35-client" />
-	<file src="output_core\net40-client\release\SuperSocket.ClientEngine.dll" target="lib/net40-client" />
-	<file src="output_core\net45\release\SuperSocket.ClientEngine.dll" target="lib/net45" />
-	<file src="output_core\sl50\release\SuperSocket.ClientEngine.dll" target="lib/sl50" />
-	<file src="output_core\netstandard1.3\release\SuperSocket.ClientEngine.dll" target="lib/netstandard1.3" />
+    <file src="output_core\net20\release\SuperSocket.ClientEngine.dll" target="lib\net20" />
+	<file src="output_core\net35-client\release\SuperSocket.ClientEngine.dll" target="lib\net35-client" />
+	<file src="output_core\net40-client\release\SuperSocket.ClientEngine.dll" target="lib\net40-client" />
+	<file src="output_core\net45\release\SuperSocket.ClientEngine.dll" target="lib\net45" />
+	<file src="output_core\sl50\release\SuperSocket.ClientEngine.dll" target="lib\sl50" />
+	<file src="output_core\netstandard1.3\release\SuperSocket.ClientEngine.dll" target="lib\netstandard1.3" />
   </files>
 </package>
