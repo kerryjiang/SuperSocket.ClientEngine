@@ -36,10 +36,6 @@
 	<file src="output_core\net40-client\release\SuperSocket.ClientEngine.dll" target="lib/net40-client" />
 	<file src="output_core\net45\release\SuperSocket.ClientEngine.dll" target="lib/net45" />
 	<file src="output_core\sl50\release\SuperSocket.ClientEngine.dll" target="lib/sl50" />
-	<file src="output_core\wp80\release\SuperSocket.ClientEngine.dll" target="lib/wp80" />
-	<file src="output_core\monoandroid10\release\SuperSocket.ClientEngine.dll" target="lib/monoandroid10" />
-	<file src="output_core\monotouch10\release\SuperSocket.ClientEngine.dll" target="lib/monotouch10" />
-	<file src="output_core\xamarinios10\release\SuperSocket.ClientEngine.dll" target="lib/xamarinios10" />
 	<file src="output_core\netstandard1.3\release\SuperSocket.ClientEngine.dll" target="lib/netstandard1.3" />
   </files>
 </package>
