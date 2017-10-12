@@ -32,11 +32,16 @@ namespace SuperSocket.ClientEngine
             }
         }
 
+        internal static bool PreferDnsInAdvance()
+        {
+            return Environment.GetEnvironmentVariable("PREFER_DNS_IN_ADVANCE") != null;
+        }
+
         public static void ConnectAsync(this EndPoint remoteEndPoint, EndPoint localEndPoint, ConnectedCallback callback, object state)
         {
             //Socket.ConnectAsync(SocketType.Stream, ProtocolType.Tcp, e);
             //Don't use Socket.ConnectAsync directly because Mono hasn't implement this method
-            if (m_ConnectMethod != null && localEndPoint == null)
+            if (m_ConnectMethod != null && localEndPoint == null && !PreferDnsInAdvance())
                 m_ConnectMethod.Invoke(null, new object[] { SocketType.Stream, ProtocolType.Tcp, CreateSocketAsyncEventArgs(remoteEndPoint, callback, state) });
             else
             {
