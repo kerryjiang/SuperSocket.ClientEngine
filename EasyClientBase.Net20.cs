@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using SuperSocket.ProtoBase;
 using System.Net;
+using System.Net.Sockets;
 
 namespace SuperSocket.ClientEngine
 {
