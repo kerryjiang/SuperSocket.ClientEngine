@@ -93,6 +93,16 @@ namespace SuperSocket.ClientEngine
             if (remoteEndPoint == null)
                 throw new ArgumentNullException("remoteEndPoint");
 
+            var dnsEndPoint = remoteEndPoint as DnsEndPoint;
+
+            if (dnsEndPoint != null)
+            {
+                var hostName = dnsEndPoint.Host;
+
+                if (!string.IsNullOrEmpty(hostName))
+                    HostName = hostName;
+            }
+
             if (m_InConnecting)
                 throw new Exception("The socket is connecting, cannot connect again!");
 
@@ -209,18 +219,22 @@ namespace SuperSocket.ClientEngine
             }
 #endif
 
-            if (e.RemoteEndPoint != null)
+            var finalRemoteEndPoint = e.RemoteEndPoint != null ? e.RemoteEndPoint : socket.RemoteEndPoint;
+
+            if (string.IsNullOrEmpty(HostName))
             {
-                HostName = GetHostOfEndPoint(e.RemoteEndPoint);
+                HostName = GetHostOfEndPoint(finalRemoteEndPoint);
             }
-            else
+            else// connect with DnsEndPoint
             {
-                try
+                var finalDnsEndPoint = finalRemoteEndPoint as DnsEndPoint;
+
+                if (finalDnsEndPoint != null)
                 {
-                    HostName = GetHostOfEndPoint(socket.RemoteEndPoint);
-                }
-                catch
-                {
+                    var hostName = finalDnsEndPoint.Host;
+
+                    if (!string.IsNullOrEmpty(hostName) && !HostName.Equals(hostName, StringComparison.OrdinalIgnoreCase))
+                        HostName = hostName;
                 }
             }
 
@@ -249,7 +263,7 @@ namespace SuperSocket.ClientEngine
 
             var ipEndPoint = endPoint as IPEndPoint;
 
-            if (ipEndPoint != null)
+            if (ipEndPoint != null && ipEndPoint.Address != null)
                return ipEndPoint.Address.ToString();
 
             return string.Empty;
