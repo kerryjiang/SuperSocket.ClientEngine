@@ -443,7 +443,7 @@ namespace SuperSocket.ClientEngine
             {
                 for (int i = items.Position; i < items.Count; i++)
                 {
-                    var item = items[items.Position];
+                    var item = items[i];
                     await m_SslStream.WriteAsync(item.Array, item.Offset, item.Count, CancellationToken.None);
                 }
                 
