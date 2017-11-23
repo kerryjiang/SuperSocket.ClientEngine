@@ -285,12 +285,18 @@ namespace SuperSocket.ClientEngine
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
 
-            // only has certificate name mismatch error
-            if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
+            if (Security.AllowNameMismatchCertificate)
             {
-                if (Security.AllowNameMismatchCertificate)
-                    return true;
+                sslPolicyErrors = sslPolicyErrors & (~SslPolicyErrors.RemoteCertificateNameMismatch);
             }
+
+            if (Security.AllowCertificateChainErrors)
+            {
+                sslPolicyErrors = sslPolicyErrors & (~SslPolicyErrors.RemoteCertificateChainErrors);
+            }
+
+            if (sslPolicyErrors == SslPolicyErrors.None)
+                return true;
 
             if (!Security.AllowUnstrustedCertificate)
             {

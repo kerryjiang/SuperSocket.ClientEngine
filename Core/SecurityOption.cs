@@ -32,6 +32,11 @@ namespace SuperSocket.ClientEngine
         /// </summary>
         public bool AllowNameMismatchCertificate { get; set; }
 
+        /// <summary>
+        /// Whether allow the certificate chain errors
+        /// </summary>
+        public bool AllowCertificateChainErrors { get; set; }
+
         public SecurityOption()
             : this(GetDefaultProtocol(), new X509CertificateCollection())
         {
