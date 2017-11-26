@@ -285,12 +285,18 @@ namespace SuperSocket.ClientEngine
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
 
-            // only has certificate name mismatch error
-            if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
+            if (Security.AllowNameMismatchCertificate)
             {
-                if (Security.AllowNameMismatchCertificate)
-                    return true;
+                sslPolicyErrors = sslPolicyErrors & (~SslPolicyErrors.RemoteCertificateNameMismatch);
             }
+
+            if (Security.AllowCertificateChainErrors)
+            {
+                sslPolicyErrors = sslPolicyErrors & (~SslPolicyErrors.RemoteCertificateChainErrors);
+            }
+
+            if (sslPolicyErrors == SslPolicyErrors.None)
+                return true;
 
             if (!Security.AllowUnstrustedCertificate)
             {
@@ -443,7 +449,7 @@ namespace SuperSocket.ClientEngine
             {
                 for (int i = items.Position; i < items.Count; i++)
                 {
-                    var item = items[items.Position];
+                    var item = items[i];
                     await m_SslStream.WriteAsync(item.Array, item.Offset, item.Count, CancellationToken.None);
                 }
                 

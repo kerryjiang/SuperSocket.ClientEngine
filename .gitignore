@@ -50,3 +50,4 @@ TestResults
 
 #Created by NuGet
 packages
+*.nupkg
