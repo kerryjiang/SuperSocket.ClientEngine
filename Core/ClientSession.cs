@@ -119,6 +119,7 @@ namespace SuperSocket.ClientEngine
         protected virtual void OnClosed()
         {
             IsConnected = false;
+            LocalEndPoint =  null;
 
             var handler = m_Closed;
 
