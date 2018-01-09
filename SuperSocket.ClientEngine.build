@@ -28,7 +28,6 @@
 		<MSBuild Projects="SuperSocket.ClientEngine.Net35.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net35-client\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
 		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net40-client\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
 		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\net45\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output_core\sl50\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
 		<Exec Command="dotnet restore" WorkingDirectory="SuperSocket.ClientEngine.Core" />
 		<Exec Command="dotnet build -c $(Configuration) -f netstandard1.3 -o ..\output_core\netstandard1.3\$(Configuration) /p:SignAssembly=True /p:AssemblyOriginatorKeyFile=..\..\..\SignKeys\SuperSocket.ClientEngine.snk" WorkingDirectory="SuperSocket.ClientEngine.Core" />
     </Target>
@@ -41,7 +40,6 @@
 		<MSBuild Projects="SuperSocket.ClientEngine.Net35.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net35-client\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
 		<MSBuild Projects="SuperSocket.ClientEngine.Net40.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net40-client\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
 		<MSBuild Projects="SuperSocket.ClientEngine.Net45.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\net45\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
-		<MSBuild Projects="SuperSocket.ClientEngine.SL50.csproj" Targets="Clean;Build" Properties="Configuration=Release;OutputPath=output\sl50\$(Configuration);NoEasyClient=$(NoEasyClient);SignAssembly=True;AssemblyOriginatorKeyFile=$(KeyFile)"/>
 		<Exec Command="dotnet restore" WorkingDirectory="SuperSocket.ClientEngine" />
 		<Exec Command="dotnet build -c $(Configuration) -f netstandard1.3 -o ..\output\netstandard1.3\$(Configuration) /p:SignAssembly=True /p:AssemblyOriginatorKeyFile=..\..\..\SignKeys\SuperSocket.ClientEngine.snk" WorkingDirectory="SuperSocket.ClientEngine" />
     </Target>

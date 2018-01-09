@@ -38,7 +38,6 @@
 	<file src="output\net35-client\release\SuperSocket.ClientEngine.dll" target="lib\net35-client" />
 	<file src="output\net40-client\release\SuperSocket.ClientEngine.dll" target="lib\net40-client" />
 	<file src="output\net45\release\SuperSocket.ClientEngine.dll" target="lib\net45" />
-	<file src="output\sl50\release\SuperSocket.ClientEngine.dll" target="lib\sl50" />
 	<file src="output\netstandard1.3\release\SuperSocket.ClientEngine.dll" target="lib\netstandard1.3" />
   </files>
 </package>
