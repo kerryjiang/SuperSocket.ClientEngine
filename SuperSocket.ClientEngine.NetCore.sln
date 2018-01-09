@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSocket.ClientEngine", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSocket.ClientEngine.Core", "SuperSocket.ClientEngine.Core\SuperSocket.ClientEngine.Core.csproj", "{D44058D3-B3FF-48E3-AF97-5F3E399E2F25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{D44058D3-B3FF-48E3-AF97-5F3E399E2F25}.Release|x64.Build.0 = Release|x64
 		{D44058D3-B3FF-48E3-AF97-5F3E399E2F25}.Release|x86.ActiveCfg = Release|x86
 		{D44058D3-B3FF-48E3-AF97-5F3E399E2F25}.Release|x86.Build.0 = Release|x86
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Debug|x64.ActiveCfg = Debug|x64
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Debug|x64.Build.0 = Debug|x64
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Debug|x86.ActiveCfg = Debug|x86
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Debug|x86.Build.0 = Debug|x86
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Release|x64.ActiveCfg = Release|x64
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Release|x64.Build.0 = Release|x64
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Release|x86.ActiveCfg = Release|x86
+		{F80957AA-E61B-47B9-AA0D-4BBF03608EF8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
