@@ -87,7 +87,7 @@ namespace SuperSocket.ClientEngine
 
         private void OnDataRead(IAsyncResult result)
         {
-            var state = result.AsyncState as SslAsyncState;
+            var state = result.AsyncState as StreamAsyncState;
 
             if (state == null || state.Stream == null)
             {
@@ -188,7 +188,7 @@ namespace SuperSocket.ClientEngine
         try
         {
             var buffer = Buffer;
-            m_Stream.BeginRead(buffer.Array, buffer.Offset, buffer.Count, OnDataRead, new SslAsyncState { Stream = m_Stream, Client = client });
+            m_Stream.BeginRead(buffer.Array, buffer.Offset, buffer.Count, OnDataRead, new StreamAsyncState { Stream = m_Stream, Client = client });
         }
         catch (Exception e)
         {
@@ -230,7 +230,7 @@ namespace SuperSocket.ClientEngine
             {
                 var item = items[items.Position];
                 m_Stream.BeginWrite(item.Array, item.Offset, item.Count,
-                    OnWriteComplete, new SslAsyncState { Stream = m_Stream, Client = client, SendingItems = items });
+                    OnWriteComplete, new StreamAsyncState { Stream = m_Stream, Client = client, SendingItems = items });
             }
             catch (Exception e)
             {
@@ -244,7 +244,7 @@ namespace SuperSocket.ClientEngine
 
         private void OnWriteComplete(IAsyncResult result)
         {
-            var state = result.AsyncState as SslAsyncState;
+            var state = result.AsyncState as StreamAsyncState;
 
             if (state == null || state.Stream == null)
             {

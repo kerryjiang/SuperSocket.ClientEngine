@@ -64,6 +64,7 @@
     <Compile Include="Common\ProxyEventArgs.cs" />
     <Compile Include="Common\SearchMarkState.cs" />
     <Compile Include="Core\AsyncTcpSession.cs" />
+    <Compile Include="Core\AuthenticatedStreamTcpSession.cs" />
     <Compile Include="Core\ClientSession.cs" />
     <Compile Include="Core\ConcurrentQueue.cs" />
     <Compile Include="Core\DataEventArgs.cs" />

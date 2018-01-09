@@ -61,6 +61,7 @@
     <Compile Include="Common\ProxyEventArgs.cs" />
     <Compile Include="Common\SearchMarkState.cs" />
     <Compile Include="Core\AsyncTcpSession.cs" />
+    <Compile Include="Core\AuthenticatedStreamTcpSession.cs" />
     <Compile Include="Core\ClientSession.cs" />
     <Compile Include="Core\DataEventArgs.cs" />
     <Compile Include="Core\ErrorEventArgs.cs" />
@@ -70,7 +71,7 @@
     <Compile Include="Core\SslStreamTcpSession.cs" />
     <Compile Include="Core\TcpClientSession.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.Net45.cs" />    
+    <Compile Include="Properties\AssemblyInfo.Net45.cs" />
     <Compile Include="Proxy\HttpConnectProxy.cs" />
     <Compile Include="Proxy\ProxyConnectorBase.cs" />
     <Compile Include="Proxy\Socks4aConnector.cs" />
