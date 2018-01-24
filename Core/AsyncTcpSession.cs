@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Sockets;
-using System.Reflection;
-using System.Text;
 
 namespace SuperSocket.ClientEngine
 {
@@ -15,7 +11,6 @@ namespace SuperSocket.ClientEngine
         public AsyncTcpSession()
             : base()
         {
-
         }
 
         protected override void SocketEventArgsCompleted(object sender, SocketAsyncEventArgs e)
@@ -71,16 +66,16 @@ namespace SuperSocket.ClientEngine
         {
             if (e.SocketError != SocketError.Success)
             {
-                if(EnsureSocketClosed())
+                if (EnsureSocketClosed())
                     OnClosed();
-                if(!IsIgnorableSocketError((int)e.SocketError))
+                if (!IsIgnorableSocketError((int)e.SocketError))
                     OnError(new SocketException((int)e.SocketError));
                 return;
             }
 
             if (e.BytesTransferred == 0)
             {
-                if(EnsureSocketClosed())
+                if (EnsureSocketClosed())
                     OnClosed();
                 return;
             }
@@ -89,7 +84,7 @@ namespace SuperSocket.ClientEngine
             StartReceive();
         }
 
-        void StartReceive()
+        private void StartReceive()
         {
             bool raiseEvent;
 
@@ -120,9 +115,9 @@ namespace SuperSocket.ClientEngine
 
                 return;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(!IsIgnorableException(e))
+                if (!IsIgnorableException(e))
                     OnError(e);
 
                 if (EnsureSocketClosed(client))
@@ -169,7 +164,6 @@ namespace SuperSocket.ClientEngine
 
                     m_SocketEventArgsSend.SetBuffer(currentItem.Array, currentItem.Offset, currentItem.Count);
                 }
-                
 
                 raiseEvent = Client.SendAsync(m_SocketEventArgsSend);
             }
@@ -199,11 +193,11 @@ namespace SuperSocket.ClientEngine
                 Sending_Completed(Client, m_SocketEventArgsSend);
         }
 
-        void Sending_Completed(object sender, SocketAsyncEventArgs e)
+        private void Sending_Completed(object sender, SocketAsyncEventArgs e)
         {
             if (e.SocketError != SocketError.Success || e.BytesTransferred == 0)
             {
-                if(EnsureSocketClosed())
+                if (EnsureSocketClosed())
                     OnClosed();
 
                 if (e.SocketError != SocketError.Success && !IsIgnorableSocketError((int)e.SocketError))

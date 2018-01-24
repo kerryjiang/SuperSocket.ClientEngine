@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using SuperSocket.ClientEngine;
 
 namespace SuperSocket.ClientEngine.Proxy
 {
@@ -12,7 +10,7 @@ namespace SuperSocket.ClientEngine.Proxy
     /// </summary>
     public class Socks5Connector : ProxyConnectorBase
     {
-        enum SocksState
+        private enum SocksState
         {
             NotAuthenticated,
             Authenticating,
@@ -21,7 +19,7 @@ namespace SuperSocket.ClientEngine.Proxy
             Connected
         }
 
-        class SocksContext
+        private class SocksContext
         {
             public Socket Socket { get; set; }
 
@@ -42,20 +40,21 @@ namespace SuperSocket.ClientEngine.Proxy
         public Socks5Connector(EndPoint proxyEndPoint, SocketClientAccessPolicyProtocol clientAccessPolicyProtocol)
             : base(proxyEndPoint, clientAccessPolicyProtocol)
         {
-
         }
 #else
+
         public Socks5Connector(EndPoint proxyEndPoint)
             : base(proxyEndPoint)
         {
-
         }
+
 #endif
 
 #if SILVERLIGHT && !WINDOWS_PHONE
         public Socks5Connector(EndPoint proxyEndPoint, SocketClientAccessPolicyProtocol clientAccessPolicyProtocol, string username, string password)
             : base(proxyEndPoint, clientAccessPolicyProtocol)
 #else
+
         public Socks5Connector(EndPoint proxyEndPoint, string username, string password)
             : base(proxyEndPoint)
 #endif
@@ -102,7 +101,6 @@ namespace SuperSocket.ClientEngine.Proxy
 
             if (!(remoteEndPoint is IPEndPoint || remoteEndPoint is DnsEndPoint))
                 throw new ArgumentException("remoteEndPoint must be IPEndPoint or DnsEndPoint", "remoteEndPoint");
-
 
             try
             {
@@ -265,7 +263,7 @@ namespace SuperSocket.ClientEngine.Proxy
 
                 if (context.ExpectedLength > context.ReceivedData.Count)
                 {
-                    StartReceive(context.Socket,e);
+                    StartReceive(context.Socket, e);
                     return;
                 }
                 else

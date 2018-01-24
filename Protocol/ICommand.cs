@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SuperSocket.ProtoBase;
-
-namespace SuperSocket.ClientEngine.Protocol
+﻿namespace SuperSocket.ClientEngine.Protocol
 {
     public interface ICommand
     {

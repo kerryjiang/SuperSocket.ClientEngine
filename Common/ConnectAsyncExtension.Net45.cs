@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
 
 namespace SuperSocket.ClientEngine
 {
@@ -16,7 +14,7 @@ namespace SuperSocket.ClientEngine
         public static void ConnectAsync(this EndPoint remoteEndPoint, EndPoint localEndPoint, ConnectedCallback callback, object state)
         {
             var e = CreateSocketAsyncEventArgs(remoteEndPoint, callback, state);
-            
+
 #if NETSTANDARD
 
             if (localEndPoint != null)
@@ -39,12 +37,12 @@ namespace SuperSocket.ClientEngine
             else
             {
                 Socket.ConnectAsync(SocketType.Stream, ProtocolType.Tcp, e);
-            }            
+            }
 #else
             var socket = PreferIPv4Stack()
-                ? new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) 
+                ? new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
                 : new Socket(SocketType.Stream, ProtocolType.Tcp);
-            
+
             if (localEndPoint != null)
             {
                 try
@@ -58,7 +56,7 @@ namespace SuperSocket.ClientEngine
                     return;
                 }
             }
-                
+
             socket.ConnectAsync(e);
 #endif
         }

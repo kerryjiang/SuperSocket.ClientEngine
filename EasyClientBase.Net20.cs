@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using SuperSocket.ProtoBase;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace SuperSocket.ClientEngine
 {
@@ -28,7 +26,7 @@ namespace SuperSocket.ClientEngine
             {
                 if (m_LocalEndPoint != null)
                     return m_LocalEndPoint;
-                    
+
                 return m_EndPointToBind;
             }
             set
@@ -58,7 +56,6 @@ namespace SuperSocket.ClientEngine
 
         public EasyClientBase()
         {
-
         }
 
         public bool IsConnected { get { return m_Connected; } }
@@ -109,7 +106,7 @@ namespace SuperSocket.ClientEngine
             m_Session = session;
             session.Connect(remoteEndPoint);
         }
-        
+
         public void Send(byte[] data)
         {
             Send(new ArraySegment<byte>(data, 0, data.Length));
@@ -118,7 +115,7 @@ namespace SuperSocket.ClientEngine
         public void Send(ArraySegment<byte> segment)
         {
             var session = m_Session;
-            
+
             if (!m_Connected || session == null)
                 throw new Exception("The socket is not connected.");
 
@@ -128,7 +125,7 @@ namespace SuperSocket.ClientEngine
         public void Send(List<ArraySegment<byte>> segments)
         {
             var session = m_Session;
-            
+
             if (!m_Connected || session == null)
                 throw new Exception("The socket is not connected.");
 
@@ -138,14 +135,14 @@ namespace SuperSocket.ClientEngine
         public void Close()
         {
             var session = m_Session;
-            
+
             if (session != null && m_Connected)
             {
                 session.Close();
             }
         }
 
-        void OnSessionDataReceived(object sender, DataEventArgs e)
+        private void OnSessionDataReceived(object sender, DataEventArgs e)
         {
             var result = PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length));
 
@@ -179,7 +176,7 @@ namespace SuperSocket.ClientEngine
             }
         }
 
-        void OnSessionError(object sender, ErrorEventArgs e)
+        private void OnSessionError(object sender, ErrorEventArgs e)
         {
             if (!m_Connected)
             {
@@ -204,7 +201,7 @@ namespace SuperSocket.ClientEngine
 
         public event EventHandler<ErrorEventArgs> Error;
 
-        void OnSessionClosed(object sender, EventArgs e)
+        private void OnSessionClosed(object sender, EventArgs e)
         {
             m_Connected = false;
             m_LocalEndPoint = null;
@@ -213,7 +210,7 @@ namespace SuperSocket.ClientEngine
 
             if (pipelineProcessor != null)
                 pipelineProcessor.Reset();
-            
+
             var handler = Closed;
 
             if (handler != null)
@@ -224,21 +221,21 @@ namespace SuperSocket.ClientEngine
 
         public event EventHandler Closed;
 
-        void OnSessionConnected(object sender, EventArgs e)
+        private void OnSessionConnected(object sender, EventArgs e)
         {
             m_Connected = true;
-            
+
             var session = sender as TcpClientSession;
-            
+
             if (session != null)
             {
                 m_LocalEndPoint = session.LocalEndPoint;
             }
-            
+
             m_ConnectEvent.Set();
 
             var handler = Connected;
-            
+
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);

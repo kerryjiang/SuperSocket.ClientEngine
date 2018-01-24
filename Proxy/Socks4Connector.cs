@@ -1,13 +1,10 @@
-﻿using System; 
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using SuperSocket.ClientEngine;
 
 namespace SuperSocket.ClientEngine.Proxy
 {
-    class ReceiveState
+    internal class ReceiveState
     {
         public ReceiveState(byte[] buffer)
         {
@@ -30,11 +27,13 @@ namespace SuperSocket.ClientEngine.Proxy
             UserID = userID;
         }
 #else
+
         public Socks4Connector(EndPoint proxyEndPoint, string userID)
             : base(proxyEndPoint)
         {
             UserID = userID;
         }
+
 #endif
 
         public override void Connect(EndPoint remoteEndPoint)
@@ -183,12 +182,15 @@ namespace SuperSocket.ClientEngine.Proxy
                 case (0x5b):
                     message = "request rejected or failed";
                     break;
+
                 case (0x5c):
                     message = "request failed because client is not running identd (or not reachable from the server)";
                     break;
+
                 case (0x5d):
                     message = "request failed because client's identd could not confirm the user ID string in the reques";
                     break;
+
                 default:
                     message = "request rejected for unknown error";
                     break;

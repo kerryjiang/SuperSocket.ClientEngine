@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Text;
 using System.Net;
 using System.Net.Sockets;
-using SuperSocket.ClientEngine;
+using System.Text;
 
 namespace SuperSocket.ClientEngine.Proxy
 {
@@ -24,16 +23,18 @@ namespace SuperSocket.ClientEngine.Proxy
         }
 
 #else
+
         public ProxyConnectorBase(EndPoint proxyEndPoint)
             : this(proxyEndPoint, null)
         {
-
         }
+
         public ProxyConnectorBase(EndPoint proxyEndPoint, string targetHostHame)
         {
             ProxyEndPoint = proxyEndPoint;
             TargetHostHame = targetHostHame;
         }
+
 #endif
 
         public abstract void Connect(EndPoint remoteEndPoint);

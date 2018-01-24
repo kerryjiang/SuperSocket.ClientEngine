@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Net.Sockets;
-using System.Reflection;
 using System.Net;
+using System.Net.Sockets;
 
 namespace SuperSocket.ClientEngine
 {
@@ -11,14 +8,14 @@ namespace SuperSocket.ClientEngine
 
     public static partial class ConnectAsyncExtension
     {
-        class ConnectToken
+        private class ConnectToken
         {
             public object State { get; set; }
 
             public ConnectedCallback Callback { get; set; }
         }
 
-        static void SocketAsyncEventCompleted(object sender, SocketAsyncEventArgs e)
+        private static void SocketAsyncEventCompleted(object sender, SocketAsyncEventArgs e)
         {
             e.Completed -= SocketAsyncEventCompleted;
             var token = (ConnectToken)e.UserToken;
@@ -26,7 +23,7 @@ namespace SuperSocket.ClientEngine
             token.Callback(sender as Socket, token.State, e, null);
         }
 
-        static SocketAsyncEventArgs CreateSocketAsyncEventArgs(EndPoint remoteEndPoint, ConnectedCallback callback, object state)
+        private static SocketAsyncEventArgs CreateSocketAsyncEventArgs(EndPoint remoteEndPoint, ConnectedCallback callback, object state)
         {
             var e = new SocketAsyncEventArgs();
 

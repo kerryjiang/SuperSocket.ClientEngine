@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SuperSocket.ProtoBase;
-using System.Net;
 
 namespace SuperSocket.ClientEngine
 {
@@ -36,7 +31,6 @@ namespace SuperSocket.ClientEngine
 
         public EasyClient()
         {
-            
         }
 
         public virtual void Initialize(IReceiveFilter<TPackageInfo> receiveFilter)
