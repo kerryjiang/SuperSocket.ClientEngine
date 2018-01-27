@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 
 namespace SuperSocket.ClientEngine
@@ -10,7 +9,7 @@ namespace SuperSocket.ClientEngine
     public abstract class ClientSession : IClientSession, IBufferSetter
     {
         public const int DefaultReceiveBufferSize = 4096;
-        
+
         protected Socket Client { get; set; }
 
         Socket IClientSession.Socket
@@ -28,7 +27,6 @@ namespace SuperSocket.ClientEngine
 
         public ClientSession()
         {
-
         }
 
         public int SendingQueueSize { get; set; }
@@ -45,6 +43,7 @@ namespace SuperSocket.ClientEngine
         }
 
 #if NO_SPINWAIT_CLASS
+
         public void Send(ArraySegment<byte> segment)
         {
             if (TrySend(segment))
@@ -72,7 +71,9 @@ namespace SuperSocket.ClientEngine
                     return;
             }
         }
+
 #else
+
         public void Send(ArraySegment<byte> segment)
         {
             if (TrySend(segment))
@@ -104,6 +105,7 @@ namespace SuperSocket.ClientEngine
                     return;
             }
         }
+
 #endif
 
         public abstract void Close();
@@ -119,7 +121,7 @@ namespace SuperSocket.ClientEngine
         protected virtual void OnClosed()
         {
             IsConnected = false;
-            LocalEndPoint =  null;
+            LocalEndPoint = null;
 
             var handler = m_Closed;
 
@@ -156,11 +158,11 @@ namespace SuperSocket.ClientEngine
         {
             var client = Client;
 
-            if(client != null)
+            if (client != null)
             {
                 try
                 {
-                    if(client.NoDelay != NoDelay)
+                    if (client.NoDelay != NoDelay)
                         client.NoDelay = NoDelay;
                 }
                 catch

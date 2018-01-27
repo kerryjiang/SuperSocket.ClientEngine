@@ -28,6 +28,5 @@
   <Library Name="SuperSocket.ClientEngine">
 
   	<!-- add directives for your library here -->
-
   </Library>
 </Directives>

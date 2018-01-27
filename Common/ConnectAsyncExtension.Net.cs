@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection;
-using System.Text;
 
 namespace SuperSocket.ClientEngine
 {
     public static partial class ConnectAsyncExtension
     {
-        class DnsConnectState
+        private class DnsConnectState
         {
             public IPAddress[] Addresses { get; set; }
 
@@ -68,7 +65,7 @@ namespace SuperSocket.ClientEngine
 
             var currentIndex = state.NextAddressIndex;
 
-            while(attempSocket == null)
+            while (attempSocket == null)
             {
                 if (currentIndex >= state.Addresses.Length)
                     return null;
@@ -138,7 +135,7 @@ namespace SuperSocket.ClientEngine
                 {
                     connectState.Callback(null, connectState.State, null, e);
                     return;
-                }                
+                }
             }
 
             var socketEventArgs = new SocketAsyncEventArgs();
@@ -152,7 +149,7 @@ namespace SuperSocket.ClientEngine
                 SocketConnectCompleted(attempSocket, socketEventArgs);
         }
 
-        static void SocketConnectCompleted(object sender, SocketAsyncEventArgs e)
+        private static void SocketConnectCompleted(object sender, SocketAsyncEventArgs e)
         {
             var connectState = e.UserToken as DnsConnectState;
 

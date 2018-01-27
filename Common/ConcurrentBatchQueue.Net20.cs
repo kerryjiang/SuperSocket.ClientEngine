@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace SuperSocket.ClientEngine
@@ -18,7 +17,7 @@ namespace SuperSocket.ClientEngine
 
         private Func<T, bool> m_NullValidator;
 
-        class Entity
+        private class Entity
         {
             public T[] Array { get; set; }
 
@@ -31,7 +30,6 @@ namespace SuperSocket.ClientEngine
         public ConcurrentBatchQueue()
             : this(16)
         {
-
         }
 
         /// <summary>
@@ -41,7 +39,6 @@ namespace SuperSocket.ClientEngine
         public ConcurrentBatchQueue(int capacity)
             : this(new T[capacity])
         {
-
         }
 
         /// <summary>
@@ -52,7 +49,6 @@ namespace SuperSocket.ClientEngine
         public ConcurrentBatchQueue(int capacity, Func<T, bool> nullValidator)
             : this(new T[capacity], nullValidator)
         {
-
         }
 
         /// <summary>
@@ -62,7 +58,6 @@ namespace SuperSocket.ClientEngine
         public ConcurrentBatchQueue(T[] array)
             : this(array, (t) => t == null)
         {
-
         }
 
         /// <summary>
@@ -115,7 +110,7 @@ namespace SuperSocket.ClientEngine
                 return false;
             }
 
-            if(entity != m_Entity)
+            if (entity != m_Entity)
                 return false;
 
             int oldCount = Interlocked.CompareExchange(ref entity.Count, count + 1, count);
@@ -232,7 +227,6 @@ namespace SuperSocket.ClientEngine
 
                 outputItems.Add(array[i]);
                 array[i] = m_Null;
-
 
                 if (entity.Count <= (i + 1))
                     break;

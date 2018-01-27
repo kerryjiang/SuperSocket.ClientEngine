@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Net;
-using System.Net.Sockets;
 using System.Net.Security;
-using System.Threading;
+using System.Net.Sockets;
+
 #if NETSTANDARD
 using System.Threading.Tasks;
 #endif
 #if !SILVERLIGHT
-using System.Security.Authentication;
 #endif
-using System.Security.Cryptography.X509Certificates;
 
 namespace SuperSocket.ClientEngine
 {
     public abstract class AuthenticatedStreamTcpSession : TcpClientSession
     {
-        class StreamAsyncState
+        private class StreamAsyncState
         {
             public AuthenticatedStream Stream { get; set; }
 
@@ -27,14 +22,11 @@ namespace SuperSocket.ClientEngine
         }
 
         private AuthenticatedStream m_Stream;
-                
 
         public AuthenticatedStreamTcpSession()
             : base()
         {
-
         }
-
 
 #if !SILVERLIGHT
 
@@ -61,14 +53,14 @@ namespace SuperSocket.ClientEngine
                     OnError(exc);
             }
         }
-        
+
         protected void OnAuthenticatedStreamConnected(AuthenticatedStream stream)
         {
             m_Stream = stream;
 
             OnConnected();
 
-            if(Buffer.Array == null)
+            if (Buffer.Array == null)
             {
                 var receiveBufferSize = ReceiveBufferSize;
 
@@ -82,7 +74,7 @@ namespace SuperSocket.ClientEngine
 
             BeginRead();
         }
-        
+
 #if !NETSTANDARD
 
         private void OnDataRead(IAsyncResult result)
@@ -125,9 +117,10 @@ namespace SuperSocket.ClientEngine
             OnDataReceived(Buffer.Array, Buffer.Offset, length);
             BeginRead();
         }
+
 #endif
 
-        void BeginRead()
+        private void BeginRead()
         {
 #if NETSTANDARD
             ReadAsync();
@@ -135,7 +128,7 @@ namespace SuperSocket.ClientEngine
             StartRead();
 #endif
         }
-        
+
 #if NETSTANDARD
         private async void ReadAsync()
         {
@@ -145,11 +138,11 @@ namespace SuperSocket.ClientEngine
 
                 if (client == null || m_Stream == null)
                     return;
-                
+
                 var buffer = Buffer;
-                
+
                 var length = 0;
-                
+
                 try
                 {
                     length = await m_Stream.ReadAsync(buffer.Array, buffer.Offset, buffer.Count, CancellationToken.None);
@@ -178,29 +171,30 @@ namespace SuperSocket.ClientEngine
         }
 #else
 
-    void StartRead()
-    {
-        var client = Client;
-
-        if (client == null || m_Stream == null)
-            return;
-
-        try
+        private void StartRead()
         {
-            var buffer = Buffer;
-            m_Stream.BeginRead(buffer.Array, buffer.Offset, buffer.Count, OnDataRead, new StreamAsyncState { Stream = m_Stream, Client = client });
-        }
-        catch (Exception e)
-        {
-            if (!IsIgnorableException(e))
-                OnError(e);
+            var client = Client;
 
-            if (EnsureSocketClosed(client))
-                OnClosed();
+            if (client == null || m_Stream == null)
+                return;
+
+            try
+            {
+                var buffer = Buffer;
+                m_Stream.BeginRead(buffer.Array, buffer.Offset, buffer.Count, OnDataRead, new StreamAsyncState { Stream = m_Stream, Client = client });
+            }
+            catch (Exception e)
+            {
+                if (!IsIgnorableException(e))
+                    OnError(e);
+
+                if (EnsureSocketClosed(client))
+                    OnClosed();
+            }
         }
-    }
 
 #endif
+
         protected override bool IsIgnorableException(Exception e)
         {
             if (base.IsIgnorableException(e))
@@ -221,7 +215,9 @@ namespace SuperSocket.ClientEngine
 
             return false;
         }
+
 #if !NETSTANDARD
+
         protected override void SendInternal(PosList<ArraySegment<byte>> items)
         {
             var client = this.Client;
@@ -297,12 +293,13 @@ namespace SuperSocket.ClientEngine
 
             OnSendingCompleted();
         }
+
 #else
         protected override void SendInternal(PosList<ArraySegment<byte>> items)
         {
             SendInternalAsync(items);
         }
-        
+
         private async void SendInternalAsync(PosList<ArraySegment<byte>> items)
         {
             try
@@ -312,7 +309,7 @@ namespace SuperSocket.ClientEngine
                     var item = items[i];
                     await m_Stream.WriteAsync(item.Array, item.Offset, item.Count, CancellationToken.None);
                 }
-                
+
                 m_Stream.Flush();
             }
             catch (Exception e)
@@ -322,13 +319,13 @@ namespace SuperSocket.ClientEngine
 
                 if (EnsureSocketClosed(Client))
                     OnClosed();
-                    
+
                 return;
             }
-            
+
             OnSendingCompleted();
         }
-        
+
 #endif
 
         public override void Close()

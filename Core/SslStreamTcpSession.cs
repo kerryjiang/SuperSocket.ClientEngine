@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
-using System.Threading;
+
 #if NETSTANDARD
 using System.Threading.Tasks;
 #endif
 #if !SILVERLIGHT
-using System.Security.Authentication;
 #endif
+
 using System.Security.Cryptography.X509Certificates;
 
 namespace SuperSocket.ClientEngine
@@ -23,22 +21,22 @@ namespace SuperSocket.ClientEngine
                 var sslStream = new SslStream(new NetworkStream(client));
                 sslStream.BeginAuthenticateAsClient(HostName, OnAuthenticated, sslStream);
 #else
-                var securityOption = Security;
+            var securityOption = Security;
 
-                if (securityOption == null)
-                {
-                    throw new Exception("securityOption was not configured");
-                }
+            if (securityOption == null)
+            {
+                throw new Exception("securityOption was not configured");
+            }
 
 #if NETSTANDARD
 
-                AuthenticateAsClientAsync(new SslStream(new NetworkStream(client), false, ValidateRemoteCertificate), Security);             
- 
+                AuthenticateAsClientAsync(new SslStream(new NetworkStream(client), false, ValidateRemoteCertificate), Security);
+
 #else
 
-                var sslStream = new SslStream(new NetworkStream(client), false, ValidateRemoteCertificate);
-                sslStream.BeginAuthenticateAsClient(HostName, securityOption.Certificates, securityOption.EnabledSslProtocols, false, OnAuthenticated, sslStream);
-                
+            var sslStream = new SslStream(new NetworkStream(client), false, ValidateRemoteCertificate);
+            sslStream.BeginAuthenticateAsClient(HostName, securityOption.Certificates, securityOption.EnabledSslProtocols, false, OnAuthenticated, sslStream);
+
 #endif
 #endif
         }
@@ -56,18 +54,18 @@ namespace SuperSocket.ClientEngine
                 OnError(e);
                 return;
             }
-            
+
             OnAuthenticatedStreamConnected(sslStream);
         }
 #endif
-        
-        
+
 #if !NETSTANDARD
+
         private void OnAuthenticated(IAsyncResult result)
         {
             var sslStream = result.AsyncState as SslStream;
 
-            if(sslStream == null)
+            if (sslStream == null)
             {
                 EnsureSocketClosed();
                 OnError(new NullReferenceException("Ssl Stream is null OnAuthenticated"));
@@ -78,7 +76,7 @@ namespace SuperSocket.ClientEngine
             {
                 sslStream.EndAuthenticateAsClient(result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 EnsureSocketClosed();
                 OnError(e);
@@ -87,9 +85,11 @@ namespace SuperSocket.ClientEngine
 
             OnAuthenticatedStreamConnected(sslStream);
         }
+
 #endif
 
 #if !SILVERLIGHT
+
         /// <summary>
         /// Validates the remote certificate.
         /// </summary>
@@ -143,7 +143,7 @@ namespace SuperSocket.ClientEngine
                     if ((certificate.Subject == certificate.Issuer) &&
                        (status.Status == X509ChainStatusFlags.UntrustedRoot))
                     {
-                        // Self-signed certificates with an untrusted root are valid. 
+                        // Self-signed certificates with an untrusted root are valid.
                         continue;
                     }
                     else
@@ -159,11 +159,12 @@ namespace SuperSocket.ClientEngine
                 }
             }
 
-            // When processing reaches this line, the only errors in the certificate chain are 
+            // When processing reaches this line, the only errors in the certificate chain are
             // untrusted root errors for self-signed certificates. These certificates are valid
             // for default Exchange server installations, so return true.
             return true;
         }
+
 #endif
     }
 }

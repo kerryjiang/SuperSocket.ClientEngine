@@ -2,14 +2,12 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using SuperSocket.ClientEngine;
 
 namespace SuperSocket.ClientEngine.Proxy
 {
     public class HttpConnectProxy : ProxyConnectorBase
     {
-        class ConnectContext
+        private class ConnectContext
         {
             public Socket Socket { get; set; }
 
@@ -34,7 +32,6 @@ namespace SuperSocket.ClientEngine.Proxy
         public HttpConnectProxy(EndPoint proxyEndPoint, SocketClientAccessPolicyProtocol clientAccessPolicyProtocol)
             : this(proxyEndPoint, clientAccessPolicyProtocol, 128)
         {
-
         }
 
         public HttpConnectProxy(EndPoint proxyEndPoint, SocketClientAccessPolicyProtocol clientAccessPolicyProtocol, int receiveBufferSize)
@@ -43,16 +40,15 @@ namespace SuperSocket.ClientEngine.Proxy
             m_ReceiveBufferSize = receiveBufferSize;
         }
 #else
+
         public HttpConnectProxy(EndPoint proxyEndPoint)
             : this(proxyEndPoint, 128, null)
         {
-
         }
 
         public HttpConnectProxy(EndPoint proxyEndPoint, string targetHostName)
             : this(proxyEndPoint, 128, targetHostName)
         {
-
         }
 
         public HttpConnectProxy(EndPoint proxyEndPoint, int receiveBufferSize, string targetHostName)
@@ -60,6 +56,7 @@ namespace SuperSocket.ClientEngine.Proxy
         {
             m_ReceiveBufferSize = receiveBufferSize;
         }
+
 #endif
 
         public override void Connect(EndPoint remoteEndPoint)
@@ -159,7 +156,7 @@ namespace SuperSocket.ClientEngine.Proxy
             {
                 int total = e.Offset + e.BytesTransferred;
 
-                if(total >= m_ReceiveBufferSize)
+                if (total >= m_ReceiveBufferSize)
                 {
                     OnException("receive buffer size has been exceeded");
                     return;

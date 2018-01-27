@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace SuperSocket.ClientEngine
 {
@@ -38,26 +34,21 @@ namespace SuperSocket.ClientEngine
         /// </summary>
         public bool AllowCertificateChainErrors { get; set; }
 
-
         public NetworkCredential Credential { get; set; }
-
 
         public SecurityOption()
             : this(GetDefaultProtocol(), new X509CertificateCollection())
         {
-
         }
 
         public SecurityOption(SslProtocols enabledSslProtocols)
             : this(enabledSslProtocols, new X509CertificateCollection())
         {
-            
         }
 
         public SecurityOption(SslProtocols enabledSslProtocols, X509Certificate certificate)
             : this(enabledSslProtocols, new X509CertificateCollection(new X509Certificate[] { certificate }))
         {
-
         }
 
         public SecurityOption(SslProtocols enabledSslProtocols, X509CertificateCollection certificates)
@@ -70,7 +61,7 @@ namespace SuperSocket.ClientEngine
         {
             Credential = credential;
         }
-        
+
         private static SslProtocols GetDefaultProtocol()
         {
 #if NETSTANDARD

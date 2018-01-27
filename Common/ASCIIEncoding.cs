@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Net;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SuperSocket.ClientEngine
 {
@@ -13,7 +12,6 @@ namespace SuperSocket.ClientEngine
     /// </summary>
     public class ASCIIEncoding : Encoding
     {
-
         static ASCIIEncoding()
         {
             m_Instance = new ASCIIEncoding();
@@ -80,7 +78,6 @@ namespace SuperSocket.ClientEngine
         /// </summary>
         public byte? FallbackByte { get; private set; }
 
-
         public ASCIIEncoding()
         {
             FallbackCharacter = '?';
@@ -92,11 +89,11 @@ namespace SuperSocket.ClientEngine
         /// <returns>
         /// The actual number of bytes written into <paramref name="bytes"/>.
         /// </returns>
-        /// <param name="chars">The character array containing the set of characters to encode. 
-        /// </param><param name="charIndex">The index of the first character to encode. 
-        /// </param><param name="charCount">The number of characters to encode. 
+        /// <param name="chars">The character array containing the set of characters to encode.
+        /// </param><param name="charIndex">The index of the first character to encode.
+        /// </param><param name="charCount">The number of characters to encode.
         /// </param><param name="bytes">The byte array to contain the resulting sequence of bytes.
-        /// </param><param name="byteIndex">The index at which to start writing the resulting sequence of bytes. 
+        /// </param><param name="byteIndex">The index at which to start writing the resulting sequence of bytes.
         /// </param>
         public override int GetBytes(char[] chars, int charIndex, int charCount, byte[] bytes, int byteIndex)
         {
@@ -104,7 +101,6 @@ namespace SuperSocket.ClientEngine
                      ? GetBytesWithFallBack(chars, charIndex, charCount, bytes, byteIndex)
                      : GetBytesWithoutFallback(chars, charIndex, charCount, bytes, byteIndex);
         }
-
 
         private int GetBytesWithFallBack(char[] chars, int charIndex, int charCount, byte[] bytes, int byteIndex)
         {
@@ -143,19 +139,17 @@ namespace SuperSocket.ClientEngine
             return charCount;
         }
 
-
-
         /// <summary>
         /// Decodes a sequence of bytes from the specified byte array into the specified character array.
         /// </summary>
         /// <returns>
         /// The actual number of characters written into <paramref name="chars"/>.
         /// </returns>
-        /// <param name="bytes">The byte array containing the sequence of bytes to decode. 
-        /// </param><param name="byteIndex">The index of the first byte to decode. 
-        /// </param><param name="byteCount">The number of bytes to decode. 
-        /// </param><param name="chars">The character array to contain the resulting set of characters. 
-        /// </param><param name="charIndex">The index at which to start writing the resulting set of characters. 
+        /// <param name="bytes">The byte array containing the sequence of bytes to decode.
+        /// </param><param name="byteIndex">The index of the first byte to decode.
+        /// </param><param name="byteCount">The number of bytes to decode.
+        /// </param><param name="chars">The character array to contain the resulting set of characters.
+        /// </param><param name="charIndex">The index at which to start writing the resulting set of characters.
         /// </param>
         public override int GetChars(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex)
         {
@@ -163,7 +157,6 @@ namespace SuperSocket.ClientEngine
                      ? GetCharsWithFallback(bytes, byteIndex, byteCount, chars, charIndex)
                      : GetCharsWithoutFallback(bytes, byteIndex, byteCount, chars, charIndex);
         }
-
 
         private int GetCharsWithFallback(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex)
         {
@@ -182,8 +175,6 @@ namespace SuperSocket.ClientEngine
             return byteCount;
         }
 
-
-
         private int GetCharsWithoutFallback(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex)
         {
             for (int i = 0; i < byteCount; i++)
@@ -197,14 +188,11 @@ namespace SuperSocket.ClientEngine
                     throw new EncoderFallbackException(msg);
                 }
 
-
                 chars[charIndex + i] = byteToChar[lookupIndex];
             }
 
             return byteCount;
         }
-
-
 
         /// <summary>
         /// Calculates the number of bytes produced by encoding a set of characters
@@ -219,20 +207,18 @@ namespace SuperSocket.ClientEngine
             return count;
         }
 
-
         /// <summary>
         /// Calculates the number of characters produced by decoding a sequence
         /// of bytes from the specified byte array.
         /// </summary>
         /// <returns>
         /// The number of characters produced by decoding the specified sequence of bytes. This class
-        /// alwas returns the value of <paramref name="count"/>. 
+        /// alwas returns the value of <paramref name="count"/>.
         /// </returns>
         public override int GetCharCount(byte[] bytes, int index, int count)
         {
             return count;
         }
-
 
         /// <summary>
         /// Calculates the maximum number of bytes produced by encoding the specified number of characters.
@@ -241,7 +227,7 @@ namespace SuperSocket.ClientEngine
         /// The maximum number of bytes produced by encoding the specified number of characters. This
         /// class alwas returns the value of <paramref name="charCount"/>.
         /// </returns>
-        /// <param name="charCount">The number of characters to encode. 
+        /// <param name="charCount">The number of characters to encode.
         /// </param>
         public override int GetMaxByteCount(int charCount)
         {
@@ -255,12 +241,11 @@ namespace SuperSocket.ClientEngine
         /// The maximum number of characters produced by decoding the specified number of bytes. This class
         /// alwas returns the value of <paramref name="byteCount"/>.
         /// </returns>
-        /// <param name="byteCount">The number of bytes to decode.</param> 
+        /// <param name="byteCount">The number of bytes to decode.</param>
         public override int GetMaxCharCount(int byteCount)
         {
             return byteCount;
         }
-
 
         /// <summary>
         /// Gets the number of characters that are supported by this encoding.
@@ -271,7 +256,6 @@ namespace SuperSocket.ClientEngine
         {
             get { return byteToChar.Length; }
         }
-
 
         #region Character Table
 
@@ -410,11 +394,10 @@ namespace SuperSocket.ClientEngine
               (char)124 /* byte 124 */  ,
               (char)125 /* byte 125 */  ,
               (char)126 /* byte 126 */  ,
-              (char)127 /* byte 127 */  
+              (char)127 /* byte 127 */
             };
 
-        #endregion
-
+        #endregion Character Table
 
         #region Byte Lookup Dictionary
 
@@ -553,6 +536,6 @@ namespace SuperSocket.ClientEngine
               { (char)127, 127 }
             };
 
-        #endregion
+        #endregion Byte Lookup Dictionary
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Net;
-using System.Net.Sockets;
-using SuperSocket.ClientEngine;
 
 namespace SuperSocket.ClientEngine.Proxy
 {
@@ -15,14 +11,14 @@ namespace SuperSocket.ClientEngine.Proxy
         public Socks4aConnector(EndPoint proxyEndPoint, SocketClientAccessPolicyProtocol clientAccessPolicyProtocol, string userID)
             : base(proxyEndPoint, clientAccessPolicyProtocol, userID)
         {
-
         }
 #else
+
         public Socks4aConnector(EndPoint proxyEndPoint, string userID)
             : base(proxyEndPoint, userID)
         {
-
         }
+
 #endif
 
         public override void Connect(EndPoint remoteEndPoint)
@@ -94,12 +90,15 @@ namespace SuperSocket.ClientEngine.Proxy
                 case (0x5b):
                     message = "request rejected or failed";
                     break;
+
                 case (0x5c):
                     message = "request failed because client is not running identd (or not reachable from the server)";
                     break;
+
                 case (0x5d):
                     message = "request failed because client's identd could not confirm the user ID string in the reques";
                     break;
+
                 default:
                     message = "request rejected for unknown error";
                     break;

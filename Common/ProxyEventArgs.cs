@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Net.Sockets;
 
 namespace SuperSocket.ClientEngine
@@ -9,19 +8,16 @@ namespace SuperSocket.ClientEngine
         public ProxyEventArgs(Socket socket)
             : this(true, socket, null, null)
         {
-
         }
 
         public ProxyEventArgs(Socket socket, string targetHostHame)
             : this(true, socket, targetHostHame, null)
         {
-
         }
 
         public ProxyEventArgs(Exception exception)
             : this(false, null, null, exception)
         {
-
         }
 
         public ProxyEventArgs(bool connected, Socket socket, string targetHostName, Exception exception)

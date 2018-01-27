@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SuperSocket.ProtoBase;
 using System.Net;
-using System.Threading;
 using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SuperSocket.ClientEngine
 {
@@ -34,7 +32,7 @@ namespace SuperSocket.ClientEngine
             {
                 if (m_LocalEndPoint != null)
                     return m_LocalEndPoint;
-                    
+
                 return m_EndPointToBind;
             }
             set
@@ -42,6 +40,7 @@ namespace SuperSocket.ClientEngine
                 m_EndPointToBind = value;
             }
         }
+
 #endif
 
         public bool NoDelay { get; set; }
@@ -65,14 +64,12 @@ namespace SuperSocket.ClientEngine
 
         public EasyClientBase()
         {
-
         }
 
         public bool IsConnected { get { return m_Connected; } }
 
-
-
 #if AWAIT
+
         public async Task<bool> ConnectAsync(EndPoint remoteEndPoint)
         {
             if (PipeLineProcessor == null)
@@ -81,7 +78,9 @@ namespace SuperSocket.ClientEngine
             var connectTaskSrc = m_ConnectTaskSource = InitConnect(remoteEndPoint);
             return await connectTaskSrc.Task.ConfigureAwait(false);
         }
+
 #else
+
         public Task<bool> ConnectAsync(EndPoint remoteEndPoint)
         {
             if (PipeLineProcessor == null)
@@ -90,6 +89,7 @@ namespace SuperSocket.ClientEngine
             var connectTaskSrc = InitConnect(remoteEndPoint);
             return connectTaskSrc.Task;
         }
+
 #endif
 
         private TcpClientSession GetUnderlyingSession()
@@ -104,7 +104,7 @@ namespace SuperSocket.ClientEngine
                 return new AsyncTcpSession();
             }
 
-    #if SILVERLIGHT
+#if SILVERLIGHT
             // no SSL/TLS enabled
             if (!security.EnabledSslProtocols)
             {
@@ -112,7 +112,7 @@ namespace SuperSocket.ClientEngine
             }
 
             return new SslStreamTcpSession();
-    #else
+#else
             // no SSL/TLS enabled
             if (security.EnabledSslProtocols == System.Security.Authentication.SslProtocols.None)
             {
@@ -123,7 +123,7 @@ namespace SuperSocket.ClientEngine
             {
                 Security = security
             };
-    #endif
+#endif
 #endif
         }
 
@@ -144,7 +144,7 @@ namespace SuperSocket.ClientEngine
 
             if (Proxy != null)
                 session.Proxy = Proxy;
-                
+
             session.Connected += new EventHandler(OnSessionConnected);
             session.Error += new EventHandler<ErrorEventArgs>(OnSessionError);
             session.Closed += new EventHandler(OnSessionClosed);
@@ -154,14 +154,14 @@ namespace SuperSocket.ClientEngine
                 session.ReceiveBufferSize = ReceiveBufferSize;
 
             m_Session = session;
-            
+
             var taskSrc = m_ConnectTaskSource = new TaskCompletionSource<bool>();
 
             session.Connect(remoteEndPoint);
-            
+
             return taskSrc;
         }
-        
+
         public void Send(byte[] data)
         {
             Send(new ArraySegment<byte>(data, 0, data.Length));
@@ -170,8 +170,8 @@ namespace SuperSocket.ClientEngine
         public void Send(ArraySegment<byte> segment)
         {
             var session = m_Session;
-            
-            if(!m_Connected || session == null)
+
+            if (!m_Connected || session == null)
                 throw new Exception("The socket is not connected.");
 
             session.Send(segment);
@@ -180,19 +180,20 @@ namespace SuperSocket.ClientEngine
         public void Send(List<ArraySegment<byte>> segments)
         {
             var session = m_Session;
-            
-            if(!m_Connected || session == null)
+
+            if (!m_Connected || session == null)
                 throw new Exception("The socket is not connected.");
 
             session.Send(segments);
         }
 
 #if AWAIT
+
         public async Task<bool> Close()
         {
             var session = m_Session;
-            
-            if(session != null && m_Connected)
+
+            if (session != null && m_Connected)
             {
                 var closeTaskSrc = new TaskCompletionSource<bool>();
                 m_CloseTaskSource = closeTaskSrc;
@@ -202,12 +203,14 @@ namespace SuperSocket.ClientEngine
 
             return await Task.FromResult(false);
         }
- #else
+
+#else
+
         public Task<bool> Close()
         {
             var session = m_Session;
-            
-            if(session != null && m_Connected)
+
+            if (session != null && m_Connected)
             {
                 var closeTaskSrc = new TaskCompletionSource<bool>();
                 m_CloseTaskSource = closeTaskSrc;
@@ -217,9 +220,10 @@ namespace SuperSocket.ClientEngine
 
             return new Task<bool>(() => false);
         }
- #endif
 
-        void OnSessionDataReceived(object sender, DataEventArgs e)
+#endif
+
+        private void OnSessionDataReceived(object sender, DataEventArgs e)
         {
             ProcessResult result;
 
@@ -264,7 +268,7 @@ namespace SuperSocket.ClientEngine
             }
         }
 
-        void OnSessionError(object sender, ErrorEventArgs e)
+        private void OnSessionError(object sender, ErrorEventArgs e)
         {
             if (!m_Connected)
             {
@@ -274,7 +278,7 @@ namespace SuperSocket.ClientEngine
             OnError(e);
         }
 
-        bool FinishConnectTask(bool result)
+        private bool FinishConnectTask(bool result)
         {
             var connectTaskSource = m_ConnectTaskSource;
 
@@ -299,13 +303,13 @@ namespace SuperSocket.ClientEngine
         {
             var handler = Error;
 
-            if(handler != null)
+            if (handler != null)
                 handler(this, args);
         }
 
         public event EventHandler<ErrorEventArgs> Error;
 
-        void OnSessionClosed(object sender, EventArgs e)
+        private void OnSessionClosed(object sender, EventArgs e)
         {
             m_Connected = false;
 
@@ -323,23 +327,20 @@ namespace SuperSocket.ClientEngine
             if (handler != null)
                 handler(this, EventArgs.Empty);
 
-
             var closeTaskSrc = m_CloseTaskSource;
-            
-            if(closeTaskSrc != null)
+
+            if (closeTaskSrc != null)
             {
-                if(Interlocked.CompareExchange(ref m_CloseTaskSource, null, closeTaskSrc) == closeTaskSrc)
+                if (Interlocked.CompareExchange(ref m_CloseTaskSource, null, closeTaskSrc) == closeTaskSrc)
                 {
                     closeTaskSrc.SetResult(true);
                 }
             }
-
-            
         }
 
         public event EventHandler Closed;
 
-        void OnSessionConnected(object sender, EventArgs e)
+        private void OnSessionConnected(object sender, EventArgs e)
         {
             m_Connected = true;
 
@@ -354,7 +355,7 @@ namespace SuperSocket.ClientEngine
             FinishConnectTask(true);
 
             var handler = Connected;
-            if(handler != null)
+            if (handler != null)
             {
                 handler(this, EventArgs.Empty);
             }
