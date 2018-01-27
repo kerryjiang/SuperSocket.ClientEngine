@@ -221,7 +221,18 @@ namespace SuperSocket.ClientEngine
 
         void OnSessionDataReceived(object sender, DataEventArgs e)
         {
-            var result = PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length));
+            ProcessResult result;
+
+            try
+            {
+                result = PipeLineProcessor.Process(new ArraySegment<byte>(e.Data, e.Offset, e.Length));
+            }
+            catch(Exception exc)
+            {
+                OnError(exc);
+                m_Session.Close();
+                return;
+            }
 
             if (result.State == ProcessState.Error)
             {
