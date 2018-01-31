@@ -15,9 +15,6 @@
       <group>
         <dependency id="SuperSocket.ProtoBase" version="[1.7.0.17, 1.7.0.17]" />
 	  </group>
-	  <group targetFramework="sl50">		
-		<dependency id="Portable.BouncyCastle-Signed" version="1.7.0.2" />
-	  </group>
 	  <group targetFramework=".NETStandard1.3">
         <dependency id="System.Linq" version="[4.3.0, )" />
         <dependency id="System.Net.Sockets" version="[4.3.0, )" />

@@ -12,9 +12,6 @@
     <description>It's a .NET socket tool which can simplify the socket client developing. This difference between this package and SuperSocket.ClientEngine is it doesn't include the protocol resolving library.</description>
     <tags>SuperSocket, Socket Client</tags>
 	<dependencies>
-	  <group targetFramework="sl50">		
-		<dependency id="Portable.BouncyCastle-Signed" version="1.7.0.2" />
-	  </group>
 	  <group targetFramework=".NETStandard1.3">
         <dependency id="System.Linq" version="[4.3.0, )" />
         <dependency id="System.Net.Sockets" version="[4.3.0, )" />
