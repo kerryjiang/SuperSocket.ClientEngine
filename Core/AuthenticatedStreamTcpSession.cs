@@ -105,7 +105,7 @@ namespace SuperSocket.ClientEngine
             }
             catch (Exception e)
             {
-                if (!IsIgnorableException(e))
+                if (!IsIgnorableReadOrSendException(e))
                     OnError(e);
 
                 if (EnsureSocketClosed(state.Client))
@@ -156,7 +156,7 @@ namespace SuperSocket.ClientEngine
                 }
                 catch (Exception e)
                 {
-                    if (!IsIgnorableException(e))
+                    if (!IsIgnorableReadOrSendException(e))
                         OnError(e);
 
                     if (EnsureSocketClosed(Client))
@@ -192,7 +192,7 @@ namespace SuperSocket.ClientEngine
         }
         catch (Exception e)
         {
-            if (!IsIgnorableException(e))
+            if (!IsIgnorableReadOrSendException(e))
                 OnError(e);
 
             if (EnsureSocketClosed(client))
@@ -221,6 +221,27 @@ namespace SuperSocket.ClientEngine
 
             return false;
         }
+
+        private bool IsIgnorableReadOrSendException(Exception e)
+        {
+            if (IsIgnorableException(e))
+                return true;
+
+            if (e is System.IO.IOException && e.InnerException is SocketException)
+            {
+                SocketException exc = (SocketException)e.InnerException;
+                int errorCode;
+
+#if !NETFX_CORE
+                errorCode = exc.ErrorCode;
+#else
+                errorCode = (int)exc.SocketErrorCode;
+#endif
+                return IsIgnorableSocketError(errorCode);
+            }
+
+            return false;
+        }
 #if !NETSTANDARD
         protected override void SendInternal(PosList<ArraySegment<byte>> items)
         {
@@ -234,7 +255,7 @@ namespace SuperSocket.ClientEngine
             }
             catch (Exception e)
             {
-                if (!IsIgnorableException(e))
+                if (!IsIgnorableReadOrSendException(e))
                     OnError(e);
 
                 if (EnsureSocketClosed(client))
@@ -260,7 +281,7 @@ namespace SuperSocket.ClientEngine
             }
             catch (Exception e)
             {
-                if (!IsIgnorableException(e))
+                if (!IsIgnorableReadOrSendException(e))
                     OnError(e);
 
                 if (EnsureSocketClosed(state.Client))
@@ -286,7 +307,7 @@ namespace SuperSocket.ClientEngine
             }
             catch (Exception e)
             {
-                if (!IsIgnorableException(e))
+                if (!IsIgnorableReadOrSendException(e))
                     OnError(e);
 
                 if (EnsureSocketClosed(state.Client))
@@ -317,7 +338,7 @@ namespace SuperSocket.ClientEngine
             }
             catch (Exception e)
             {
-                if (!IsIgnorableException(e))
+                if (!IsIgnorableReadOrSendException(e))
                     OnError(e);
 
                 if (EnsureSocketClosed(Client))
