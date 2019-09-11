@@ -18,7 +18,8 @@ namespace SuperSocket.ClientEngine.Proxy
 
         private const string m_RequestTemplate = "CONNECT {0}:{1} HTTP/1.1\r\nHost: {0}:{1}\r\nProxy-Connection: Keep-Alive\r\n\r\n";
 
-        private const string m_ResponsePrefix = "HTTP/1.1";
+        private const string m_ResponsePrefix11 = "HTTP/1.1";
+        private const string m_ResponsePrefix10 = "HTTP/1.0";
         private const char m_Space = ' ';
 
         private static byte[] m_LineSeparator;
@@ -199,7 +200,7 @@ namespace SuperSocket.ClientEngine.Proxy
 
             var httpProtocol = line.Substring(0, pos);
 
-            if (!m_ResponsePrefix.Equals(httpProtocol))
+            if (!m_ResponsePrefix11.Equals(httpProtocol) && !m_ResponsePrefix10.Equals(httpProtocol))
             {
                 OnException("protocol error: invalid protocol");
                 return;
