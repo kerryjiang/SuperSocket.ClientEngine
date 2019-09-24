@@ -171,7 +171,7 @@ namespace SuperSocket.ClientEngine.Proxy
                 return;
             }
 
-            int responseLength = prevMatched > 0 ? (e.Offset - prevMatched) : (e.Offset + result);
+            int responseLength = (prevMatched > 0 && result == e.Offset) ? (e.Offset - prevMatched) : result;
 
             if (e.Offset + e.BytesTransferred > responseLength + m_LineSeparator.Length)
             {

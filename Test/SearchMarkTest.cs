@@ -74,5 +74,32 @@ namespace SuperSocket.ClientEngine.Test
                 Assert.Equal(0, second.SearchMark(0, second.Length, searchState));
             }
         }
+
+
+        [Fact]
+        public void Test()
+        {
+            byte[] first = Encoding.ASCII.GetBytes("HTTP/1.1 200 Connection Established\r\n");
+            byte[] second = Encoding.ASCII.GetBytes("Proxy-agent: Apache/2.2.29 (Win32)\r\n\r\n");
+
+            byte[] mark = Encoding.ASCII.GetBytes("\r\n\r\n");
+
+            var searchState = new SearchMarkState<byte>(mark);
+
+            {
+                // -1 means: not matched, or partially matched.
+                Assert.Equal(-1, first.SearchMark(0, first.Length, searchState));
+
+                // Check if (1 <= searchState.Matched) in case of partial match.
+            }
+            {
+                var prevMatched = searchState.Matched;
+                Assert.Equal(prevMatched, 2);
+
+                // "\r\n\r\n" is matched on second buffer at second[34] to [37].
+                // So prevMatched should be ignored this time.
+                Assert.Equal(34, second.SearchMark(0, second.Length, searchState));
+            }
+        }
     }
 }
