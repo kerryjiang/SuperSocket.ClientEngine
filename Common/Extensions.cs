@@ -111,6 +111,7 @@ namespace SuperSocket.ClientEngine
 
             if (result.Value < 0)
             {
+                searchState.Matched = 0 - result.Value;
                 return -1;
             }
 
