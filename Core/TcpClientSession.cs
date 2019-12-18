@@ -30,7 +30,7 @@ namespace SuperSocket.ClientEngine
             set
             {
                 if (m_InConnecting || IsConnected)
-                    throw new Exception("You cannot set LocalEdnPoint after you start the connection.");
+                    throw new Exception("You cannot set LocalEndPoint after you start the connection.");
 
                 base.LocalEndPoint = value;
             }
