@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -16,51 +16,44 @@ namespace SuperSocket.ClientEngine
         public static void ConnectAsync(this EndPoint remoteEndPoint, EndPoint localEndPoint, ConnectedCallback callback, object state)
         {
             var e = CreateSocketAsyncEventArgs(remoteEndPoint, callback, state);
-            
+
 #if NETSTANDARD
 
+            AddressFamily addressFamily = remoteEndPoint.AddressFamily;
+
             if (localEndPoint != null)
             {
-                var socket = new Socket(localEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
-                try
-                {
-                    socket.ExclusiveAddressUse = false;
-                    socket.Bind(localEndPoint);
-                }
-                catch (Exception exc)
-                {
-                    callback(null, state, null, exc);
-                    return;
-                }
-
-                socket.ConnectAsync(e);
+                addressFamily = localEndPoint.AddressFamily;
             }
-            else
-            {
-                Socket.ConnectAsync(SocketType.Stream, ProtocolType.Tcp, e);
-            }            
+
+            var socket = new Socket(addressFamily, SocketType.Stream, ProtocolType.Tcp);
+
 #else
             var socket = PreferIPv4Stack()
-                ? new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) 
+                ? new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
                 : new Socket(SocketType.Stream, ProtocolType.Tcp);
-            
-            if (localEndPoint != null)
+#endif
+
+            try
             {
-                try
+                if (localEndPoint != null)
                 {
                     socket.ExclusiveAddressUse = false;
                     socket.Bind(localEndPoint);
                 }
-                catch (Exception exc)
+
+                bool wasAsync = socket.ConnectAsync(e);
+
+                if (!wasAsync)
                 {
-                    callback(null, state, null, exc);
-                    return;
+                    callback(socket, state, e, null);
                 }
             }
-                
-            socket.ConnectAsync(e);
-#endif
+            catch (Exception exc)
+            {
+                callback(null, state, null, exc);
+            }
+
         }
     }
 }
